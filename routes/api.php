@@ -45,7 +45,7 @@ Route::prefix('filters')->group(function() {
     Route::delete('/{filter}', [FilterController::class, 'destroy']);
 });
 
-Route::prefix('filters')->group(function() {
+Route::prefix('charts')->group(function() {
     Route::get('/{office}', [FilterController::class, 'index']);
     Route::post('/store', [FilterController::class, 'store']);
     Route::put('/{filter}', [FilterController::class, 'update']);
