@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -46,9 +47,9 @@ Route::prefix('filters')->group(function() {
 });
 
 Route::prefix('charts')->group(function() {
-    Route::get('/{office}', [FilterController::class, 'index']);
-    Route::post('/store', [FilterController::class, 'store']);
-    Route::put('/{filter}', [FilterController::class, 'update']);
-    Route::delete('/{filter}', [FilterController::class, 'destroy']);
+    Route::get('/{office}', [ChartController::class, 'index']);
+    Route::post('/store', [ChartController::class, 'store']);
+    Route::put('/{filter}', [ChartController::class, 'update']);
+    Route::delete('/{filter}', [ChartController::class, 'destroy']);
 });
 
