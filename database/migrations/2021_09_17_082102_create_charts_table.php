@@ -16,8 +16,10 @@ class CreateChartsTable extends Migration
         Schema::create('charts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('filter_id');
-            $table->json('data')->nullable();
+            $table->string('title');
+            $table->json('series')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

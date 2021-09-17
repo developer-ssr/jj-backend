@@ -47,9 +47,6 @@ Route::prefix('filters')->group(function() {
 });
 
 Route::prefix('charts')->group(function() {
-    Route::get('/{office}', [ChartController::class, 'index']);
-    Route::post('/store', [ChartController::class, 'store']);
-    Route::put('/{filter}', [ChartController::class, 'update']);
-    Route::delete('/{filter}', [ChartController::class, 'destroy']);
+    Route::post('/', [ChartController::class, 'index']);
 });
 

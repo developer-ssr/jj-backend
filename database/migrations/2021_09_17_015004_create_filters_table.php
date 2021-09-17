@@ -20,6 +20,7 @@ class CreateFiltersTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('office_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
