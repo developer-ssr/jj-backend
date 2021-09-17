@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RecordController;
 use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/test', [TestController::class, 'index']);
+Route::get('/complete', [RecordController::class, 'complete']);
