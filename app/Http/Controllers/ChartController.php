@@ -19,6 +19,7 @@ class ChartController extends Controller
     public function index(Request $request)
     {
         $filters = Filter::whereIn('id', $request->filter_ids)->get();
+        // $filters = Filter::all();
         $data = [];
         foreach ($filters as $key => $filter) {
             $qry = Chart::where('filter_id',$filter->id);
@@ -32,17 +33,26 @@ class ChartController extends Controller
             }
 
             // if ($request->update_series == true) {
-                $series_data = [];
-                $segment_num = 1;
-                foreach ($filter->segments as $segment) {
-                    $records = Record::whereBetween('created_at', [date($segment['from']), date($segment['to'])])->get();
-                    $result = $this->getResult($records, $filter->prime);
-                    $series_data[] = ['x' => $segment_num, 'y' => $result];
+                $series = [];
+                $records = [];//Record::all();
+                foreach ($filter->data['legends'] as $legend) {
+                    foreach ($legend['primes']  as $prime) {
+                        $series_data = [];
+                        foreach ($filter->data['segments'] as $s_key => $segment) {
+                            if (!isset($records[$s_key])) {
+                                $records[$s_key] = Record::whereBetween('created_at', [date($segment['from']), date($segment['to'])])->get();
+                            }
+                            $score = $this->getScore($records[$s_key], $legend['name'], $prime);
+                            $series_data[] = ['x' => ($s_key + 1), 'y' => $score];
+                        }
+                        $series[] = [
+                            'name' => $legend['name'].'_'.$prime,
+                            'data' => $series_data
+                        ];
+                    }
                 }
-
                 $chart->update([
-                    'name' => $filter->prime,
-                    'series' => $series_data
+                    'series' => $series
                 ]);
             // }
 
@@ -129,10 +139,26 @@ class ChartController extends Controller
         $records = Record::all();
     }
 
-    public function getResult($records, $prime)
+    public function getScore($records, $legend, $prime)
     {
-        $records = Record::all();
-        $result = 68;
-        return $result;
+        $data = [];
+        $max_value = 0;
+        $points = 0;
+        foreach ($records as $record) {
+            $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime)['data'];
+            if ($max_value == 0) {
+                $max_value = count($records) * count($tmp_data);
+            }
+            foreach ($tmp_data as $t_key => $tmp) {
+                /* if (!isset($points[$t_key])) {
+                    $points[$t_key] = 0;
+                } */
+                if ($tmp['selected']) {
+                    $points++;
+                }
+            }
+        }
+        $score = ($points/$max_value) * 100;
+        return ceil($score);
     }
 }
