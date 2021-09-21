@@ -18,7 +18,7 @@ class ChartController extends Controller
      */
     public function index(Request $request)
     {
-        $filters = Filter::whereIn('id', $request->filter_ids)->get();
+        $filters = Filter::whereIn('id', json_decode($request->filter_ids, true))->get();
         // $filters = Filter::all();
         $data = [];
         foreach ($filters as $key => $filter) {
@@ -35,12 +35,13 @@ class ChartController extends Controller
             // if ($request->update_series == true) {
                 $series = [];
                 $records = [];//Record::all();
+                $office = Office::find($request->office_id);
                 foreach ($filter->data['legends'] as $legend) {
                     foreach ($legend['primes']  as $prime) {
                         $series_data = [];
                         foreach ($filter->data['segments'] as $s_key => $segment) {
                             if (!isset($records[$s_key])) {
-                                $records[$s_key] = Record::whereBetween('created_at', [date($segment['from']), date($segment['to'])])->get();
+                                $records[$s_key] = Record::whereBetween('created_at', [date($segment['from']), date($segment['to'])])->where('meta->office', $office->address)->get();
                             }
                             $score = $this->getScore($records[$s_key], $legend['name'], $prime);
                             $series_data[] = ['x' => ($s_key + 1), 'y' => $score];
@@ -158,7 +159,8 @@ class ChartController extends Controller
                 }
             }
         }
-        $score = ($points/$max_value) * 100;
+
+        $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
         return ceil($score);
     }
 }
