@@ -74,7 +74,7 @@ class ChartController extends Controller
 
             $data[] = $chart->only(['id', 'title', 'series']);
         }
-        return response()->json($data);
+        return response()->json($data[0]);
     }
 
     /**
