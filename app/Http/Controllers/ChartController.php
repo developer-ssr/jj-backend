@@ -26,7 +26,7 @@ class ChartController extends Controller
             $filters = Filter::where('office_id', $request->office_id)->orderBy('id', 'desc')->limit(1)->get();
         }
         if ($filters->isEmpty()) {
-            return response('No data');
+            return response('No data', 500);
         }
         
         
