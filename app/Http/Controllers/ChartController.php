@@ -54,7 +54,8 @@ class ChartController extends Controller
                     }
                 }
                 $chart->update([
-                    'series' => $series
+                    'series' => $series,
+                    'title' => $office->name
                 ]);
             // }
 
