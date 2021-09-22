@@ -18,10 +18,19 @@ class ChartController extends Controller
      */
     public function index(Request $request)
     {
-        $filters = Filter::whereIn('id', json_decode($request->filter_ids, true))->get();
+        $office = Office::find($request->office_id);
+        if ($request->has('filter_ids')) {
+            $filters = Filter::whereIn('id', json_decode($request->filter_ids, true))->get();
+        } else {
+            $filters = Filter::where('office_id', $request->office_id)->orderBy('id', 'desc')->first();
+        }
+        if ($filters->count() == 0) {
+            return response('No data');
+        }
+        
         // $filters = Filter::all();
         $data = [];
-        $office = Office::find($request->office_id);
+        
         foreach ($filters as $key => $filter) {
             $qry = Chart::where('filter_id',$filter->id);
             if(!$qry->exists()){
