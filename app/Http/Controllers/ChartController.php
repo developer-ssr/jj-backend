@@ -21,11 +21,12 @@ class ChartController extends Controller
         $filters = Filter::whereIn('id', json_decode($request->filter_ids, true))->get();
         // $filters = Filter::all();
         $data = [];
+        $office = Office::find($request->office_id);
         foreach ($filters as $key => $filter) {
             $qry = Chart::where('filter_id',$filter->id);
             if(!$qry->exists()){
                 $chart = Chart::create([
-                    'title' => $filter->name,
+                    'title' => $office->name,
                     'filter_id' => $filter->id
                 ]);
             }else {
@@ -35,7 +36,7 @@ class ChartController extends Controller
             // if ($request->update_series == true) {
                 $series = [];
                 $records = [];//Record::all();
-                $office = Office::find($request->office_id);
+                
                 foreach ($filter->data['legends'] as $legend) {
                     foreach ($legend['primes']  as $prime) {
                         $series_data = [];
