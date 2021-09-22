@@ -19,12 +19,13 @@ class ChartController extends Controller
     public function index(Request $request)
     {
         $office = Office::find($request->office_id);
+        $country = $request->country ?? null;
         if ($request->has('filter_ids')) {
             $filters = Filter::whereIn('id', json_decode($request->filter_ids, true))->get();
         } else {
             $filters = Filter::where('office_id', $request->office_id)->orderBy('id', 'desc')->first();
         }
-        if ($filters->count() == 0) {
+        if (!$filters) {
             return response('No data');
         }
         
@@ -51,7 +52,9 @@ class ChartController extends Controller
                         $series_data = [];
                         foreach ($filter->data['segments'] as $s_key => $segment) {
                             if (!isset($records[$s_key])) {
-                                $records[$s_key] = Record::whereBetween('created_at', [date($segment['from']), date($segment['to'])])->where('meta->office', $office->address)->get();
+                                $records[$s_key] = !$country ?
+                                 Record::whereBetween('created_at', [date($segment['from']), date($segment['to'])])->where('meta->office', $office->address)->get() :
+                                Record::where('country', $country)->get();
                             }
                             $score = $this->getScore($records[$s_key], $legend['name'], $prime);
                             $series_data[] = ['x' => ($s_key + 1), 'y' => $score];

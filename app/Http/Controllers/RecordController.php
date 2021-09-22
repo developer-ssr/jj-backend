@@ -33,6 +33,7 @@ class RecordController extends Controller
 
         $record = Record::create([
             'participant_id' => $request->id,
+            'country' => 'us',
             'ip' => $request->ip(),
             'data' => $data,
             'meta' => [
