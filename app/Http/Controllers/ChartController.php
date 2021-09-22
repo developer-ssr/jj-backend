@@ -23,9 +23,9 @@ class ChartController extends Controller
         if ($request->has('filter_ids')) {
             $filters = Filter::whereIn('id', json_decode($request->filter_ids, true))->get();
         } else {
-            $filters = Filter::where('office_id', $request->office_id)->orderBy('id', 'desc')->first();
+            $filters = collect(Filter::where('office_id', $request->office_id)->orderBy('id', 'desc')->first());
         }
-        if (!$filters) {
+        if ($filters->isEmpty()) {
             return response('No data');
         }
         
