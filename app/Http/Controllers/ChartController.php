@@ -63,7 +63,7 @@ class ChartController extends Controller
                             $series_data[] = ['y' => $score];
                         }
                         $series[] = [
-                            'name' => $legend['name'].'_'. ($prime + 1),
+                            'name' => $legend['name'].'_'. $prime,
                             'data' => $series_data
                         ];
                     }
@@ -164,7 +164,7 @@ class ChartController extends Controller
         $max_value = 0;
         $points = 0;
         foreach ($records as $record) {
-            $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', ($prime + 1))['data'];
+            $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime)['data'];
             if ($max_value == 0) {
                 $max_value = count($records) * count($tmp_data);
             }
