@@ -64,7 +64,7 @@ class ChartController extends Controller
                             $series_data[] = ['y' => $score];
                         }
                         $series[] = [
-                            'name' => $legend['name'].'_'.$prime,
+                            'name' => $legend['name'].'_'. ($prime + 1),
                             'data' => $series_data
                         ];
                     }
