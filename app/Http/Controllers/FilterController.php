@@ -130,7 +130,7 @@ class FilterController extends Controller
         $request->validate([
             'name' => 'required',
             'office_id' => 'required',
-            'data' => 'required'
+            'data' => 'required',
         ]);
         $filter = Filter::create([
             'name' => $request->name,
