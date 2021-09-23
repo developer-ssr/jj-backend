@@ -49,7 +49,7 @@ class ChartController extends Controller
                 $records = [];//Record::all();
                 $categories = [];
                 foreach ($filter->data['legends'] as $legend) {
-                    foreach ($legend['primes']  as $prime) {
+                    foreach ($legend['primes'] as $prime) {
                         $series_data = [];
                         foreach ($filter->data['segments'] as $s_key => $segment) {
                             if (!isset($records[$s_key])) {
@@ -165,7 +165,7 @@ class ChartController extends Controller
         $max_value = 0;
         $points = 0;
         foreach ($records as $record) {
-            $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime + 1)['data'];
+            $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime)['data'];
             if ($max_value == 0) {
                 $max_value = count($records) * count($tmp_data);
             }
@@ -174,7 +174,7 @@ class ChartController extends Controller
                     $points[$t_key] = 0;
                 } */
                 if ($tmp['selected']) {
-                    $points++;
+                    $points+=$prime;
                 }
             }
         }
