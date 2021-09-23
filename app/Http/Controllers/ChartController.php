@@ -47,18 +47,21 @@ class ChartController extends Controller
             // if ($request->update_series == true) {
                 $series = [];
                 $records = [];//Record::all();
-                
+                $categories = [];
                 foreach ($filter->data['legends'] as $legend) {
                     foreach ($legend['primes']  as $prime) {
                         $series_data = [];
                         foreach ($filter->data['segments'] as $s_key => $segment) {
                             if (!isset($records[$s_key])) {
                                 $records[$s_key] = !$country ?
-                                 Record::whereBetween('created_at', [date($segment['from']), date($segment['to'])])->where('meta->office', $office->address)->get() :
+                                Record::whereBetween('created_at', [date($segment['from']), date($segment['to'])])->where('meta->office', $office->address)->get() :
                                 Record::where('country', $country)->get();
                             }
+                            if (!isset($categories[$s_key])) {
+                                $categories[$s_key] = 'Segment '.($s_key + 1);
+                            }
                             $score = $this->getScore($records[$s_key], $legend['name'], $prime);
-                            $series_data[] = ['x' => ($s_key + 1), 'y' => $score];
+                            $series_data[] = ['y' => $score];
                         }
                         $series[] = [
                             'name' => $legend['name'].'_'.$prime,
@@ -68,6 +71,7 @@ class ChartController extends Controller
                 }
                 $chart->update([
                     'series' => $series,
+                    'categories' => $categories,
                     'title' => $office->name
                 ]);
             // }
