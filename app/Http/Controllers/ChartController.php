@@ -71,11 +71,12 @@ class ChartController extends Controller
                 $chart->update([
                     'series' => $series,
                     'categories' => $categories,
-                    'title' => $office->name
+                    'title' => $office->name,
+                    'office_type' => $office->type
                 ]);
             // }
 
-            $data[] = $chart->only(['id', 'title', 'series', 'categories']);
+            $data[] = $chart->only(['id', 'title', 'series', 'categories', 'office_type']);
         }
         return response()->json($data[0]);
     }
