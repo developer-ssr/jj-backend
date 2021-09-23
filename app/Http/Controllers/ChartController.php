@@ -53,7 +53,7 @@ class ChartController extends Controller
                         foreach ($filter->data['segments'] as $s_key => $segment) {
                             if (!isset($records[$s_key])) {
                                 $records[$s_key] = Record::whereBetween('created_at', [date($segment['from']), date($segment['to'])])
-                                                        ->where($filter->type === 'office' ? 'meta->office' : 'country', $office->address)
+                                                        ->where($office->type === 'office' ? 'meta->office' : 'country', $office->address)
                                                         ->get();
                             }
                             if (!isset($categories[$s_key])) {
