@@ -76,7 +76,7 @@ class ChartController extends Controller
                 ]);
             // }
 
-            $data[] = $chart->only(['id', 'title', 'series']);
+            $data[] = $chart->only(['id', 'title', 'series', 'categories']);
         }
         return response()->json($data[0]);
     }
