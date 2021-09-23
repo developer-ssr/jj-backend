@@ -12,7 +12,7 @@ class RecordController extends Controller
 
     public function complete(Request $request)
     {
-        $http = Http::get($this->act_api . "survey_id=244&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=242&id={$request->id}");
         $data = [
             't3' => json_decode($http->body(), true)
         ];
@@ -31,7 +31,7 @@ class RecordController extends Controller
 
         $http = Http::get($this->act_api . "survey_id=247&id={$request->id}");
         $data['t10'] = json_decode($http->body(), true);
-        
+
         $data['t6'] = $request->c1;
         $data['t7'] = $request->c2;
 
