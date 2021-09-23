@@ -174,7 +174,7 @@ class ChartController extends Controller
                     $points[$t_key] = 0;
                 } */
                 if ($tmp['selected']) {
-                    $points+=$prime;
+                    $points+=($t_key + 1);
                 }
             }
         }
