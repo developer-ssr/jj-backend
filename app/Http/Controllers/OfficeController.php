@@ -10,7 +10,7 @@ class OfficeController extends Controller
 {
     public function addresses()
     {
-        return Record::all()->pluck('meta')->map(fn ($v) => $v['office'])->toArray();
+        return Record::all()->pluck('meta')->map(fn ($v) => $v['office'])->unique()->toArray();
     }
 
     public function index()
