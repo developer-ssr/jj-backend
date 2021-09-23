@@ -165,7 +165,7 @@ class ChartController extends Controller
         $max_value = 0;
         $points = 0;
         foreach ($records as $record) {
-            $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime)['data'];
+            $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime + 1)['data'];
             if ($max_value == 0) {
                 $max_value = count($records) * count($tmp_data);
             }
