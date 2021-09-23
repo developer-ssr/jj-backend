@@ -22,16 +22,39 @@ class FilterController extends Controller
                 "Product ordering",
                 "The Clinical Sales Consultant: Johnson & Johnson Vision Myopia Subject Matter Expert",
                 "Helping me provide personalized care to my myopia management patients",
+                "Abiliti Overnight therapeutic lens",
+                "Abiliti New Wearer Kit",
+                "On-line tools/programs that help me train myself and/or my staff",
+                "In Person tools/programs that help me train myself and/or my staff",
+                "Tools/programs that educate me on the disease (myopia) and the product science",
+                "Patient brochure(s) that educate the parent on the condition (myopia)",
+                "Patient brochure(s) that educate the parent on the brand (Abiliti)",
+                "Master Your Abiliti Training Program",
+                "Share Your Abiliti donation with patient purchase to Sight for Kids",
+                "Turnaround time from product ordering to delivery",
+                "Software’s accuracy in getting the right product for patient from 1st order"
+            ],
+            "t4" => [
+                "Customer service",
+                "HealthCaring Conversations – The ISIGHT Model",
+                "Training on the fitting process",
+                "Fitting guides",
+                "FitAbiliti fitting Software",
+                "The SeeAbiliti App",
+                "Product ordering",
+                "The Clinical Sales Consultant: Johnson & Johnson Vision Myopia Subject Matter Expert",
+                "Helping me provide personalized care to my myopia management patients",
                 "Abiliti Overnight Therapeutic lens",
                 "Abiliti New Wearer Kit",
-                "Tools/programs that help me train myself and/or my staff",
+                "On-line tools/programs that help me train myself and/or my staff",
+                "In Person tools/programs that help me train myself and/or my staff",
                 "Tools/programs that educate me on the disease (myopia) and the product science",
                 "Patient brochure(s) that educate the parent on the condition (myopia)",
                 "Patient brochure(s) that educate the parent on the brand (Abiliti)",
                 "Master Your Abiliti Training Program",
                 "Share Your Abiliti donation with patient purchase to Sight for Kids"
             ],
-            "t4" => [
+            "t5" => [
                 "MiSight",
                 "naturalVue",
                 "Paragon CRT",
@@ -40,13 +63,13 @@ class FilterController extends Controller
                 "MOONLENS",
                 'Wave NighLens',
             ],
-            "t5" => [
+            "t6" => [
                 "Abiliti HealthCaring Conversations, ISIGHT Model, provides me with usable strategies for engaging in high quality conversations with my patients."
             ],
-            "t6" => [
+            "t7" => [
                 "For your patients between 5-18 years of age, please estimate the percent of parents/patients you approach to discuss myopia management as a treatment option during the first visit."
             ],
-            "t7" => [
+            "t8" => [
                 "Assess parents’ values and motivations for their child before providing myopia management recommendations.",
                 "Assess a child’s current eye health in relation to their existing treatments, behaviors, and challenges they’re experiencing.",
                 "Discuss the child’s eye health and eye care practices using easy to understand terms.",
@@ -62,7 +85,7 @@ class FilterController extends Controller
                 "Provide the parent/child with relevant feedback and support during myopia treatment.",
                 "Follow up with the parent/child throughout their myopia management plan."
             ],
-            "t8" => [
+            "t9" => [
                 "The long-term risk of potential visual impairment due to a variety of eye diseases (i.e. retinal detachment, macular degeneration)",
                 "That these eye diseases present later in life (myopia is a silent epidemic)",
                 "That myopia is chronic",
@@ -83,7 +106,7 @@ class FilterController extends Controller
                 "Use the word “prescribe” when talking about the treatment option (i.e. I am “prescribing” product “X” to treat your child’s myopia)",
                 "Use the word “recommend” when talking about the treatment option (i.e. I am “recommending” product “X” to treat your child’s myopia)"
             ],
-            "t9" => [
+            "t10" => [
                 "The Healthcaring™Conversations Conversation Starter: filled out by the parent before entering the appointment room with the ECP. ​It identifies what matters to the parent and why; connects their values to treatment decisions and behaviors.​",
                 "The patient myopia action plan:  helps providers and staff layout a plan (behavioral and treatment goals/plan) for the parent and child to follow when they leave the office.",
                 "SeeAbiliti App: gives parents tools and resources to monitor child’s activity (outdoor time), follow the treatment plan, and manage upcoming appts with ECPs.",

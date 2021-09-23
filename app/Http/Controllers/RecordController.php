@@ -12,24 +12,28 @@ class RecordController extends Controller
 
     public function complete(Request $request)
     {
-        $http = Http::get($this->act_api . "survey_id=243&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=244&id={$request->id}");
         $data = [
             't3' => json_decode($http->body(), true)
         ];
         
-        $http = Http::get($this->act_api . "survey_id=244&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=243&id={$request->id}");
         $data['t4'] = json_decode($http->body(), true);
 
-        $http = Http::get($this->act_api . "survey_id=245&id={$request->id}");
-        $data['t7'] = json_decode($http->body(), true);
+        $http = Http::get($this->act_api . "survey_id=244&id={$request->id}");
+        $data['t5'] = json_decode($http->body(), true);
 
-        $http = Http::get($this->act_api . "survey_id=246&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=245&id={$request->id}");
         $data['t8'] = json_decode($http->body(), true);
 
-        $http = Http::get($this->act_api . "survey_id=247&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=246&id={$request->id}");
         $data['t9'] = json_decode($http->body(), true);
-        $data['t5'] = $request->c1;
-        $data['t6'] = $request->c2;
+
+        $http = Http::get($this->act_api . "survey_id=247&id={$request->id}");
+        $data['t10'] = json_decode($http->body(), true);
+        
+        $data['t6'] = $request->c1;
+        $data['t7'] = $request->c2;
 
         $record = Record::create([
             'participant_id' => $request->id,
