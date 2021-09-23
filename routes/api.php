@@ -43,7 +43,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::prefix('filters')->group(function () {
         Route::get('/items', [FilterController::class, 'primes']);
-        Route::get('/', [FilterController::class, 'index']);
+        Route::get('/{office}', [FilterController::class, 'index']);
         Route::post('/store', [FilterController::class, 'store']);
         Route::put('/{filter}', [FilterController::class, 'update']);
         Route::delete('/{filter}', [FilterController::class, 'destroy']);
