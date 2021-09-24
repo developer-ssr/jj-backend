@@ -135,7 +135,8 @@ class FilterController extends Controller
         $filter = Filter::create([
             'name' => $request->name,
             'data' => $request->data,
-            'office_id' => $request->office_id
+            'office_id' => $request->office_id,
+            'user_id' => $request->user()->id
         ]);
         return response()->json($filter);
     }
