@@ -39,11 +39,13 @@ class OfficeController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'address' => 'required'
+            'address' => 'required',
+            'type' => 'required'
         ]);
         $office->update([
             'name' => $request->name,
-            'address' => $request->address
+            'address' => $request->address,
+            'type' => $request->type
         ]);
         return response()->json($office);
     }
