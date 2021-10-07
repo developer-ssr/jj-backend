@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -47,6 +48,10 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('/store', [FilterController::class, 'store']);
         Route::put('/{filter}', [FilterController::class, 'update']);
         Route::delete('/{filter}', [FilterController::class, 'destroy']);
+    });
+
+    Route::prefix('emails')->group(function() {
+        Route::post('/store', [EmailController::class, 'store']);
     });
 });
 
