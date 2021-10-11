@@ -3,6 +3,7 @@
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,12 +19,13 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    // return Inertia::render('Welcome', [
+    //     'canLogin' => Route::has('login'),
+    //     'canRegister' => Route::has('register'),
+    //     'laravelVersion' => Application::VERSION,
+    //     'phpVersion' => PHP_VERSION,
+    // ]);
+    return redirect('http://jnj.splitsecondsurveys.co.uk/#/dashboard');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -36,5 +38,6 @@ Route::get('/complete', [RecordController::class, 'complete']);
 Route::get('test2', function() {
     $string = '{"segments":[{"from":"2021-09-1 10:08:01","to":"2021-09-17 10:47:08"},{"from":"2021-09-17 10:08:01","to":"2021-09-24 10:47:08"},{"from":"2021-10-1 10:08:01","to":"2021-10-17 10:47:08"}],"legends":[{"name":"t3","primes":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]}]}';
     $filter = json_decode($string, true);
-    dd($filter);
+    $date = Carbon::parse("2021-09-23 08:53:10")->format("dmy-Hi");
+    dd($date);
 });

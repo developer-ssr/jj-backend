@@ -12,4 +12,9 @@ class Office extends Model
     use SoftDeletes;
 
     protected $guarded = [];
+
+    public function getLinkAttribute()
+    {
+        
+    }
 }
