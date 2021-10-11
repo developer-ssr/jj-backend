@@ -245,7 +245,7 @@ class ChartController extends Controller
             }
         }
         foreach ($percentage as $percent) {
-            $percent['value'] = ceil($percent['count'] / $tcount);
+            $percent['value'] = $tcount > 0 ? ceil($percent['count'] / $tcount) : 0;
         }
         $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
         return [
