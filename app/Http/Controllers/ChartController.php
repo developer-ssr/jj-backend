@@ -195,6 +195,7 @@ class ChartController extends Controller
             ]
         ];
         $tcount = count($records);
+        $tmp_data = [];
         foreach ($records as $record) {
             $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime);
             if ($max_value == 0) {
@@ -244,13 +245,17 @@ class ChartController extends Controller
                 }
             }
         }
-        foreach ($percentage as $percent) {
-            $percent['value'] = $tcount > 0 ? ceil($percent['count'] / $tcount) : 0;
+        
+        if ($tcount > 0) {
+            foreach ($percentage as $percent) {
+                $percent['value'] = ceil($percent['count'] / $tcount);
+            }
         }
+        
         $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
         return [
             'gscore' => ceil($score),
-            'prime' => $tmp_data['prime'],
+            'prime' => $tmp_data['prime'] ?? null,
             'percentage' => $percentage
         ];
     }
