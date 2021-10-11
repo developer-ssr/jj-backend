@@ -7,6 +7,7 @@ use App\Models\Office;
 use App\Models\Chart;
 use App\Models\Record;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class ChartController extends Controller
@@ -49,6 +50,7 @@ class ChartController extends Controller
                 $categories = [];
                 foreach ($filter->data['legends'] as $legend) {
                     foreach ($legend['primes'] as $prime) {
+                        $code = Str::of($legend['name'].'_'. $prime)->ucfirst();
                         $series_data = [];
                         foreach ($filter->data['segments'] as $s_key => $segment) {
                             if (!isset($records[$s_key])) {
@@ -60,10 +62,19 @@ class ChartController extends Controller
                                 $categories[$s_key] = 'Segment '.($s_key + 1);
                             }
                             $score = $this->getScore($records[$s_key], $legend['name'], $prime);
-                            $series_data[] = ['y' => $score];
+                            $series_data[] = [
+                                'question' => 'How likely would you be to recommend the following to your patients and their parents?',
+                                'code' => $code,
+                                'prime' => $score['prime'],
+                                'segment' => ($s_key + 1),
+                                'date' => $segment['to'],
+                                'tcount' => count($records[$s_key]),
+                                'gscore' => $score['gscore'],
+                                'percentage' => $score['percentage']
+                            ];
                         }
                         $series[] = [
-                            'name' => $legend['name'].'_'. $prime,
+                            'name' => $code,
                             'data' => $series_data
                         ];
                     }
@@ -161,25 +172,87 @@ class ChartController extends Controller
 
     public function getScore($records, $legend, $prime)
     {
-        $data = [];
         $max_value = 0;
         $points = 0;
+        $percentage = [
+            'red' => [
+                'colour' => 'red',
+                'value' => 0,
+                'count' => 0,
+                'name' => 'Red Box %'
+            ],
+            'orange' => [
+                'colour' => 'orange',
+                'value' => 0,
+                'count' => 0,
+                'name' => 'Green Box %'
+            ],
+            'green' => [
+                'colour' => 'green',
+                'value' => 0,
+                'count' => 0,
+                'name' => 'Green Box %'
+            ]
+        ];
+        $tcount = count($records);
         foreach ($records as $record) {
-            $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime)['data'];
+            $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime);
             if ($max_value == 0) {
-                $max_value = count($records) * count($tmp_data);
+                $max_value = $tcount * count($tmp_data['data']);
             }
-            foreach ($tmp_data as $t_key => $tmp) {
+            foreach ($tmp_data['data'] as $t_key => $tmp) {
                 /* if (!isset($points[$t_key])) {
                     $points[$t_key] = 0;
                 } */
                 if ($tmp['selected']) {
                     $points+=($t_key + 1);
+
+                    switch ($legend) {
+                        case 't3':
+                        case 't5':
+                        case 't8':
+                            if ($t_key <= 1) {
+                                $percentage['red']['count'] += 1;
+                            }elseif ($t_key == 2) {
+                                $percentage['orange']['count'] += 1;
+                            }else  {
+                                $percentage['green']['count'] += 1;
+                            }
+                            break;
+                        case 't4':
+                        case 't9':
+                            if ($t_key == 0) {
+                                $percentage['red']['count'] += 1;
+                            }else  {
+                                $percentage['green']['count'] += 1;
+                            }
+                            unset($percentage['orange']);
+                            break;
+                        case 't10':
+                            if ($t_key == 0) {
+                                $percentage['red']['count'] += 1;
+                            }elseif ($t_key == 3) {
+                                $percentage['green']['count'] += 1;
+                            }else  {
+                                $percentage['orange']['count'] += 1;
+                            }
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
                 }
             }
         }
-
+        foreach ($percentage as $percent) {
+            $percent['value'] = ceil($percent['count'] / $tcount);
+        }
+        $percentage['red']['value'] = 
         $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
-        return ceil($score);
+        return [
+            'gscore' => ceil($score),
+            'prime' => $tmp_data['prime'],
+            'percentage' => $percentage
+        ];
     }
 }
