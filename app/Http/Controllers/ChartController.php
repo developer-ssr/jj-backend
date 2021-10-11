@@ -247,7 +247,6 @@ class ChartController extends Controller
         foreach ($percentage as $percent) {
             $percent['value'] = ceil($percent['count'] / $tcount);
         }
-        $percentage['red']['value'] = 
         $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
         return [
             'gscore' => ceil($score),
