@@ -257,8 +257,9 @@ class ChartController extends Controller
         }
         
         if ($tcount > 0) {
-            foreach ($percentage as $percent) {
-                $percent['value'] = ceil($percent['count'] / $tcount);
+            foreach ($percentage as $key =>  $percent) {
+                $percentage[$key]['value'] = ceil($percent['count'] / $tcount);
+                // $percent['value'] = ceil($percent['count'] / $tcount);
             }
         }
         
