@@ -23,14 +23,16 @@ class OfficeController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'address' => 'required',
-            'type' => 'required'
+            'email' => 'nullable',
+            'type' => 'required',
+            'code' => 'required'
         ]);
         $office = Office::create([
             'name' => $request->name,
-            'address' => $request->address,
+            'email' => $request->email,
             'user_id' => 1,
-            'type' => strtolower($request->type)
+            'type' => strtolower($request->type),
+            'code' => $request->code
         ]);
         return response()->json($office);
     }
