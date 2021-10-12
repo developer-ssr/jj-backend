@@ -30,7 +30,7 @@ class ChartController extends Controller
             return response('No data', 500);
         }
         
-        $links = Link::where('office_id', $office->id)->first();
+        $links = Link::where('office_id', $office->id)->get();
         // $filters = Filter::all();
         $data = [];
         
