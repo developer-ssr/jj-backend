@@ -16,4 +16,11 @@ class Filter extends Model
     protected $casts = [
         'data' => 'array'
     ];
+
+    protected $with = ['office'];
+
+    public function office()
+    {
+        return $this->belongsTo(Office::class);
+    }
 }
