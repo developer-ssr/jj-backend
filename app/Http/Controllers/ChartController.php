@@ -62,10 +62,10 @@ class ChartController extends Controller
                                 }
                                 $tcount = count($records[$s_key]);
                                 if (!isset($categories[$s_key])) {
-                                    $categories[$s_key] = $segments['from']->format("d F Y");//'Segment '.($segment + 1);
+                                    $categories[$s_key] = $segments['from'];//'Segment '.($segment + 1);
                                 }
                                 $score = $this->getScore($records[$s_key], $legend['name'], $prime);
-                                $date = $segments['from']->format("d F Y");
+                                $date = $segments['from'];
                                 $series_data[] = [
                                     'question' => 'How likely would you be to recommend the following to your patients and their parents?',
                                     'code' => $code,
