@@ -19,6 +19,11 @@ class OfficeController extends Controller
         return response()->json($offices);
     }
 
+    public function show(Office $office)
+    {
+        return response()->json($office);
+    }
+
     public function store(Request $request)
     {
         $request->validate([

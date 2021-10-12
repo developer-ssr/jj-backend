@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::prefix('offices')->group(function () {
         Route::get('/', [OfficeController::class, 'index']);
         Route::get('/addresses', [OfficeController::class, 'addresses']);
+        Route::get('{office}', [OfficeController::class, 'show']);
         Route::post('/store', [OfficeController::class, 'store']);
         Route::put('{office}', [OfficeController::class, 'update']);
         Route::delete('/{office}', [OfficeController::class, 'destroy']);

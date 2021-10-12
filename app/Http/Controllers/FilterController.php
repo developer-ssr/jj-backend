@@ -125,6 +125,7 @@ class FilterController extends Controller
         return response()->json($filters);
     }
 
+
     public function store(Request $request)
     {
         $request->validate([
