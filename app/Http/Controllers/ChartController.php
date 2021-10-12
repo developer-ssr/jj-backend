@@ -69,7 +69,7 @@ class ChartController extends Controller
                                     $categories[$segment] = 'Segment '.($segment + 1);
                                 }
                                 $score = $this->getScore($records[$s_key], $legend['name'], $prime);
-                                $date = $link->created_at;
+                                $date = $link->created_at->format("d F Y");
                                 $series_data[] = [
                                     'question' => 'How likely would you be to recommend the following to your patients and their parents?',
                                     'code' => $code,
