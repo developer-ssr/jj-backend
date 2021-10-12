@@ -6,6 +6,7 @@ use App\Models\Filter;
 use App\Models\Office;
 use App\Models\Chart;
 use App\Models\Record;
+use App\Models\Link;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class ChartController extends Controller
             return response('No data', 500);
         }
         
-        
+        $links = Link::where('office_id', $office->id)->first();
         // $filters = Filter::all();
         $data = [];
         
@@ -46,32 +47,41 @@ class ChartController extends Controller
 
             // if ($request->update_series == true) {
                 $series = [];
-                $records = [];//Record::all();
+                // $records = [];//Record::all();
                 $categories = [];
                 foreach ($filter->data['legends'] as $legend) {
                     foreach ($legend['primes'] as $prime) {
                         $code = Str::of($legend['name'].'_'. $prime)->ucfirst();
                         $series_data = [];
-                        foreach ($filter->data['segments'] as $s_key => $segment) {
-                            if (!isset($records[$s_key])) {
+                        $records = [];
+                        $segment = 0;
+                        foreach ($links as $s_key => $link) {
+                            $records[$s_key] = Record::where('participant_id', $link->link_id)->get();                            
+                        // foreach ($filter->data['segments'] as $s_key => $segment) {
+                            /* if (!isset($records[$s_key])) {
                                 $records[$s_key] = Record::whereBetween('created_at', [date($segment['from']), date($segment['to'])])
                                                         ->where($office->type === 'office' ? 'meta->office' : 'country', $office->address)
                                                         ->get();
+                            } */
+                            $tcount = count($records[$s_key]);
+                            if ($tcount > 0) {
+                                if (!isset($categories[$segment])) {
+                                    $categories[$segment] = 'Segment '.($segment + 1);
+                                }
+                                $score = $this->getScore($records[$s_key], $legend['name'], $prime);
+                                $date = $link->created_at;
+                                $series_data[] = [
+                                    'question' => 'How likely would you be to recommend the following to your patients and their parents?',
+                                    'code' => $code,
+                                    'prime' => $score['prime'],
+                                    'segment' => ($segment + 1),
+                                    'date' => $date,
+                                    'tcount' => $tcount,
+                                    'gscore' => $score['gscore'],
+                                    'percentage' => $score['percentage']
+                                ];
+                                $segment++;
                             }
-                            if (!isset($categories[$s_key])) {
-                                $categories[$s_key] = 'Segment '.($s_key + 1);
-                            }
-                            $score = $this->getScore($records[$s_key], $legend['name'], $prime);
-                            $series_data[] = [
-                                'question' => 'How likely would you be to recommend the following to your patients and their parents?',
-                                'code' => $code,
-                                'prime' => $score['prime'],
-                                'segment' => ($s_key + 1),
-                                'date' => $segment['to'],
-                                'tcount' => count($records[$s_key]),
-                                'gscore' => $score['gscore'],
-                                'percentage' => $score['percentage']
-                            ];
                         }
                         $series[] = [
                             'name' => $code,
@@ -185,7 +195,7 @@ class ChartController extends Controller
                 'colour' => 'orange',
                 'value' => 0,
                 'count' => 0,
-                'name' => 'Green Box %'
+                'name' => 'Amber Box %'
             ],
             'green' => [
                 'colour' => 'green',
