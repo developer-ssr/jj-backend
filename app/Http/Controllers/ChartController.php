@@ -55,34 +55,54 @@ class ChartController extends Controller
                         $series_data = [];
                         $records = [];
                         $segment = 0;
-                        foreach ($links as $s_key => $link) {
-                            $records[$s_key] = Record::where('participant_id', $link->link_id)->get();                            
-                        // foreach ($filter->data['segments'] as $s_key => $segment) {
-                            /* if (!isset($records[$s_key])) {
-                                $records[$s_key] = Record::whereBetween('created_at', [date($segment['from']), date($segment['to'])])
-                                                        ->where($office->type === 'office' ? 'meta->office' : 'country', $office->address)
-                                                        ->get();
-                            } */
-                            $tcount = count($records[$s_key]);
-                            if ($tcount > 0) {
-                                if (!isset($categories[$segment])) {
-                                    $categories[$segment] = 'Segment '.($segment + 1);
+                        if ($office->type == 'country') {
+                            foreach ($filter->data['segments'] as $s_key => $segments):
+                                if (!isset($records[$s_key])) {
+                                    $records[$s_key] = Record::whereBetween('created_at', [date($segments['from']), date($segments['to'])])->get();
+                                }
+                                $tcount = count($records[$s_key]);
+                                if (!isset($categories[$s_key])) {
+                                    $categories[$s_key] = date($segments['from']);//'Segment '.($segment + 1);
                                 }
                                 $score = $this->getScore($records[$s_key], $legend['name'], $prime);
-                                $date = $link->created_at->format("d F Y");
+                                $date = date($segments['from']);
                                 $series_data[] = [
                                     'question' => 'How likely would you be to recommend the following to your patients and their parents?',
                                     'code' => $code,
                                     'prime' => $score['prime'],
-                                    'segment' => ($segment + 1),
+                                    'segment' => ($s_key + 1),
                                     'date' => $date,
                                     'tcount' => $tcount,
                                     'gscore' => $score['gscore'],
                                     'percentage' => $score['percentage']
                                 ];
                                 $segment++;
+                            endforeach;
+                        }else {
+                            foreach ($links as $s_key => $link) {
+                                $records[$s_key] = Record::where('participant_id', $link->link_id)->get();  
+                                $tcount = count($records[$s_key]);
+                                if ($tcount > 0) {
+                                    if (!isset($categories[$segment])) {
+                                        $categories[$segment] = $records[$s_key][0]->created_at->format("d F Y");//'Segment '.($segment + 1);
+                                    }
+                                    $score = $this->getScore($records[$s_key], $legend['name'], $prime);
+                                    $date = $link->created_at->format("d F Y");
+                                    $series_data[] = [
+                                        'question' => 'How likely would you be to recommend the following to your patients and their parents?',
+                                        'code' => $code,
+                                        'prime' => $score['prime'],
+                                        'segment' => ($segment + 1),
+                                        'date' => $date,
+                                        'tcount' => $tcount,
+                                        'gscore' => $score['gscore'],
+                                        'percentage' => $score['percentage']
+                                    ];
+                                    $segment++;
+                                }
                             }
                         }
+                        
                         $series[] = [
                             'name' => $code,
                             'data' => $series_data
@@ -257,8 +277,9 @@ class ChartController extends Controller
         }
         
         if ($tcount > 0) {
-            foreach ($percentage as $percent) {
-                $percent['value'] = ceil($percent['count'] / $tcount);
+            foreach ($percentage as $key =>  $percent) {
+                $percentage[$key]['value'] = ceil(($percent['count'] / $tcount) * 100);
+                // $percent['value'] = ceil($percent['count'] / $tcount);
             }
         }
         
