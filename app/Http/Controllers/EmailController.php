@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Email;
+
+use App\Mail\JnJMail;
+
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -32,6 +36,9 @@ class EmailController extends Controller
             'path' =>  $path,
             'file' => $filename
         ]);
+
+        Mail::to($request->email)->send(new JnJMail($email));
+
         return response()->json($email);
     }
 }
