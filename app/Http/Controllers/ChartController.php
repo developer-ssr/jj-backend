@@ -65,11 +65,12 @@ class ChartController extends Controller
                                                                 ->get();
                                 }
                                 $tcount = count($records[$s_key]);
+                                $date = Carbon::parse($segments['from'])->format('d M Y');
                                 if (!isset($categories[$s_key])) {
-                                    $categories[$s_key] = Carbon::parse($segments['from'])->format('d m Y');//'Segment '.($segment + 1);
+                                    $categories[$s_key] = $date;//'Segment '.($segment + 1);
                                 }
                                 $score = $this->getScore($records[$s_key], $legend['name'], $prime);
-                                $date = Carbon::parse($segments['from'])->format('d m Y');
+                                
                                 $series_data[] = [
                                     'question' => 'How likely would you be to recommend the following to your patients and their parents?',
                                     'code' => $code,
@@ -88,10 +89,10 @@ class ChartController extends Controller
                                 $tcount = count($records[$s_key]);
                                 if ($tcount > 0) {
                                     if (!isset($categories[$segment])) {
-                                        $categories[$segment] = $records[$s_key][0]->created_at->format("d m Y");//'Segment '.($segment + 1);
+                                        $categories[$segment] = $records[$s_key][0]->created_at->format("d M Y");//'Segment '.($segment + 1);
                                     }
                                     $score = $this->getScore($records[$s_key], $legend['name'], $prime);
-                                    $date = $link->created_at->format("d m Y");
+                                    $date = $link->created_at->format("d M Y");
                                     $series_data[] = [
                                         'question' => 'How likely would you be to recommend the following to your patients and their parents?',
                                         'code' => $code,
