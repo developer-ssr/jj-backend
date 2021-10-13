@@ -27,7 +27,7 @@ class Link extends Model
         'updated_at' => 'datetime'
     ];
 
-    protected $timestamps = false;
+    public $timestamps = false;
 
     protected $with = ['office'];
 
