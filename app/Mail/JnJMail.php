@@ -30,6 +30,7 @@ class JnJMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.jnj');
+        $email = $this->email;
+        return $this->view('emails.jnj')->subject($email->subject);
     }
 }

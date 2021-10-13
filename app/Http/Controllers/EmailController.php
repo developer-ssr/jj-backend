@@ -36,7 +36,7 @@ class EmailController extends Controller
             'path' =>  $path,
             'file' => $filename
         ]);
-
+        $email->subject = $request->subject;
         Mail::to($request->email)->send(new JnJMail($email));
 
         return response()->json($email);
