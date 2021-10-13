@@ -10,6 +10,7 @@ use App\Models\Link;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ChartController extends Controller
 {
@@ -68,7 +69,7 @@ class ChartController extends Controller
                                     $categories[$s_key] = date($segments['from']);//'Segment '.($segment + 1);
                                 }
                                 $score = $this->getScore($records[$s_key], $legend['name'], $prime);
-                                $date = date($segments['from']);
+                                $date = Carbon::parse($segments['from'])->format('d m Y');
                                 $series_data[] = [
                                     'question' => 'How likely would you be to recommend the following to your patients and their parents?',
                                     'code' => $code,
@@ -90,7 +91,7 @@ class ChartController extends Controller
                                         $categories[$segment] = $records[$s_key][0]->created_at->format("d F Y");//'Segment '.($segment + 1);
                                     }
                                     $score = $this->getScore($records[$s_key], $legend['name'], $prime);
-                                    $date = $link->created_at->format("d F Y");
+                                    $date = $link->created_at->format("d m Y");
                                     $series_data[] = [
                                         'question' => 'How likely would you be to recommend the following to your patients and their parents?',
                                         'code' => $code,
