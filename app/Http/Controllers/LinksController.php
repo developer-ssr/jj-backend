@@ -22,8 +22,8 @@ class LinksController extends Controller
             'office_id' => $office->id,
             'country_code' => $office->code,
             'uid' => random_int(10000000, 99999999),
-            'created_at' => now()->addMonth(),
-            'updated_at' => now()->addMonth()
+            // 'created_at' => now()->addMonth(),
+            // 'updated_at' => now()->addMonth()
         ]);
         return response()->json(Link::find($l->id));
     }

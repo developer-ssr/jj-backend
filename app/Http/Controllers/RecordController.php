@@ -45,8 +45,8 @@ class RecordController extends Controller
                 'query' => $request->all(),
                 'office' => $request->b2_3
             ],
-            'created_at' => now()->addMonth(),
-            'updated_at' => now()->addMonth()
+            // 'created_at' => now()->addMonth(),
+            // 'updated_at' => now()->addMonth()
         ]);
         return redirect('https://fluent.splitsecondsurveys.co.uk/engine/complete/V3n?' . http_build_query($request->all()));
     }
