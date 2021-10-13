@@ -22,6 +22,13 @@ class Link extends Model
         'link_id'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
+    protected $timestamps = false;
+
     protected $with = ['office'];
 
     public function office()
@@ -36,6 +43,7 @@ class Link extends Model
 
     public function getLinkIdAttribute()
     {
+        
         $codes = [
             840 => 'US',
             702 => 'SG',

@@ -21,7 +21,9 @@ class LinksController extends Controller
         $l = Link::create([
             'office_id' => $office->id,
             'country_code' => $office->code,
-            'uid' => random_int(10000000, 99999999)
+            'uid' => random_int(10000000, 99999999),
+            'created_at' => now()->addDays(5),
+            'updated_at' => now()->addDays(5)
         ]);
         return response()->json(Link::find($l->id));
     }

@@ -12,8 +12,12 @@ class Record extends Model
 
     protected $casts = [
         'data' => 'array',
-        'meta' => 'array'
+        'meta' => 'array',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
     ];
+
+    protected $timestamps = false;
 
     protected $guarded = [];
 }
