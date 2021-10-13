@@ -58,7 +58,10 @@ class ChartController extends Controller
                         if ($office->type == 'country') {
                             foreach ($filter->data['segments'] as $s_key => $segments):
                                 if (!isset($records[$s_key])) {
-                                    $records[$s_key] = Record::whereBetween('created_at', [date($segments['from']), date($segments['to'])])->get();
+                                    //$records[$s_key] = Record::whereBetween('created_at', [date($segments['from']), date($segments['to'])])->get();
+                                    $records[$s_key] = Record::where('created_at', ">=", date($segments['from']))
+                                                                ->where('created_at', "<=", $data($segments['to']))
+                                                                ->get();
                                 }
                                 $tcount = count($records[$s_key]);
                                 if (!isset($categories[$s_key])) {
