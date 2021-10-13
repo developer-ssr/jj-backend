@@ -60,7 +60,7 @@ class ChartController extends Controller
                                 if (!isset($records[$s_key])) {
                                     //$records[$s_key] = Record::whereBetween('created_at', [date($segments['from']), date($segments['to'])])->get();
                                     $records[$s_key] = Record::where('created_at', ">=", date($segments['from']))
-                                                                ->where('created_at', "<=", $data($segments['to']))
+                                                                ->where('created_at', "<=", date($segments['to']))
                                                                 ->get();
                                 }
                                 $tcount = count($records[$s_key]);
