@@ -12,7 +12,7 @@ class JnJMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $email;
+    public  $email;
     /**
      * Create a new message instance.
      *
