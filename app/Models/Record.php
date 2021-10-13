@@ -17,7 +17,7 @@ class Record extends Model
         'updated_at' => 'datetime'
     ];
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $guarded = [];
 }
