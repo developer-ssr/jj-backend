@@ -11,6 +11,7 @@ use App\Models\Link;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class ChartController extends Controller
 {
@@ -24,8 +25,14 @@ class ChartController extends Controller
         $office = Office::find($request->office_id);
         if ($request->has('filter_ids')) {
             $filters = Filter::whereIn('id', json_decode($request->filter_ids, true))->get();
+            Cache::put($office->id, $filters->pluck('id')->toArray());
         } else {
-            $filters = Filter::where('office_id', $request->office_id)->orderBy('id', 'desc')->limit(1)->get();
+            if (Cache::has($office->id)) {
+                $filters = Filter::where('office_id', $request->office_id)->whereIn('id', Cache::get($office->id))->get();
+            } else {
+                $filters = Filter::where('office_id', $request->office_id)->orderBy('id', 'desc')->limit(1)->get();
+            }
+            
         }
         if ($filters->isEmpty()) {
             return response('No data', 500);
