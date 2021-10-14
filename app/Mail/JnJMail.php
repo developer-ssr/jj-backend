@@ -13,6 +13,7 @@ class JnJMail extends Mailable
     use Queueable, SerializesModels;
 
     public  $email;
+    public $attachment;
     /**
      * Create a new message instance.
      *
@@ -31,6 +32,8 @@ class JnJMail extends Mailable
     public function build()
     {
         $email = $this->email;
-        return $this->view('emails.jnj')->subject($email->subject);
+        return $this->view('emails.jnj')
+                    ->attachFromStorage($this->email->path)
+                    ->subject($email->subject);
     }
 }

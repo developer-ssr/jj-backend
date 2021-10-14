@@ -17,13 +17,13 @@ class EmailController extends Controller
     {
         $request->validate([
             'email' => 'required',
-            'attachment' => 'file|mimes:pdf,PDF',
+            'file' => 'file|mimes:pdf,PDF',
             'message' => 'nullable|string'
         ]);
         $filename = null;
         $path = null;
-        if ($request->hasFile('attachment')) {
-            $file = $request->file('attachment');
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
             $filename = $file->getClientOriginalName();
             $fileHash = $file->hashName();
             $path = Str::random(10) . "/{$fileHash}";
@@ -34,9 +34,9 @@ class EmailController extends Controller
             'message' => $request->message,
             'user_id' => $request->user()->id,
             'path' =>  $path,
-            'file' => $filename
+            'file' => $filename,
+            'subject' => $this->subject
         ]);
-        $email->subject = $request->subject;
         Mail::to($request->email)->send(new JnJMail($email));
 
         return response()->json($email);
