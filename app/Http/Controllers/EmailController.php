@@ -28,7 +28,7 @@ class EmailController extends Controller
             $fileHash = $file->hashName();
             $rand_string = Str::random(10);
             $path = $rand_string . "/{$fileHash}";
-            $file->store($path);
+            $file->store($rand_string);
         }
         $email = Email::create([
             'email' => $request->email,
