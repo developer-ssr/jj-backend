@@ -25,6 +25,9 @@ class LogSentEmail
      */
     public function handle($event)
     {
-        info($event->data);
+        $email = $event->data['email'];
+        $email->update([
+            'status' => 'sent'
+        ]);
     }
 }
