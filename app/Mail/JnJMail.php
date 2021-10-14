@@ -32,7 +32,7 @@ class JnJMail extends Mailable
     public function build()
     {
         $email = $this->email;
-        return $this->view('emails.jnj')
+        return $this->markdown('emails.jnj')
                     ->attachFromStorage($this->email->path)
                     ->subject($email->subject);
     }
