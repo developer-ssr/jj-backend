@@ -18,7 +18,8 @@ class EmailController extends Controller
         $request->validate([
             'email' => 'required',
             'file' => 'file|mimes:pdf,PDF',
-            'message' => 'nullable|string'
+            'message' => 'nullable|string',
+            'subject' => 'required'
         ]);
         $filename = null;
         $path = null;
