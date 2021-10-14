@@ -36,6 +36,9 @@ class NotifyEcp extends Mailable
                         'as' => $this->email->file,
                         'mime' => 'application/pdf'
                     ])
-                    ->subject($this->email->subject);
+                    ->subject($this->email->subject)
+                    ->with([
+                        'message' => $this->email->message
+                    ]);
     }
 }

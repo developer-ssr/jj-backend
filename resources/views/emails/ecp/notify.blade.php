@@ -1,6 +1,6 @@
 @component('mail::message')
 # Introduction
 
-{{ $email->message }}
+{{ $message }}
 
 @endcomponent
