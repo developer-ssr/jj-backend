@@ -23,9 +23,8 @@ class LogSentEmail
      * @param  object  $event
      * @return void
      */
-    public function handle($event, array $data)
+    public function handle($event)
     {
-        info($data);
-        //info($event);
+        info($event->email);
     }
 }
