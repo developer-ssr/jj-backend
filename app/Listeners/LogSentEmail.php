@@ -25,6 +25,6 @@ class LogSentEmail
      */
     public function handle($event)
     {
-        info($event->email);
+        info($event->data);
     }
 }
