@@ -35,7 +35,7 @@ class EmailController extends Controller
             'user_id' => $request->user()->id,
             'path' =>  $path,
             'file' => $filename,
-            'subject' => $this->subject
+            'subject' => $request->subject
         ]);
         Mail::to($request->email)->send(new JnJMail($email));
 
