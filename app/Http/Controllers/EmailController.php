@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Email;
 
 use App\Mail\JnJMail;
-
+use App\Mail\NotifyEcp;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -38,7 +38,7 @@ class EmailController extends Controller
             'file' => $filename,
             'subject' => $request->subject
         ]);
-        Mail::to($request->email)->send(new JnJMail($email));
+        Mail::to($request->email)->send(new NotifyEcp($email));
 
         return response()->json($email);
     }

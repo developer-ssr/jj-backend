@@ -8,11 +8,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class JnJMail extends Mailable
+class NotifyEcp extends Mailable
 {
     use Queueable, SerializesModels;
 
     public  $email;
+
     /**
      * Create a new message instance.
      *
@@ -30,9 +31,11 @@ class JnJMail extends Mailable
      */
     public function build()
     {
-        $email = $this->email;
-        return $this->markdown('emails.jnj')
-                    ->attachFromStorage($this->email->path)
-                    ->subject($email->subject);
+        return $this->markdown('emails.ecp.notify')
+                    ->attachFromStorage($this->email->path, [
+                        'as' => $this->email->file,
+                        'mime' => 'application/pdf'
+                    ])
+                    ->subject($this->email->subject);
     }
 }
