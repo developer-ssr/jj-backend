@@ -32,8 +32,7 @@ class NotifyEcp extends Mailable
     public function build()
     {
         return $this->markdown('emails.ecp.notify')
-                    ->attachFromStorage($this->email->path, [
-                        'as' => $this->email->file,
+                    ->attachFromStorage($this->email->path, $this->email->file, [
                         'mime' => 'application/pdf'
                     ])
                     ->subject($this->email->subject)
