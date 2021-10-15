@@ -61,10 +61,12 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('/{office}', [LinksController::class, 'store']);
         Route::delete('/{link}', [LinksController::class, 'destroy']);
     });
+
+    Route::prefix('charts')->group(function () {
+        Route::post('/', [ChartController::class, 'index']);
+    });
 });
 
 
-Route::prefix('charts')->group(function() {
-    Route::post('/', [ChartController::class, 'index']);
-});
+
 

@@ -13,9 +13,14 @@ class OfficeController extends Controller
         return Record::all()->pluck('meta')->map(fn ($v) => $v['office'])->unique()->toArray();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $offices = Office::all();
+        if ($request->user()->type === "user") {
+            $offices = Office::where('id', $request->user()->office_id)->get();
+        } else {
+            $offices = Office::all();
+        }
+        
         return response()->json($offices);
     }
 
