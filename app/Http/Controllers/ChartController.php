@@ -117,6 +117,7 @@ class ChartController extends Controller
                         
                         $series[] = [
                             'name' => $code,
+                            'question' => 'How likely would you be to recommend the following to your patients and their parents?',
                             'data' => $series_data
                         ];
                     }
