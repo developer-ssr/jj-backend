@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Cache;
 
 class ChartController extends Controller
 {
+    private $tops;
     /**
      * Display a listing of the resource.
      *
@@ -63,6 +64,16 @@ class ChartController extends Controller
                         $series_data = [];
                         $records = [];
                         $segment = 0;
+                        $this->tops = [
+                            "highest" => [
+                                "value" => 0,
+                                "colour" => 'green'
+                            ],
+                            "lowest" => [
+                                "value" => 100,
+                                "colour" => 'green'
+                            ]
+                        ];
                         if ($office->type == 'country') {
                             foreach ($filter->data['segments'] as $s_key => $segments):
                                 if (!isset($records[$s_key])) {
@@ -118,7 +129,8 @@ class ChartController extends Controller
                         $series[] = [
                             'name' => $code,
                             'question' => 'How likely would you be to recommend the following to your patients and their parents?',
-                            'data' => $series_data
+                            'data' => $series_data,
+                            'tops' => $this->tops
                         ];
                     }
                 }
@@ -293,6 +305,22 @@ class ChartController extends Controller
             foreach ($percentage as $key =>  $percent) {
                 $percentage[$key]['value'] = ceil(($percent['count'] / $tcount) * 100);
                 // $percent['value'] = ceil($percent['count'] / $tcount);
+                
+                /* if ($this->tops['highest']['value'] == 0 && $this->tops['lowest']['value'] == 0) {
+                    $this->tops['highest']['value'] = $percentage[$key]['value'];
+                    $this->tops['highest']['colour'] = $key;
+                    $this->tops['lowest']['value'] = $percentage[$key]['value'];
+                    $this->tops['lowest']['colour'] = $key;
+                } */
+
+                if ($percentage[$key]['value'] > $this->tops['highest']['value']) {
+                    $this->tops['highest']['value'] = $percentage[$key]['value'];
+                    $this->tops['highest']['colour'] = $key;
+                }
+                if ($percentage[$key]['value'] < $this->tops['lowest']['value']) {
+                    $this->tops['lowest']['value'] = $percentage[$key]['value'];
+                    $this->tops['lowest']['colour'] = $key;
+                }
             }
         }
         
