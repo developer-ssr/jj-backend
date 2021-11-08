@@ -70,7 +70,7 @@ class ChartController extends Controller
                                 "colour" => 'green'
                             ],
                             "lowest" => [
-                                "value" => 0,
+                                "value" => 100,
                                 "colour" => 'green'
                             ],
                             "colours" => [
