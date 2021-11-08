@@ -70,8 +70,13 @@ class ChartController extends Controller
                                 "colour" => 'green'
                             ],
                             "lowest" => [
-                                "value" => 100,
+                                "value" => 0,
                                 "colour" => 'green'
+                            ],
+                            "colours" => [
+                                "red" => 0,
+                                "orange" => 0,
+                                "green" => 0
                             ]
                         ];
                         if ($office->type == 'country') {
@@ -126,6 +131,16 @@ class ChartController extends Controller
                             }
                         }
                         
+                        foreach ($this->tops['colours'] as $colour => $top) {
+                            if ($top > $this->tops['highest']['value']) {
+                                $this->tops['highest']['value'] = $top;
+                                $this->tops['highest']['colour'] = $colour;
+                            }
+                            if ($top < $this->tops['lowest']['value']) {
+                                $this->tops['lowest']['value'] = $top;
+                                $this->tops['lowest']['colour'] = $colour;
+                            }
+                        }
                         $series[] = [
                             'name' => $code,
                             'question' => 'How likely would you be to recommend the following to your patients and their parents?',
@@ -305,21 +320,8 @@ class ChartController extends Controller
             foreach ($percentage as $key =>  $percent) {
                 $percentage[$key]['value'] = ceil(($percent['count'] / $tcount) * 100);
                 // $percent['value'] = ceil($percent['count'] / $tcount);
-                
-                /* if ($this->tops['highest']['value'] == 0 && $this->tops['lowest']['value'] == 0) {
-                    $this->tops['highest']['value'] = $percentage[$key]['value'];
-                    $this->tops['highest']['colour'] = $key;
-                    $this->tops['lowest']['value'] = $percentage[$key]['value'];
-                    $this->tops['lowest']['colour'] = $key;
-                } */
-
-                if ($percentage[$key]['value'] > $this->tops['highest']['value']) {
-                    $this->tops['highest']['value'] = $percentage[$key]['value'];
-                    $this->tops['highest']['colour'] = $key;
-                }
-                if ($percentage[$key]['value'] < $this->tops['lowest']['value']) {
-                    $this->tops['lowest']['value'] = $percentage[$key]['value'];
-                    $this->tops['lowest']['colour'] = $key;
+                if ($percentage[$key]['value'] > $this->tops['colours'][$key]) {
+                    $this->tops['colours'][$key] = $percentage[$key]['value'];
                 }
             }
         }
