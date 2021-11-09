@@ -123,7 +123,7 @@ class ChartController extends Controller
                         }
                         
                         foreach ($score['percentage'] as $colour =>  $percent) {
-                            if ($percent['vlue'] > $this->tops['highest']['value']) {
+                            if ($percent['vlue'] >= $this->tops['highest']['value']) {
                                 $this->tops['highest']['value'] = $percent['vlue'];
                                 $this->tops['highest']['colour'] = $colour;
                             }
@@ -238,11 +238,11 @@ class ChartController extends Controller
         $max_value = 0;
         $points = 0;
         $percentage = [
-            'red' => [
-                'colour' => 'red',
+            'green' => [
+                'colour' => 'green',
                 'value' => 0,
                 'count' => 0,
-                'name' => 'Red Box %'
+                'name' => 'Green Box %'
             ],
             'orange' => [
                 'colour' => 'orange',
@@ -250,12 +250,12 @@ class ChartController extends Controller
                 'count' => 0,
                 'name' => 'Amber Box %'
             ],
-            'green' => [
-                'colour' => 'green',
+            'red' => [
+                'colour' => 'red',
                 'value' => 0,
                 'count' => 0,
-                'name' => 'Green Box %'
-            ]
+                'name' => 'Red Box %'
+            ],
         ];
         $tcount = count($records);
         $tmp_data = [];
