@@ -134,6 +134,7 @@ class ChartController extends Controller
                                 $this->tops['highest']['colour'] = $colour;
                             }
                         } */
+                        $this->tops['segment'] = last($series_data);
                         $series[] = [
                             'name' => $code,
                             'question' => 'How likely would you be to recommend the following to your patients and their parents?',
