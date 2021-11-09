@@ -123,7 +123,7 @@ class ChartController extends Controller
                         }
                         
                         foreach ($score['percentage'] as $colour =>  $percent) {
-                            if ($percent['vlue'] >= $this->tops['highest']['value']) {
+                            if ($percent['value'] >= $this->tops['highest']['value']) {
                                 $this->tops['highest']['value'] = $percent['vlue'];
                                 $this->tops['highest']['colour'] = $colour;
                             }
