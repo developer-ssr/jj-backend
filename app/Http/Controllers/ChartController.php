@@ -262,49 +262,51 @@ class ChartController extends Controller
         $tmp_data = [];
         foreach ($records as $record) {
             $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime);
-            if ($max_value == 0) {
-                $max_value = $tcount * count($tmp_data['data']);
-            }
-            foreach ($tmp_data['data'] as $t_key => $tmp) {
-                /* if (!isset($points[$t_key])) {
-                    $points[$t_key] = 0;
-                } */
-                if ($tmp['selected']) {
-                    $points+=($t_key + 1);
-
-                    switch ($legend) {
-                        case 't3':
-                        case 't5':
-                        case 't8':
-                            if ($t_key <= 1) {
-                                $percentage['red']['count'] += 1;
-                            }elseif ($t_key == 2) {
-                                $percentage['orange']['count'] += 1;
-                            }else  {
-                                $percentage['green']['count'] += 1;
-                            }
-                            break;
-                        case 't4':
-                        case 't9':
-                            if ($t_key == 0) {
-                                $percentage['red']['count'] += 1;
-                            }else  {
-                                $percentage['green']['count'] += 1;
-                            }
-                            unset($percentage['orange']);
-                            break;
-                        case 't10':
-                            if ($t_key == 0) {
-                                $percentage['red']['count'] += 1;
-                            }elseif ($t_key == 3) {
-                                $percentage['green']['count'] += 1;
-                            }else  {
-                                $percentage['orange']['count'] += 1;
-                            }
-                            break;
-                        default:
-                            # code...
-                            break;
+            if ($tmp_data != null) {
+                if ($max_value == 0) {
+                    $max_value = $tcount * count($tmp_data['data']);
+                }
+                foreach ($tmp_data['data'] as $t_key => $tmp) {
+                    /* if (!isset($points[$t_key])) {
+                        $points[$t_key] = 0;
+                    } */
+                    if ($tmp['selected']) {
+                        $points+=($t_key + 1);
+    
+                        switch ($legend) {
+                            case 't3':
+                            case 't5':
+                            case 't8':
+                                if ($t_key <= 1) {
+                                    $percentage['red']['count'] += 1;
+                                }elseif ($t_key == 2) {
+                                    $percentage['orange']['count'] += 1;
+                                }else  {
+                                    $percentage['green']['count'] += 1;
+                                }
+                                break;
+                            case 't4':
+                            case 't9':
+                                if ($t_key == 0) {
+                                    $percentage['red']['count'] += 1;
+                                }else  {
+                                    $percentage['green']['count'] += 1;
+                                }
+                                unset($percentage['orange']);
+                                break;
+                            case 't10':
+                                if ($t_key == 0) {
+                                    $percentage['red']['count'] += 1;
+                                }elseif ($t_key == 3) {
+                                    $percentage['green']['count'] += 1;
+                                }else  {
+                                    $percentage['orange']['count'] += 1;
+                                }
+                                break;
+                            default:
+                                # code...
+                                break;
+                        }
                     }
                 }
             }
