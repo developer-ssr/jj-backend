@@ -6,6 +6,8 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\LinksController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ExportController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -64,6 +66,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::prefix('charts')->group(function () {
         Route::post('/', [ChartController::class, 'index']);
+        Route::get('/download/{what?}', [ExportController::class, 'download']);
     });
 });
 
