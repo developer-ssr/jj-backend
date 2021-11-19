@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\ExportController;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
