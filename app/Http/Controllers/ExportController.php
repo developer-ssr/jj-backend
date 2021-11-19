@@ -87,7 +87,7 @@ class ExportController extends Controller
         //
     }
 
-    public function download(Request $request) 
+    public function download(Request $request, $id, $all = 'all') 
     {
         /* $project = Project::whereCode($project_code)->first();
         $questionnaire = Questionnaire::whereCode($questionnaire_code)->first();
