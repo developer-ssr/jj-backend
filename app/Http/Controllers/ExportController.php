@@ -87,12 +87,14 @@ class ExportController extends Controller
         //
     }
 
-    public function download(Request $request, $id, $all = 'all') 
+    public function download(Request $request, $id, $summary) 
     {
         /* $project = Project::whereCode($project_code)->first();
         $questionnaire = Questionnaire::whereCode($questionnaire_code)->first();
         $to_export = Rcord::all(); */
-
+        $all = $request->all;
+        $legends = $request->legends;
+        
         return Excel::download(CsvExport::new([]), "download.csv");
     }
 }

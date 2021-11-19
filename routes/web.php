@@ -47,6 +47,6 @@ Route::get('test2', function() {
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::prefix('charts')->group(function () {
-        Route::get('/download/{id}/{summary}', [ExportController::class, 'download']);
+        Route::post('/download/{id}/{summary}', [ExportController::class, 'download']);
     });
 });
