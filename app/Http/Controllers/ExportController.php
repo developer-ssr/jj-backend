@@ -93,9 +93,9 @@ class ExportController extends Controller
         $questionnaire = Questionnaire::whereCode($questionnaire_code)->first();
         $to_export = Rcord::all(); */
         $chart = Chart::find($id);
-        /* $all = $request->all;
-        $legends = $request->legends; */
-
+        $all = $request->all;
+        $legends = json_decode($request->legends);
+        dd($legends);
         return Excel::download(CsvExport::new([]), "download.xlsx");
     }
 
