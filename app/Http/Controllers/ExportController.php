@@ -98,4 +98,14 @@ class ExportController extends Controller
 
         return Excel::download(CsvExport::new([]), "download.xlsx");
     }
+
+    public function exportSummary(Request $request, $id, $summary) 
+    {
+        return [];
+    }
+
+    public function exportRespondent(Request $request, $id, $summary) 
+    {
+        return [];
+    }
 }
