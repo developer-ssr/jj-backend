@@ -42,3 +42,9 @@ Route::get('test2', function() {
     $date = Carbon::parse("2021-09-23 08:53:10")->format("d F Y");
     dd($date);
 });
+
+Route::middleware('auth:sanctum')->group(function() {
+    Route::prefix('charts')->group(function () {
+        Route::get('/download/{what?}', [ExportController::class, 'download']);
+    });
+});
