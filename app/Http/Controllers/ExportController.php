@@ -96,6 +96,6 @@ class ExportController extends Controller
         /* $all = $request->all;
         $legends = $request->legends; */
 
-        return Excel::download(CsvExport::new([]), "download.csv");
+        return Excel::download(CsvExport::new([]), "download.xlsx");
     }
 }
