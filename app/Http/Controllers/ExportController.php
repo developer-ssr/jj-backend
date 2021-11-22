@@ -98,7 +98,8 @@ class ExportController extends Controller
             $data = $this->exportRespondent($all, $legends);
         }
         $headers = ['Order', 'Dimension','','','Question Text', 'SSR Platform', 'Question Types', 'Answer Type','','','Answer Value','','','Score'];
-        return Excel::download(CsvExport::new($headers), "download.xlsx");
+        $data = collect($data)->prepend($headers)->toArray(); 
+        return Excel::download(CsvExport::new($data), "download.xlsx");
     }
 
     public function exportSummary($all, $legends) 
