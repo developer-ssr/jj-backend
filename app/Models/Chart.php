@@ -12,6 +12,7 @@ class Chart extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'data' => 'array'
+        'series' => 'array',
+        'categories' => 'array'
     ];
 }

@@ -93,7 +93,8 @@ class ChartController extends Controller
                                     'date' => $date,
                                     'tcount' => $tcount,
                                     'gscore' => $score['gscore'],
-                                    'percentage' => $score['percentage']
+                                    'percentage' => $score['percentage'],
+                                    'record_ids' => $records[$s_key]->pluck('id')
                                 ];
                                 $segment++;
                             endforeach;
@@ -115,7 +116,8 @@ class ChartController extends Controller
                                         'date' => $date,
                                         'tcount' => $tcount,
                                         'gscore' => $score['gscore'],
-                                        'percentage' => $score['percentage']
+                                        'percentage' => $score['percentage'],
+                                        'record_ids' => $records[$s_key]->pluck('id')
                                     ];
                                     $segment++;
                                 }
@@ -271,8 +273,8 @@ class ChartController extends Controller
                         $points[$t_key] = 0;
                     } */
                     if ($tmp['selected']) {
-                        $points+=($t_key + 1);
-    
+                        // $points+=($t_key + 1);
+                        $points+=$tmp['index'];
                         switch ($legend) {
                             case 't3':
                             case 't5':

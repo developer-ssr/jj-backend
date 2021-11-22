@@ -7,6 +7,7 @@ use App\Models\Chart;
 use App\Exports\CsvExport;
 use Maatwebsite\Excel\Facades\Excel;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 
 class ExportController extends Controller
@@ -90,25 +91,49 @@ class ExportController extends Controller
     public function download(Request $request, $id, $summary) 
     {
         $chart = Chart::find($id);
-        $all = $request->all;
+        $all = json_decode($request->all);
         $legends = json_decode($request->legends);
         if ($summary == 'summary') {
-            $data = $this->exportSummary($all, $legends);
+            $data = $this->exportSummary($chart, $all, $legends);
         }else {
-            $data = $this->exportRespondent($all, $legends);
+            $data = $this->exportRespondent($chart, $all, $legends);
         }
-        $headers = ['Order', 'Dimension','','','Question Text', 'SSR Platform', 'Question Types', 'Answer Type','','','Answer Value','','','Score'];
+        dd($data);
+        
+        $headers = ['Dimension','','','Question Text', 'SSR Platform', 'Question Types', 'Answer Type','','','Answer Value','','','Score'];
         $data = collect($data)->prepend($headers)->toArray(); 
         return Excel::download(CsvExport::new($data), "download.xlsx");
     }
 
-    public function exportSummary($all, $legends) 
+    public function exportSummary($chart, $all, $legends) 
     {
-        return [];
+        $results = [];
+        if ($all) {
+            # code...
+        }else {
+            foreach ($legends as $legend) {
+                $tmp_data = collect($chart->series)->firstWhere('name', $legend);
+                unset($tmp_data['data'][count($tmp_data['data']) - 1]['percentage']);
+                // $results[] = $tmp_data['data'][count($tmp_data['data']) - 1];
+                $results[] = Arr::flatten($tmp_data['data'][count($tmp_data['data']) - 1]);
+            }
+        }
+        return $results;
     }
 
-    public function exportRespondent($all, $legends) 
+    public function exportRespondent($chart, $all, $legends) 
     {
-        return [];
+        $results = [];
+        if ($all) {
+            # code...
+        }else {
+            foreach ($legends as $legend) {
+                $tmp_data = collect($chart->series)->firstWhere('name', $legend);
+                unset($tmp_data['data'][count($tmp_data['data']) - 1]['percentage']);
+                // $results[] = $tmp_data['data'][count($tmp_data['data']) - 1];
+                $results[] = Arr::flatten($tmp_data['data'][count($tmp_data['data']) - 1]);
+            }
+        }
+        return $results;
     }
 }
