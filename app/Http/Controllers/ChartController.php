@@ -372,6 +372,6 @@ class ChartController extends Controller
                 $question = 'How likely would you be to recommend the following to your patients and their parents?';
                 break;
         }
-        return ['question' => $question, $dimension => 'dimension'];
+        return ['question' => $question, 'dimension' => $dimension];
     }
 }
