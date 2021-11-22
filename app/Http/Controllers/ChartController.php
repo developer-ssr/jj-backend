@@ -267,7 +267,12 @@ class ChartController extends Controller
         $tcount = count($records);
         $tmp_data = [];
         foreach ($records as $record) {
-            $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime);
+            if (isset($record->data[$legend]['responses'])) {
+                $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime);
+            }else {
+                $tmp_data = null;
+            }
+            
             if ($tmp_data != null) {
                 if ($max_value == 0) {
                     $max_value = $tcount * count($tmp_data['data']);
