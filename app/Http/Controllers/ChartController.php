@@ -341,7 +341,7 @@ class ChartController extends Controller
             'percentage' => $percentage,
             'question' => $question['question'],
             'dimension' => $question['dimension'],
-            'targets' => $tmp_data != null ? collect($tmp_data['data'])->pluck('target'): []
+            'targets' => $tmp_data != null ? collect($tmp_data['data'])->pluck('equivalent'): []
         ];
     }    
 
