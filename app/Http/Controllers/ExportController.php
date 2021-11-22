@@ -128,6 +128,7 @@ class ExportController extends Controller
         if ($all) {
             # code...
         }else {
+            $headers = [];
             foreach ($legends as $legend) {
                 $tmp = Str::of($legend)->explode('_');
                 $t = Str::lower($tmp[0]);
@@ -135,7 +136,7 @@ class ExportController extends Controller
                 /* $results[$t] = [
                     [$this->getDimension($t), $tmp[0], $tmp[0]]
                 ]; */
-                $headers = [];
+                
                 $record_ids = collect([]);
                 $serires = collect($chart->series)->firstWhere('name', $legend);
                 foreach ($serires['data'] as $data) {
@@ -146,11 +147,13 @@ class ExportController extends Controller
                 }
                 $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
                 $data = $this->getData($records, $t, $prime);
-                dd($data);
+                
                 // $results[] = $tmp_data['data'][count($tmp_data['data']) - 1];
                 $results[] = Arr::flatten($serires['data'][count($serires['data']) - 1]);
             }
+            dd($headers);
         }
+        
         return $results;
     }
     public function getData($records, $t, $prime) {
