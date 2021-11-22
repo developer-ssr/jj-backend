@@ -86,7 +86,7 @@ class ChartController extends Controller
                                 $score = $this->getScore($records[$s_key], $legend['name'], $prime);
                                 
                                 $series_data[] = [
-                                    'question' => 'How likely would you be to recommend the following to your patients and their parents?',
+                                    'question' => $score['question'],
                                     'code' => $code,
                                     'prime' => $score['prime'],
                                     'segment' => ($s_key + 1),
@@ -94,7 +94,9 @@ class ChartController extends Controller
                                     'tcount' => $tcount,
                                     'gscore' => $score['gscore'],
                                     'percentage' => $score['percentage'],
-                                    'record_ids' => $records[$s_key]->pluck('id')
+                                    'record_ids' => $records[$s_key]->pluck('id'),
+                                    'dimension' => $score['dimension'],
+                                    'targets' => $score['targets']
                                 ];
                                 $segment++;
                             endforeach;
@@ -109,7 +111,7 @@ class ChartController extends Controller
                                     $score = $this->getScore($records[$s_key], $legend['name'], $prime);
                                     $date = $link->created_at->format("d M Y");
                                     $series_data[] = [
-                                        'question' => 'How likely would you be to recommend the following to your patients and their parents?',
+                                        'question' => $score['question'],
                                         'code' => $code,
                                         'prime' => $score['prime'],
                                         'segment' => ($segment + 1),
@@ -117,7 +119,9 @@ class ChartController extends Controller
                                         'tcount' => $tcount,
                                         'gscore' => $score['gscore'],
                                         'percentage' => $score['percentage'],
-                                        'record_ids' => $records[$s_key]->pluck('id')
+                                        'record_ids' => $records[$s_key]->pluck('id'),
+                                        'dimension' => $score['dimension'],
+                                        'targets' => $score['targets']
                                     ];
                                     $segment++;
                                 }
@@ -325,10 +329,49 @@ class ChartController extends Controller
         }
         
         $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
+        $question = $this->getQuestion($legend);
         return [
             'gscore' => ceil($score),
             'prime' => $tmp_data['prime'] ?? null,
-            'percentage' => $percentage
+            'percentage' => $percentage,
+            'question' => $question['question'],
+            'dimension' => $question['dimension'],
+            'targets' => collect($tmp_data['data'])->pluck('target')
         ];
+    }    
+
+    public function getQuestion($legend) 
+    {
+        switch ($legend) {
+            case 't3':
+                $dimension = 'Satisfaction';
+                $question = 'Please indicate your satisfaction level with Abilit in the following areas:';
+                break;
+            case 't4':
+                $dimension = 'Value';
+                $question = 'Please indicate which of the following areas from Abiliti are effective and providing value to your myopia management practice.';
+                break;
+            case 't5':
+                $dimension = 'Brand';
+                $question = 'How likely would you be to recommend the following to your patients and their parents?';
+                break;
+            case 't8':
+                $dimension = 'HC2 Behavior freq.';
+                $question = 'In general, how frequently are you able to do the following with your myopia patients and/or their parents? ';
+                break;
+            case 't9':
+                $dimension = 'HC2 Content';
+                $question = 'As part of the parent conversation, please indicate if you include the following information or language in your discussion:';
+                break;
+            case 't10':
+                $dimension = 'Tool use/reco';
+                $question = 'Please indicate how often you use/recommend the following tools from Abiliti™:';
+                break;
+            default:
+                $dimension = 'Dimension';
+                $question = 'How likely would you be to recommend the following to your patients and their parents?';
+                break;
+        }
+        return ['question' => $question, $dimension => 'dimension'];
     }
 }

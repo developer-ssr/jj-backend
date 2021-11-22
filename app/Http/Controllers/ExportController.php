@@ -8,6 +8,7 @@ use App\Exports\CsvExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class ExportController extends Controller
@@ -128,12 +129,35 @@ class ExportController extends Controller
             # code...
         }else {
             foreach ($legends as $legend) {
-                $tmp_data = collect($chart->series)->firstWhere('name', $legend);
-                unset($tmp_data['data'][count($tmp_data['data']) - 1]['percentage']);
+                $tmp = Str::of($legend)->explode('_');
+                $t = Str::lower($tmp[0]);
+                $prime = $tmp[1];
+                /* $results[$t] = [
+                    [$this->getDimension($t), $tmp[0], $tmp[0]]
+                ]; */
+                $headers = [];
+                $record_ids = collect([]);
+                $serires = collect($chart->series)->firstWhere('name', $legend);
+                foreach ($serires['data'] as $data) {
+                    if (!isset($headers[$t])) {
+                        $headers[$t] = collect([$data['dimension'], $tmp[0], $tmp[0], $data['question']])->merge($data['targets'])->toArray();
+                    }
+                    $record_ids = $record_ids->merge($data['record_ids']);
+                }
+                $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
+                $data = $this->getData($records, $t, $prime);
+                dd($data);
                 // $results[] = $tmp_data['data'][count($tmp_data['data']) - 1];
-                $results[] = Arr::flatten($tmp_data['data'][count($tmp_data['data']) - 1]);
+                $results[] = Arr::flatten($serires['data'][count($serires['data']) - 1]);
             }
         }
         return $results;
+    }
+    public function getData($records, $t, $prime) {
+        $tmp_data = [];
+        foreach ($records as $record) {
+            $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
+            
+        }
     }
 }
