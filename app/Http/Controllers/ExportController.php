@@ -89,22 +89,24 @@ class ExportController extends Controller
 
     public function download(Request $request, $id, $summary) 
     {
-        /* $project = Project::whereCode($project_code)->first();
-        $questionnaire = Questionnaire::whereCode($questionnaire_code)->first();
-        $to_export = Rcord::all(); */
         $chart = Chart::find($id);
         $all = $request->all;
         $legends = json_decode($request->legends);
-        dd($legends);
-        return Excel::download(CsvExport::new([]), "download.xlsx");
+        if ($summary == 'summary') {
+            $data = $this->exportSummary($all, $legends);
+        }else {
+            $data = $this->exportRespondent($all, $legends);
+        }
+        $headers = ['Order', 'Dimension','','','Question Text', 'SSR Platform', 'Question Types', 'Answer Type','','','Answer Value','','','Score'];
+        return Excel::download(CsvExport::new($headers), "download.xlsx");
     }
 
-    public function exportSummary(Request $request, $id, $summary) 
+    public function exportSummary($all, $legends) 
     {
         return [];
     }
 
-    public function exportRespondent(Request $request, $id, $summary) 
+    public function exportRespondent($all, $legends) 
     {
         return [];
     }
