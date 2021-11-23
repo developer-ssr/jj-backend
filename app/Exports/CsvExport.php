@@ -4,8 +4,9 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 
-class CsvExport implements FromCollection, WithStrictNullComparison
+class CsvExport implements FromCollection, WithStrictNullComparison, WithColumnWidths
 {
     public $data;
 
@@ -25,5 +26,14 @@ class CsvExport implements FromCollection, WithStrictNullComparison
     public function collection()
     {
         return collect($this->data);
+    }
+
+
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 10,
+            'D' => 20,            
+        ];
     }
 }

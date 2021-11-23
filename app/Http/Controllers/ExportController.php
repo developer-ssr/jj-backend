@@ -99,10 +99,9 @@ class ExportController extends Controller
         }else {
             $data = $this->exportRespondent($chart, $all, $legends);
         }
-        dd($data);
-        
-        $headers = ['Dimension','','','Question Text', 'SSR Platform', 'Question Types', 'Answer Type','','','Answer Value','','','Score'];
+        $headers = ['Dimension','','','Question Text','','','Answer Value','','','Score'];
         $data = collect($data)->prepend($headers)->toArray(); 
+
         return Excel::download(CsvExport::new($data), "download.xlsx");
     }
 
@@ -115,7 +114,6 @@ class ExportController extends Controller
             foreach ($legends as $legend) {
                 $tmp_data = collect($chart->series)->firstWhere('name', $legend);
                 unset($tmp_data['data'][count($tmp_data['data']) - 1]['percentage']);
-                // $results[] = $tmp_data['data'][count($tmp_data['data']) - 1];
                 $results[] = Arr::flatten($tmp_data['data'][count($tmp_data['data']) - 1]);
             }
         }
@@ -124,43 +122,65 @@ class ExportController extends Controller
 
     public function exportRespondent($chart, $all, $legends) 
     {
-        $results = [];
+        $tmp_results = [];
+        $headers = [];
         if ($all) {
             # code...
         }else {
-            $headers = [];
             foreach ($legends as $legend) {
                 $tmp = Str::of($legend)->explode('_');
                 $t = Str::lower($tmp[0]);
                 $prime = $tmp[1];
-                /* $results[$t] = [
-                    [$this->getDimension($t), $tmp[0], $tmp[0]]
-                ]; */
-                
                 $record_ids = collect([]);
                 $serires = collect($chart->series)->firstWhere('name', $legend);
+                $tmp_data = [];
                 foreach ($serires['data'] as $data) {
-                    if (!isset($headers[$t])) {
-                        $headers[$t] = collect([$data['dimension'], $tmp[0], $tmp[0], $data['question']])->merge($data['targets'])->toArray();
+                    $headers[$t] = collect([$data['dimension'], $tmp[0], $tmp[0], $data['question']]);
+                    if (count($tmp_data) < count($data)) {
+                        $tmp_data = $data;
                     }
                     $record_ids = $record_ids->merge($data['record_ids']);
                 }
                 $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
-                $data = $this->getData($records, $t, $prime);
-                
-                // $results[] = $tmp_data['data'][count($tmp_data['data']) - 1];
-                $results[] = Arr::flatten($serires['data'][count($serires['data']) - 1]);
+                $tmp_results[$t][] = $this->getData($records, $t, $prime, $tmp_data);
+                $headers[$t] = $headers[$t]->merge($tmp_data['targets'] ?? [])->toArray();
             }
-            dd($headers);
         }
-        
+        $results = [];
+        $header_keys = collect($headers)->keys()->toArray();
+        natsort($header_keys);
+        dd($header_keys);
+        foreach ($headers as $key => $header) {
+            $results[] = $header;
+            foreach ($tmp_results[$key] as $value) {
+                $results[] = $value;
+            }
+        }
         return $results;
     }
-    public function getData($records, $t, $prime) {
+    public function getData($records, $t, $prime, $data) {
         $tmp_data = [];
+        $tmp_result = collect([$data['dimension'] ?? '', Str::upper($t), $prime, $data['question'] ?? '']);
+
         foreach ($records as $record) {
-            $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
-            
+            if (isset($record->data[$t]['responses'])) {
+                $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
+            } else {
+                $tmp_data = null;
+            }
+
+            if ($tmp_data != null) {
+                foreach ($tmp_data['data'] as $t_key => $tmp) {
+                    if (!isset($tmp_result[4+$t_key])) {
+                        $tmp_result[3] = $tmp_data['equivalent'];
+                        $tmp_result[4+$t_key] = 0;
+                    }
+                    if ($tmp['selected']) {
+                        $tmp_result[4+$t_key] += 1;
+                    }
+                }
+            }
         }
+        return $tmp_result->toArray();
     }
 }

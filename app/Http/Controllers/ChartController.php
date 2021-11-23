@@ -350,7 +350,7 @@ class ChartController extends Controller
         switch ($legend) {
             case 't3':
                 $dimension = 'Satisfaction';
-                $question = 'Please indicate your satisfaction level with Abilit in the following areas:';
+                $question = 'Please indicate your satisfaction level with Abiliti in the following areas:';
                 break;
             case 't4':
                 $dimension = 'Value';
