@@ -107,7 +107,7 @@ class ExportController extends Controller
         $headers = ['Dimension','','','Question Text','','','Answer Value'];
         $data = collect($data)->prepend($headers)->toArray(); 
 
-        return Excel::download(CsvExport::new($data), "download.xlsx");
+        return Excel::download(CsvExport::new($data), $chart->title.".xlsx");
     }
 
     public function exportSummary($chart, $legends) 
