@@ -93,66 +93,67 @@ class ExportController extends Controller
     {
         $chart = Chart::find($id);
         $all = json_decode($request->all);
-        $legends = json_decode($request->legends);
-        if ($summary == 'summary') {
-            $data = $this->exportSummary($chart, $all, $legends);
+        if ($all) {
+            $legends = collect($chart->series)->pluck('name')->toArray();
         }else {
-            $data = $this->exportRespondent($chart, $all, $legends);
+            $legends = json_decode($request->legends);
         }
-        $headers = ['Dimension','','','Question Text','','','Answer Value','','','Score'];
+        
+        if ($summary == 'summary') {
+            $data = $this->exportSummary($chart, $legends);
+        }else {
+            $data = $this->exportRespondent($chart, $legends);
+        }
+        $headers = ['Dimension','','','Question Text','','','Answer Value'];
         $data = collect($data)->prepend($headers)->toArray(); 
 
         return Excel::download(CsvExport::new($data), "download.xlsx");
     }
 
-    public function exportSummary($chart, $all, $legends) 
+    public function exportSummary($chart, $legends) 
     {
         $results = [];
-        if ($all) {
-            # code...
-        }else {
-            foreach ($legends as $legend) {
-                $tmp_data = collect($chart->series)->firstWhere('name', $legend);
-                unset($tmp_data['data'][count($tmp_data['data']) - 1]['percentage']);
-                $results[] = Arr::flatten($tmp_data['data'][count($tmp_data['data']) - 1]);
-            }
+        foreach ($legends as $legend) {
+            $tmp_data = collect($chart->series)->firstWhere('name', $legend);
+            unset($tmp_data['data'][count($tmp_data['data']) - 1]['percentage']);
+            $results[] = Arr::flatten($tmp_data['data'][count($tmp_data['data']) - 1]);
         }
         return $results;
     }
 
-    public function exportRespondent($chart, $all, $legends) 
+    public function exportRespondent($chart, $legends) 
     {
         $tmp_results = [];
         $headers = [];
-        if ($all) {
-            # code...
-        }else {
-            foreach ($legends as $legend) {
-                $tmp = Str::of($legend)->explode('_');
-                $t = Str::lower($tmp[0]);
-                $prime = $tmp[1];
-                $record_ids = collect([]);
-                $serires = collect($chart->series)->firstWhere('name', $legend);
-                $tmp_data = [];
-                foreach ($serires['data'] as $data) {
-                    $headers[$t] = collect([$data['dimension'], $tmp[0], $tmp[0], $data['question']]);
-                    if (count($tmp_data) < count($data)) {
-                        $tmp_data = $data;
-                    }
-                    $record_ids = $record_ids->merge($data['record_ids']);
+        foreach ($legends as $legend) {
+            $tmp = Str::of($legend)->explode('_');
+            $t = Str::lower($tmp[0]);
+            $prime = $tmp[1];
+            $record_ids = collect([]);
+            $serires = collect($chart->series)->firstWhere('name', $legend);
+            $tmp_data = [];
+            foreach ($serires['data'] as $data) {
+                $headers[$t] = collect([$data['dimension'], $tmp[0], $tmp[0], $data['question']]);
+                if (count($tmp_data) < count($data)) {
+                    $tmp_data = $data;
                 }
-                $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
-                $tmp_results[$t][] = $this->getData($records, $t, $prime, $tmp_data);
-                $headers[$t] = $headers[$t]->merge($tmp_data['targets'] ?? [])->toArray();
+                $record_ids = $record_ids->merge($data['record_ids']);
             }
+            $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
+            $tmp_results[$t][] = $this->getData($records, $t, $prime, $tmp_data);
+            while (count($tmp_data['targets']) < 5) {
+                $tmp_data['targets'][] = '';
+            }
+            $tmp_data['targets'][] = 'TOTAL Completes';       
+            $headers[$t] = $headers[$t]->merge($tmp_data['targets'] ?? [])->toArray();
+            
         }
         $results = [];
         $header_keys = collect($headers)->keys()->toArray();
         natsort($header_keys);
-        dd($header_keys);
-        foreach ($headers as $key => $header) {
-            $results[] = $header;
-            foreach ($tmp_results[$key] as $value) {
+        foreach ($header_keys as $ts) {
+            $results[] = $headers[$ts];
+            foreach ($tmp_results[$ts] as $value) {
                 $results[] = $value;
             }
         }
@@ -161,10 +162,11 @@ class ExportController extends Controller
     public function getData($records, $t, $prime, $data) {
         $tmp_data = [];
         $tmp_result = collect([$data['dimension'] ?? '', Str::upper($t), $prime, $data['question'] ?? '']);
-
+        $data_count = 0;
         foreach ($records as $record) {
             if (isset($record->data[$t]['responses'])) {
                 $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
+                $data_count = count($tmp_data);
             } else {
                 $tmp_data = null;
             }
@@ -181,6 +183,13 @@ class ExportController extends Controller
                 }
             }
         }
+        
+        $i = 0;
+        while (count($tmp_result) < 9) {
+            $i++;
+            $tmp_result[5+$data_count+$i] = '';
+        }
+        $tmp_result[5+$data_count] = count($records); //total
         return $tmp_result->toArray();
     }
 }
