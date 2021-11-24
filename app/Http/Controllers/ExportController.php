@@ -127,21 +127,21 @@ class ExportController extends Controller
         $headers = [];
         foreach ($legends as $legend) {
             $tmp = Str::of($legend)->explode('_');
-            $t = Str::lower($tmp[0]);
+            $t = Str::lower($tmp[0]);//t3
             $prime = $tmp[1];
             $record_ids = collect([]);
-            $serires = collect($chart->series)->firstWhere('name', $legend);
+            $series = collect($chart->series)->firstWhere('name', $legend);
             $tmp_data = [];
-            foreach ($serires['data'] as $data) {
+            foreach ($series['data'] as $data) {
                 $headers[$t] = collect([$data['dimension'], $tmp[0], $tmp[0], $data['question']]);
                 if (count($tmp_data) < count($data)) {
-                    $tmp_data = $data;
+                    $tmp_data = $data; //find proper data
                 }
                 $record_ids = $record_ids->merge($data['record_ids']);
             }
             $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
             $tmp_results[$t][] = $this->getData($records, $t, $prime, $tmp_data);
-            while (count($tmp_data['targets']) < 5) {
+            while (count($tmp_data['targets']) < 5) {//assign spacing
                 $tmp_data['targets'][] = '';
             }
             $tmp_data['targets'][] = 'TOTAL Completes';       
@@ -150,9 +150,9 @@ class ExportController extends Controller
         }
         $results = [];
         $header_keys = collect($headers)->keys()->toArray();
-        natsort($header_keys);
+        natsort($header_keys);//sort list
         foreach ($header_keys as $ts) {
-            $results[] = $headers[$ts];
+            $results[] = $headers[$ts];//assign header
             foreach ($tmp_results[$ts] as $value) {
                 $results[] = $value;
             }
@@ -174,11 +174,11 @@ class ExportController extends Controller
             if ($tmp_data != null) {
                 foreach ($tmp_data['data'] as $t_key => $tmp) {
                     if (!isset($tmp_result[4+$t_key])) {
-                        $tmp_result[3] = $tmp_data['equivalent'];
-                        $tmp_result[4+$t_key] = 0;
+                        $tmp_result[3] = $tmp_data['equivalent'];//prime
+                        $tmp_result[4+$t_key] = 0;//initialize
                     }
                     if ($tmp['selected']) {
-                        $tmp_result[4+$t_key] += 1;
+                        $tmp_result[4+$t_key] += 1;//increment selected
                     }
                 }
             }
@@ -187,7 +187,7 @@ class ExportController extends Controller
         $i = 0;
         while (count($tmp_result) < 9) {
             $i++;
-            $tmp_result[5+$data_count+$i] = '';
+            $tmp_result[5+$data_count+$i] = ''; //assign spacing
         }
         $tmp_result[5+$data_count] = count($records); //total
         return $tmp_result->toArray();
