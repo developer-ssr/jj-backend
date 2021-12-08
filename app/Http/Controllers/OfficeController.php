@@ -42,7 +42,8 @@ class OfficeController extends Controller
             'email' => $request->email,
             'user_id' => $request->user()->id,
             'type' => strtolower($request->type),
-            'code' => $request->code
+            'code' => $request->code,
+            'sequence' => $request->sequence
         ]);
         return response()->json($office);
     }
@@ -62,7 +63,8 @@ class OfficeController extends Controller
             //'address' => $request->address,
             'type' => $request->type,
             'email' => $request->email,
-            'code' => $request->code
+            'code' => $request->code,
+            'sequence' => $request->sequence
         ]);
         return response()->json($office);
     }
