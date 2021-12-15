@@ -112,11 +112,39 @@ class ExportController extends Controller
 
     public function exportSummary($chart, $legends) 
     {
-        $results = [];
+        $tmp_results = [];
+        $headers = [];
         foreach ($legends as $legend) {
-            $tmp_data = collect($chart->series)->firstWhere('name', $legend);
-            unset($tmp_data['data'][count($tmp_data['data']) - 1]['percentage']);
-            $results[] = Arr::flatten($tmp_data['data'][count($tmp_data['data']) - 1]);
+            $tmp = Str::of($legend)->explode('_');
+            $t = Str::lower($tmp[0]);//t3
+            $prime = $tmp[1];
+            $record_ids = collect([]);
+            $series = collect($chart->series)->firstWhere('name', $legend);
+            $tmp_data = [];
+            foreach ($series['data'] as $data) {
+                $headers[$t] = collect([$data['dimension'], $tmp[0], $tmp[0], $data['question']]);
+                if (count($tmp_data) < count($data)) {
+                    $tmp_data = $data; //find proper data
+                }
+                $record_ids = $record_ids->merge($data['record_ids']);
+            }
+            $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
+            $tmp_results[$t][] = $this->getData($records, $t, $prime, $tmp_data, 'summary');
+            while (count($tmp_data['targets']) < 5) {//assign spacing
+                $tmp_data['targets'][] = '';
+            }
+            $tmp_data['targets'][] = 'TOTAL Completes';       
+            $headers[$t] = $headers[$t]->merge($tmp_data['targets'] ?? [])->toArray();
+            
+        }
+        $results = [];
+        $header_keys = collect($headers)->keys()->toArray();
+        natsort($header_keys);//sort list
+        foreach ($header_keys as $ts) {
+            $results[] = $headers[$ts];//assign header
+            foreach ($tmp_results[$ts] as $value) {
+                $results[] = $value;
+            }
         }
         return $results;
     }
@@ -140,7 +168,7 @@ class ExportController extends Controller
                 $record_ids = $record_ids->merge($data['record_ids']);
             }
             $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
-            $tmp_results[$t][] = $this->getData($records, $t, $prime, $tmp_data);
+            $tmp_results[$t][] = $this->getData($records, $t, $prime, $tmp_data, 'respondent');
             while (count($tmp_data['targets']) < 5) {//assign spacing
                 $tmp_data['targets'][] = '';
             }
@@ -159,7 +187,7 @@ class ExportController extends Controller
         }
         return $results;
     }
-    public function getData($records, $t, $prime, $data) {
+    public function getData($records, $t, $prime, $data, $summary) {
         $tmp_data = [];
         $tmp_result = collect([$data['dimension'] ?? '', Str::upper($t), $prime, $data['question'] ?? '']);
         $data_count = 0;
@@ -178,7 +206,12 @@ class ExportController extends Controller
                         $tmp_result[4+$t_key] = 0;//initialize
                     }
                     if ($tmp['selected']) {
-                        $tmp_result[4+$t_key] += 1;//increment selected
+                        if ($summary == 'summary') {
+                            $tmp_result[4+$t_key]+=$tmp['index'];
+                        }else {
+                            $tmp_result[4+$t_key] += 1;//increment selected
+                        }
+                        
                     }
                 }
             }
