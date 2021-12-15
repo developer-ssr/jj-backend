@@ -209,7 +209,7 @@ class ExportController extends Controller
                     }
                     if ($tmp['selected']) {
                         if ($summary == 'summary') {
-                            $tmp_result[4+$t_key]+=$tmp['index'];
+                            $tmp_result[4+$t_key] += $tmp['index'];
                         }else {
                             $tmp_result[4+$t_key] += 1;//increment selected
                         }
@@ -218,7 +218,7 @@ class ExportController extends Controller
                 }
             }
         }
-        
+        dd($tmp_data['data']);
         $i = 0;
         while (count($tmp_result) < 9) {
             $i++;
