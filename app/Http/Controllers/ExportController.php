@@ -107,7 +107,7 @@ class ExportController extends Controller
         $headers = ['Dimension','','','Question Text','','','Answer Value'];
         $data = collect($data)->prepend($headers)->toArray(); 
 
-        return Excel::download(CsvExport::new($data), $chart->title.".xlsx");
+        return Excel::download(CsvExport::new($data), $chart->title."_".$summary.".xlsx");
     }
 
     public function exportSummary($chart, $legends) 
@@ -229,6 +229,7 @@ class ExportController extends Controller
             $tmp_result[6+$data_count] = count($records) * $data_count; //max point
             $tmp_result[7+$data_count] = 0; //segment 1
         }
+        dd($data_count);
         return $tmp_result->toArray();
     }
 }
