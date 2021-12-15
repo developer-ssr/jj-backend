@@ -218,7 +218,7 @@ class ExportController extends Controller
                 }
             }
         }
-        dd($tmp_data);
+        dd($data_count);
         $i = 0;
         while (count($tmp_result) < 9) {
             $i++;
