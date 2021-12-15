@@ -196,7 +196,6 @@ class ExportController extends Controller
         foreach ($records as $record) {
             if (isset($record->data[$t]['responses'])) {
                 $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
-                dd($tmp_data);
                 $data_count = count($tmp_data);
             } else {
                 $tmp_data = null;
@@ -219,7 +218,7 @@ class ExportController extends Controller
                 }
             }
         }
-        
+        dd($tmp_data);
         $i = 0;
         while (count($tmp_result) < 9) {
             $i++;
