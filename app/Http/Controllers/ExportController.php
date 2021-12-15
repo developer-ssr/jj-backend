@@ -209,11 +209,10 @@ class ExportController extends Controller
                     }
                     if ($tmp['selected']) {
                         if ($summary == 'summary') {
-                            $tmp_result[4+$t_key] += 1;//increment selected
-                            //$tmp_result[4+$t_key] += $tmp['index'];
-                        }else {
                             $tmp_result[4+$t_key] += $tmp['index'];
-                            //$tmp_result[4+$t_key] += 1;//increment selected
+                            $tmp_result[5+$data_count] += $tmp['index']; //total
+                        }else {
+                            $tmp_result[4+$t_key] += 1;//increment selected
                         }
                         
                     }
@@ -226,10 +225,12 @@ class ExportController extends Controller
             $i++;
             $tmp_result[5+$data_count+$i] = ''; //assign spacing
         }
-        $tmp_result[5+$data_count] = count($records); //total
+        
         if ($summary == 'summary') {
             $tmp_result[6+$data_count] = count($records) * $data_count; //max point
             $tmp_result[7+$data_count] = 0; //segment 1
+        }else {
+            $tmp_result[5+$data_count] = count($records); //total
         }
 
         return $tmp_result->toArray();
