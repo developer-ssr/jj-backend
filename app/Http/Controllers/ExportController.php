@@ -228,12 +228,15 @@ class ExportController extends Controller
         }
         
         if ($summary == 'summary') {
-            $tmp_result[6+$data_count] = count($records) * $data_count; //max point
-            $tmp_result[7+$data_count] = 0; //segment 1
+            $max_point = count($records) * $data_count; //max point
+            $segment1 = 0; //segment 1
         }else {
             $total = count($records);
         }
         $tmp_result[5+$data_count] = $total; //total
+        $tmp_result[6+$data_count] = $max_point ?? '';
+        $tmp_result[7+$data_count] = $segment1 ?? '';
+        
 
         return $tmp_result->toArray();
     }
