@@ -133,7 +133,9 @@ class ExportController extends Controller
             while (count($tmp_data['targets']) < 5) {//assign spacing
                 $tmp_data['targets'][] = '';
             }
-            $tmp_data['targets'][] = 'TOTAL Completes';       
+            $tmp_data['targets'][] = 'TOTAL Points';   
+            $tmp_data['targets'][] = 'Max Points (max value * total completes)';    
+            $tmp_data['targets'][] = 'Segment 1';
             $headers[$t] = $headers[$t]->merge($tmp_data['targets'] ?? [])->toArray();
             
         }
