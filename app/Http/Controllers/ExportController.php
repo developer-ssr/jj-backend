@@ -196,7 +196,7 @@ class ExportController extends Controller
         foreach ($records as $record) {
             if (isset($record->data[$t]['responses'])) {
                 $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
-                $data_count = count($tmp_data);
+                $data_count = count($tmp_data['data']);
             } else {
                 $tmp_data = null;
             }
@@ -218,7 +218,7 @@ class ExportController extends Controller
                 }
             }
         }
-        dd($data_count);
+        
         $i = 0;
         while (count($tmp_result) < 9) {
             $i++;
@@ -229,7 +229,7 @@ class ExportController extends Controller
             $tmp_result[6+$data_count] = count($records) * $data_count; //max point
             $tmp_result[7+$data_count] = 0; //segment 1
         }
-        dd($data_count);
+
         return $tmp_result->toArray();
     }
 }
