@@ -229,7 +229,7 @@ class ExportController extends Controller
         
         if ($summary == 'summary') {
             $max_point = count($records) * $data_count; //max point
-            $segment1 = ceil(($total / $data_count) * 100); //segment 1
+            $segment1 = ceil(($total / $max_point) * 100); //segment 1
         }else {
             $total = count($records);
         }
