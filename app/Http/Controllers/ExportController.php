@@ -193,6 +193,7 @@ class ExportController extends Controller
         $tmp_data = [];
         $tmp_result = collect([$data['dimension'] ?? '', Str::upper($t), $prime, $data['question'] ?? '']);
         $data_count = 0;
+        $total = 0;
         foreach ($records as $record) {
             if (isset($record->data[$t]['responses'])) {
                 $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
@@ -210,7 +211,7 @@ class ExportController extends Controller
                     if ($tmp['selected']) {
                         if ($summary == 'summary') {
                             $tmp_result[4+$t_key] += $tmp['index'];
-                            $tmp_result[5+$data_count] += $tmp['index']; //total
+                            $total += $tmp['index']; //total
                         }else {
                             $tmp_result[4+$t_key] += 1;//increment selected
                         }
@@ -230,8 +231,9 @@ class ExportController extends Controller
             $tmp_result[6+$data_count] = count($records) * $data_count; //max point
             $tmp_result[7+$data_count] = 0; //segment 1
         }else {
-            $tmp_result[5+$data_count] = count($records); //total
+            $total = count($records);
         }
+        $tmp_result[5+$data_count] = $total; //total
 
         return $tmp_result->toArray();
     }
