@@ -239,8 +239,10 @@ class ExportController extends Controller
             $total = count($records);
         }
         $tmp_result[5+$data_count] = $total; //total
-        $tmp_result[6+$data_count] = $max_point ?? '';
-        $tmp_result[7+$data_count] = $segment1 ?? '';
+        $tmp_result[] = $max_point ?? '';
+        $tmp_result[] = $segment1 ?? '';
+        /* $tmp_result[6+$data_count] = $max_point ?? '';
+        $tmp_result[7+$data_count] = $segment1 ?? ''; */
         
 
         return $tmp_result->toArray();
