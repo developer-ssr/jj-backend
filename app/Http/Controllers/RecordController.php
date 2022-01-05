@@ -16,8 +16,8 @@ class RecordController extends Controller
         $country_t5 = [
             'us' => '244',
             'sg' => '981',
-            'hongkong' => '982',
-            'canada' => '983'
+            'hk' => '982',
+            'ca' => '983'
         ];
 
         $country = $request->country ?? 'us';
