@@ -12,6 +12,16 @@ class RecordController extends Controller
 
     public function complete(Request $request)
     {
+
+        $country_t5 = [
+            'us' => '244',
+            'sg' => '981',
+            'hongkong' => '982',
+            'canada' => '983'
+        ];
+
+        $country = $request->country ?? 'us';
+
         $http = Http::get($this->act_api . "survey_id=242&id={$request->id}");
         $data = [
             't3' => json_decode($http->body(), true)
@@ -20,7 +30,7 @@ class RecordController extends Controller
         $http = Http::get($this->act_api . "survey_id=243&id={$request->id}");
         $data['t4'] = json_decode($http->body(), true);
 
-        $http = Http::get($this->act_api . "survey_id=244&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=" . $country_t5[$country] . "&id={$request->id}");
         $data['t5'] = json_decode($http->body(), true);
 
         $http = Http::get($this->act_api . "survey_id=245&id={$request->id}");
