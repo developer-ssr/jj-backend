@@ -32,7 +32,7 @@ class NotifyEcp extends Mailable
     public function build()
     {
         return $this->view('emails.jnj')
-                    ->attachFromStorage("app/" . $this->email->path, $this->email->file, [
+                    ->attachFromStorage($this->email->path, $this->email->file, [
                         'mime' => 'application/pdf'
                     ])
                     ->subject($this->email->subject)
