@@ -39,7 +39,7 @@ class NotifyEcp extends Mailable
         if ($this->email->file) {
             $mail->attachFromStorage($this->email->path, $this->email->file, [
                 'mime' => 'application/pdf'
-            ])
+            ]);
         }
         
     }
