@@ -42,7 +42,7 @@ class EmailController extends Controller
                 'file' => $filename,
                 'subject' => $request->subject,
                 'status' => 'sent'
-            ])
+            ]);
         }else {
             $email = Email::create([
                 'email' => $request->email,
