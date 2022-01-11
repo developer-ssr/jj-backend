@@ -18,7 +18,14 @@ class OfficeController extends Controller
         if ($request->user()->type === "user") {
             $offices = Office::where('id', $request->user()->office_id)->get();
         } else {
-            $offices = Office::all();
+            $ofs = Office::with('emails', function($query) {
+                $query->orderBy('created_at', 'desc');
+            })->get()->toArray();
+            $offices = collect($ofs)->map(function($values) {
+                $email = collect($values->emails)->first();
+                $values['emails'] = $email;
+                return $values;
+            });
         }
         
         return response()->json($offices);

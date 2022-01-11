@@ -10,4 +10,5 @@ class Email extends Model
     use HasFactory;
 
     protected $guarded = [];
+
 }
