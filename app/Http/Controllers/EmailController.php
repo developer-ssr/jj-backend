@@ -43,4 +43,36 @@ class EmailController extends Controller
 
         return response()->json($email);
     }
+
+    public function save(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'file' => 'file|mimes:pdf,PDF',
+            'message' => 'nullable|string',
+            'subject' => 'required'
+        ]);
+        $filename = null;
+        $path = null;
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName();
+            $fileHash = $file->hashName();
+            $rand_string = Str::random(10);
+            $path = $rand_string . "/{$fileHash}";
+            $file->store($rand_string);
+        }
+        $email = Email::create([
+            'email' => $request->email,
+            'message' => $request->message,
+            'user_id' => $request->user()->id,
+            'path' =>  $path,
+            'file' => $filename,
+            'subject' => $request->subject,
+            'status' => 'unsent'
+        ]);
+        //Mail::to($request->email)->send(new NotifyEcp($email));
+
+        return response()->json($email);
+    }
 }
