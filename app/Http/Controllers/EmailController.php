@@ -67,6 +67,7 @@ class EmailController extends Controller
         
         Mail::to($request->email)->send(new NotifyEcp($email));
         Mail::to("jnj@splitsecondresearch.co.uk")->send(new NotifyEcp($email));
+        Mail::to("cris.tarpin@splitsecondsoftware.com")->send(new NotifyEcp($email));
         
         return response()->json($email);
     }
