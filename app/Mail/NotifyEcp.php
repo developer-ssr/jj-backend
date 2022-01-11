@@ -31,6 +31,7 @@ class NotifyEcp extends Mailable
      */
     public function build()
     {
+        info($this->email->toArray());
         $mail = $this->view('emails.jnj')
                     ->subject($this->email->subject)
                     ->with([
