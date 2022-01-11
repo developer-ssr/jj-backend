@@ -17,7 +17,7 @@ class EmailController extends Controller
     {
         $request->validate([
             'email' => 'required',
-            'file' => 'file|mimes:pdf,PDF',
+            'file' => 'nullable|file|mimes:pdf,PDF',
             'message' => 'nullable|string',
             'subject' => 'required'
         ]);
@@ -48,7 +48,7 @@ class EmailController extends Controller
     {
         $request->validate([
             'email' => 'required',
-            'file' => 'file|mimes:pdf,PDF',
+            'file' => 'nullable|file|mimes:pdf,PDF',
             'message' => 'nullable|string',
             'subject' => 'required'
         ]);
