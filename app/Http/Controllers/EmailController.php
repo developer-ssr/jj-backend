@@ -77,15 +77,29 @@ class EmailController extends Controller
             $path = $rand_string . "/{$fileHash}";
             $file->store($rand_string);
         }
-        $email = Email::create([
-            'email' => $request->email,
-            'message' => $request->message,
-            'user_id' => $request->user()->id,
-            'path' =>  $path,
-            'file' => $filename,
-            'subject' => $request->subject,
-            'status' => 'unsent'
-        ]);
+        if (isset($request->id)) {
+            $email = Email::find($request->id);
+            $email->update([
+                'email' => $request->email,
+                'message' => $request->message,
+                'user_id' => $request->user()->id,
+                'path' =>  $path,
+                'file' => $filename,
+                'subject' => $request->subject,
+                'status' => 'unsent'
+            ]);
+        }else {
+            $email = Email::create([
+                'email' => $request->email,
+                'message' => $request->message,
+                'user_id' => $request->user()->id,
+                'path' =>  $path,
+                'file' => $filename,
+                'subject' => $request->subject,
+                'status' => 'unsent'
+            ]);
+        }
+        
         //Mail::to($request->email)->send(new NotifyEcp($email));
 
         return response()->json($email);
