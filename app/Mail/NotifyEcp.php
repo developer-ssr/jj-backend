@@ -41,6 +41,6 @@ class NotifyEcp extends Mailable
                 'mime' => 'application/pdf'
             ]);
         }
-        
+        return $mail;
     }
 }
