@@ -34,12 +34,23 @@ class EmailController extends Controller
         }
         if (isset($request->id)) {
             $email = Email::find($request->id);
+            if ($request->hasFile('file')) {
+                $email->update([
+                    'path' => $path,
+                    'file' => $filename
+                ]);
+            } else {
+                if ($request->remove_attachment ?? false) {
+                    $email->update([
+                        'path' => null,
+                        'file' => null
+                    ]);
+                }
+            }
+            
             $email->update([
                 'email' => $request->email,
                 'message' => $request->message,
-                'user_id' => $request->user()->id,
-                'path' =>  $path,
-                'file' => $filename,
                 'subject' => $request->subject,
                 'status' => 'sent'
             ]);
