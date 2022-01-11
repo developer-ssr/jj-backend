@@ -75,4 +75,18 @@ class EmailController extends Controller
 
         return response()->json($email);
     }
+
+    public function drafts(Request $request)
+    {
+        $drafts = Email::where(['user_id' => $request->user()->id, 'status' => 'unsent'])->get();
+
+        return response()->json($drafts);
+    }
+    
+    public function sents(Request $request)
+    {
+        $sents = Email::where(['user_id' => $request->user()->id, 'status' => 'sent'])->get();
+
+        return response()->json($sents);
+    }
 }

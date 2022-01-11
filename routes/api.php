@@ -56,6 +56,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::prefix('emails')->group(function() {
         Route::post('/store', [EmailController::class, 'store']);
         Route::post('/save', [EmailController::class, 'save']);
+        Route::post('/drafts', [EmailController::class, 'drafts']);
+        Route::post('/sents', [EmailController::class, 'sents']);
     });
 
     Route::prefix('links')->group(function() {
