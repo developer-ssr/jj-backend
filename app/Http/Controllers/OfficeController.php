@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Email;
 use App\Models\Office;
 use App\Models\Record;
 use Illuminate\Http\Request;
@@ -18,11 +19,9 @@ class OfficeController extends Controller
         if ($request->user()->type === "user") {
             $offices = Office::where('id', $request->user()->office_id)->get();
         } else {
-            $ofs = Office::with('emails', function($query) {
-                $query->orderBy('created_at', 'desc');
-            })->get()->toArray();
-            $offices = collect($ofs)->map(function($values) {
-                $email = collect($values->emails)->first();
+            $offices = Office::all()->toArray();
+            $offices = collect($offices)->map(function($values) {
+                $email = Email::where('email', $values['email'])->orderBy('created_at', 'desc')->first();
                 $values['emails'] = $email;
                 return $values;
             });
