@@ -38,8 +38,8 @@ class EmailController extends Controller
                 'email' => $request->email,
                 'message' => $request->message,
                 'user_id' => $request->user()->id,
-                'path' =>  $path,
-                'file' => $filename,
+                /* 'path' =>  $path,
+                'file' => $filename, */
                 'subject' => $request->subject,
                 'status' => 'sent'
             ]);
