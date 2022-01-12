@@ -71,7 +71,7 @@ class ChartController extends Controller
                             ]
                         ];
                         if ($office->type == 'country') {
-                            $res_ids = $office->links()->get()->pluck('link_id')->toArray();
+                            $res_ids = Link::where('country_code', $office->code)->pluck('link_id')->toArray();
                             info($res_ids);
                             foreach ($filter->data['segments'] as $s_key => $segments):
                                 if (!isset($records[$s_key])) {
