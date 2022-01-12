@@ -71,11 +71,13 @@ class ChartController extends Controller
                             ]
                         ];
                         if ($office->type == 'country') {
+                            $res_ids = $office->links->pluck('link_id')->toArray();
                             foreach ($filter->data['segments'] as $s_key => $segments):
                                 if (!isset($records[$s_key])) {
                                     //$records[$s_key] = Record::whereBetween('created_at', [date($segments['from']), date($segments['to'])])->get();
                                     $records[$s_key] = Record::whereDate('created_at', ">=", date($segments['from']))
                                                                 ->whereDate('created_at', "<=", date($segments['to']))
+                                                                ->whereIn('participant_id', $res_ids)
                                                                 ->get();
                                 }
                                 $tcount = count($records[$s_key]);
