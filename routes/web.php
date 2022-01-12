@@ -28,7 +28,7 @@ Route::get('/', function () {
     //     'laravelVersion' => Application::VERSION,
     //     'phpVersion' => PHP_VERSION,
     // ]);
-    return redirect('http://jnj.splitsecondsurveys.co.uk/dashboard');
+    return redirect('https://jnj.splitsecondsurveys.co.uk/dashboard');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
