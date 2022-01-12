@@ -71,7 +71,7 @@ class ChartController extends Controller
                             ]
                         ];
                         if ($office->type == 'country') {
-                            $res_ids = $office->links->pluck('link_id')->toArray();
+                            $res_ids = $office->links->get()->pluck('link_id')->toArray();
                             foreach ($filter->data['segments'] as $s_key => $segments):
                                 if (!isset($records[$s_key])) {
                                     //$records[$s_key] = Record::whereBetween('created_at', [date($segments['from']), date($segments['to'])])->get();
