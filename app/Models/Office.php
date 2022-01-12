@@ -22,4 +22,9 @@ class Office extends Model
     {
         return $this->hasMany(Email::class, 'email', 'email');
     }
+
+    public function links()
+    {
+        return $this->hasMany(Link::class);
+    }
 }
