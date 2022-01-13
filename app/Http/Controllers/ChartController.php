@@ -313,13 +313,20 @@ class ChartController extends Controller
                                 break;
                             case 't4':
                             case 't9':
-                                if ($t_key == 0) {
-                                    // $percentage['red']['count'] += 1;
-                                    $percentage['green']['count'] += 1; //change 1/14/2021
-                                }else  {
-                                    // $percentage['green']['count'] += 1;
-                                    $percentage['red']['count'] += 1; //change 1/14/2021
+                                if ($prime == 19) {
+                                    if ($t_key == 0) {
+                                        $percentage['green']['count'] += 1; //change 1/14/2021
+                                    }else  {
+                                        $percentage['red']['count'] += 1; //change 1/14/2021
+                                    }
+                                }else {
+                                    if ($t_key == 0) {
+                                        $percentage['red']['count'] += 1;
+                                    }else  {
+                                        $percentage['green']['count'] += 1;
+                                    }
                                 }
+                                
                                 unset($percentage['orange']);
                                 break;
                             case 't10':
