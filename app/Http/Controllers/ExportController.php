@@ -210,9 +210,10 @@ class ExportController extends Controller
                     }
                     if ($tmp['selected']) {
                         if ($summary == 'summary') {
-                            // $tmp_result[4+$t_key] += $tmp['index'];
-                            $tmp_result[4+$t_key] += ($t_key + 1);
-                            $total += $tmp['index']; //total
+                            $tmp_result[4+$t_key] += $tmp['value'];
+                            // $tmp_result[4+$t_key] += ($t_key + 1);
+                            $total += $tmp['value']; //total using value
+                            // $total += ($t_key + 1); //total using key
                         }else {
                             $tmp_result[4+$t_key] += 1;//increment selected
                         }
