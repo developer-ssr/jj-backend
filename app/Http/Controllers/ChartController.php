@@ -70,16 +70,24 @@ class ChartController extends Controller
                                 "colour" => 'green'
                             ]
                         ];
-                        if ($office->type == 'country') {
+                        if ($office->type == 'country' || $office->type == 'global') {
                             $res_ids = Link::where('country_code', $office->code)->get()->pluck('link_id')->toArray();
                             info($res_ids);
                             foreach ($filter->data['segments'] as $s_key => $segments):
                                 if (!isset($records[$s_key])) {
                                     //$records[$s_key] = Record::whereBetween('created_at', [date($segments['from']), date($segments['to'])])->get();
-                                    $records[$s_key] = Record::whereDate('created_at', ">=", date($segments['from']))
+                                    if ($office->type == 'country') {
+                                        // country
+                                        $records[$s_key] = Record::whereDate('created_at', ">=", date($segments['from']))
                                                                 ->whereDate('created_at', "<=", date($segments['to']))
                                                                 ->whereIn('participant_id', $res_ids)
                                                                 ->get();
+                                    } else {
+                                        // global
+                                        $records[$s_key] = Record::whereDate('created_at', ">=", date($segments['from']))
+                                                                ->whereDate('created_at', "<=", date($segments['to']))
+                                                                ->get();
+                                    }
                                 }
                                 $tcount = count($records[$s_key]);
                                 $date = Carbon::parse($segments['from'])->format('d M Y');
