@@ -230,7 +230,11 @@ class ExportController extends Controller
         }
         
         if ($summary == 'summary') {
-            $max_point = count($records) * $data_count; //max point
+            if ($data_count > 2) {
+                $max_point = count($records) * $data_count; //max point
+            }else {
+                $max_point = count($records); //max point
+            }
             if ($max_point == 0) {
                 $segment1 = 0;
             }else {

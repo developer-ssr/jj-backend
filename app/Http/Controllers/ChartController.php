@@ -286,7 +286,11 @@ class ChartController extends Controller
             
             if ($tmp_data != null) {
                 if ($max_value == 0) {
-                    $max_value = $tcount * count($tmp_data['data']);
+                    if (count($tmp_data['data']) > 2) {
+                        $max_value = $tcount * count($tmp_data['data']);
+                    }else {
+                        $max_value = $tcount;
+                    }
                 }
                 foreach ($tmp_data['data'] as $t_key => $tmp) {
                     /* if (!isset($points[$t_key])) {
