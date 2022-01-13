@@ -314,9 +314,11 @@ class ChartController extends Controller
                             case 't4':
                             case 't9':
                                 if ($t_key == 0) {
-                                    $percentage['red']['count'] += 1;
+                                    // $percentage['red']['count'] += 1;
+                                    $percentage['green']['count'] += 1; //change 1/14/2021
                                 }else  {
-                                    $percentage['green']['count'] += 1;
+                                    // $percentage['green']['count'] += 1;
+                                    $percentage['red']['count'] += 1; //change 1/14/2021
                                 }
                                 unset($percentage['orange']);
                                 break;
