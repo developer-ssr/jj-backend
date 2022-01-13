@@ -286,7 +286,7 @@ class ChartController extends Controller
                     } */
                     if ($tmp['selected']) {
                         // $points+=($t_key + 1);
-                        $points+=$tmp['index'];
+                        $points+=$tmp['value'];
                         switch ($legend) {
                             case 't3':
                             case 't5':
