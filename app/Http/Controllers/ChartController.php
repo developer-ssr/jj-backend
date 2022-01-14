@@ -357,7 +357,10 @@ class ChartController extends Controller
                                 }
                                 break;
                             default:
-                                # code...
+                                # t6 t7
+                                $percentage['green']['count'] += 1;
+                                unset($percentage['red']);
+                                unset($percentage['orange']);
                                 break;
                         }
                     }
