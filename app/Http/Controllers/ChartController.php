@@ -59,10 +59,6 @@ class ChartController extends Controller
                 // $records = [];//Record::all();
                 $categories = [];
                 foreach ($filter->data['legends'] as $legend) {
-                    if ($legend == 't6' || $legend == 't7') {
-                        continue;
-                    }
-        
                     foreach ($legend['primes'] as $prime) {
                         $code = Str::of($legend['name'].'_'. $prime)->ucfirst();
                         $series_data = [];
@@ -158,7 +154,7 @@ class ChartController extends Controller
                         $this->tops['segment'] = last($series_data);
                         $series[] = [
                             'name' => $code,
-                            'question' => 'How likely would you be to recommend the following to your patients and their parents?',
+                            'question' => $score['question'],
                             'data' => $series_data,
                             'tops' => $this->tops
                         ];
