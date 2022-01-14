@@ -285,9 +285,35 @@ class ChartController extends Controller
                 'name' => 'Red Box %'
             ],
         ];
-        if ($legend == 't6' || $legend == 't7') {
-            unset($percentage['red']);
-            unset($percentage['orange']);
+        if ($legend == 't6') {
+            if ($prime == 1) {
+                unset($percentage['orange']);
+                unset($percentage['green']);
+                $colour = 'red';
+            }else if ($prime == 2) {
+                unset($percentage['red']);
+                unset($percentage['green']);
+                $colour = 'orange';
+            }else {
+                unset($percentage['red']);
+                unset($percentage['orange']);
+                $colour = 'green';
+            }
+            
+        } elseif ($legend == 't7') {
+            if ($prime <= 2) {
+                unset($percentage['orange']);
+                unset($percentage['green']);
+                $colour = 'red';
+            }else if ($prime == 3) {
+                unset($percentage['red']);
+                unset($percentage['green']);
+                $colour = 'orange';
+            }else {
+                unset($percentage['red']);
+                unset($percentage['orange']);
+                $colour = 'green';
+            }
         }
         $tcount = count($records);
         $tmp_data = [];
@@ -362,7 +388,7 @@ class ChartController extends Controller
                                 break;
                             default:
                                 # t6 t7
-                                $percentage['green']['count'] += 1;
+                                $percentage[$colour]['count'] += 1;
                                 break;
                         }
                     }
