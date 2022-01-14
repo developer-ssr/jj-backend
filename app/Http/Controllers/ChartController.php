@@ -146,6 +146,9 @@ class ChartController extends Controller
                             }
                         }
                         
+                        if (!isset($score)) {
+                            return response('No links or segments', 500);
+                        }
                         foreach ($score['percentage'] as $colour =>  $percent) {
                             if ($percent['value'] >= $this->tops['highest']['value']) {
                                 $this->tops['highest']['value'] = $percent['value'];
