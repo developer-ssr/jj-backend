@@ -59,6 +59,10 @@ class ChartController extends Controller
                 // $records = [];//Record::all();
                 $categories = [];
                 foreach ($filter->data['legends'] as $legend) {
+                    if ($legend == 't6' || $legend == 't7') {
+                        continue;
+                    }
+        
                     foreach ($legend['primes'] as $prime) {
                         $code = Str::of($legend['name'].'_'. $prime)->ucfirst();
                         $series_data = [];
@@ -372,6 +376,7 @@ class ChartController extends Controller
 
     public function getQuestion($legend) 
     {
+        $choices = [];
         switch ($legend) {
             case 't3':
                 $dimension = 'Satisfaction';
@@ -384,6 +389,26 @@ class ChartController extends Controller
             case 't5':
                 $dimension = 'Brand';
                 $question = 'How likely would you be to recommend the following to your patients and their parents?';
+                break;
+            case 't6':
+                $dimension = '';
+                $question = 'Now we are going to ask you a little about the conversations you may have with the parents of your patients between 5-18 years. Please indicate if you agree with the following statement:  Abiliti HealthCaring Conversations, ISIGHT Model, provides me with usable strategies for engaging in high quality conversations with my patients.';
+                $choices = [
+                    'I DO NOT USE the HealthCaringTM Conversations ISIGHT Model',
+                    'NO, I DO NOT agree with HealthCaringTM Conversations ISIGHT Model',
+                    'YES, I agree with HealthCaringTM Conversations ISIGHT Model'
+                ];
+                break;
+            case 't7':
+                $dimension = '';
+                $question = 'For your patients between 5-18 years of age, please estimate the percent of parents/patients you approach to discuss myopia management as a treatment option during the first visit.';
+                $choices = [
+                    'None',
+                    'About 25%',
+                    'About 50%',
+                    'About 75%',
+                    'Virtually all of my patients'
+                ];
                 break;
             case 't8':
                 $dimension = 'HC2 Behavior freq.';
@@ -402,6 +427,6 @@ class ChartController extends Controller
                 $question = 'How likely would you be to recommend the following to your patients and their parents?';
                 break;
         }
-        return ['question' => $question, 'dimension' => $dimension];
+        return ['question' => $question, 'dimension' => $dimension, 'choices' => $choices];
     }
 }
