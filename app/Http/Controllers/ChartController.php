@@ -370,13 +370,19 @@ class ChartController extends Controller
         $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
         $question = $this->getQuestion($legend);
         $equivalent = $tmp_data['prime'] ?? null;
+        if ($legend == 't6' || $legend == 't7') {
+            $targets = $question['choices'];
+        }else {
+            $targets = $tmp_data != null ? collect($tmp_data['data'])->pluck('equivalent'): [];
+        }
+        
         return [
             'gscore' => ceil($score),
             'prime' => $legend == 't5' ? ($tmp_data['equivalent'] ?? '').' '.$equivalent : $equivalent,
             'percentage' => $percentage,
             'question' => $question['question'],
             'dimension' => $question['dimension'],
-            'targets' => $tmp_data != null ? collect($tmp_data['data'])->pluck('equivalent'): []
+            'targets' => $targets
         ];
     }    
 
