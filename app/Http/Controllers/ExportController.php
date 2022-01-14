@@ -135,7 +135,7 @@ class ExportController extends Controller
             }
             $tmp_data['targets'][] = 'TOTAL Points';   
             $tmp_data['targets'][] = 'Max Points (max value * total completes)';    
-            $tmp_data['targets'][] = 'Segment 1';
+            $tmp_data['targets'][] = 'Invite 1';
             $headers[$t] = $headers[$t]->merge($tmp_data['targets'] ?? [])->toArray();
             
         }
