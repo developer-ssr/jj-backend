@@ -461,7 +461,6 @@ class ChartController extends Controller
                     'NO, I DO NOT agree with HealthCaringTM Conversations ISIGHT Model',
                     'YES, I agree with HealthCaringTM Conversations ISIGHT Model'
                 ];
-                $tmp_data['data']
                 break;
             case 't7':
                 $choices = [
