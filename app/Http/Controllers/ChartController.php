@@ -288,12 +288,20 @@ class ChartController extends Controller
         $tcount = count($records);
         $tmp_data = [];
         foreach ($records as $record) {
-            if (isset($record->data[$legend]['responses'])) {
-                $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime);
-            }else {
-                $tmp_data = null;
+            switch ($legend) {
+                case 't6':
+                case 't7':
+                    $tmp_data = $this->getExpData($legend, $record->data[$legend], $prime);
+                    break;
+                default:
+                    if (isset($record->data[$legend]['responses'])) {
+                        $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime);
+                    }else {
+                        $tmp_data = null;
+                    }                    
+                    break;
             }
-            
+
             if ($tmp_data != null) {
                 if ($max_value == 0) {
                     if (count($tmp_data['data']) > 2) {
@@ -355,6 +363,7 @@ class ChartController extends Controller
                     }
                 }
             }
+            
         }
         
         if ($tcount > 0) {
@@ -440,5 +449,47 @@ class ChartController extends Controller
                 break;
         }
         return ['question' => $question, 'dimension' => $dimension, 'choices' => $choices];
+    }
+
+    public function getExpData($legend, $value, $prime) 
+    {
+        $choices = [];
+        switch ($legend) {
+            case 't6':
+                $choices = [
+                    'I DO NOT USE the HealthCaringTM Conversations ISIGHT Model',
+                    'NO, I DO NOT agree with HealthCaringTM Conversations ISIGHT Model',
+                    'YES, I agree with HealthCaringTM Conversations ISIGHT Model'
+                ];
+                $tmp_data['data']
+                break;
+            case 't7':
+                $choices = [
+                    'None',
+                    'About 25%',
+                    'About 50%',
+                    'About 75%',
+                    'Virtually all of my patients'
+                ];
+                break;
+            default:
+                break;
+        }
+        $index = $prime - 1;
+        $tmp_data = [
+            'index' => $prime,
+            'prime' => $choices[$index],
+            'equivalent' => $choices[$index],
+            'data' => [
+                [
+                    "target" => '',
+                    "equivalent" => '',
+                    "index" => $prime,
+                    "value" => $prime
+                    "selected" => $value == $prime ? true: false
+                ]
+            ],
+        ]; 
+        return $tmp_data;
     }
 }

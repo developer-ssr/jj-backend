@@ -64,10 +64,16 @@ class FilterController extends Controller
                 'Wave NighLens',
             ],
             "t6" => [
-                "Abiliti HealthCaring Conversations, ISIGHT Model, provides me with usable strategies for engaging in high quality conversations with my patients."
+                "I DO NOT USE the HealthCaringTM Conversations ISIGHT Model",
+                "NO, I DO NOT agree with HealthCaringTM Conversations ISIGHT Model",
+                "YES, I agree with HealthCaringTM Conversations ISIGHT Model"
             ],
             "t7" => [
-                "For your patients between 5-18 years of age, please estimate the percent of parents/patients you approach to discuss myopia management as a treatment option during the first visit."
+                "None",
+                "About 25%",
+                "About 50%",
+                "About 75%",
+                "Virtually all of my patients"
             ],
             "t8" => [
                 "Assess parents’ values and motivations for their child before providing myopia management recommendations.",
