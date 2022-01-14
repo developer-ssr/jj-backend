@@ -417,7 +417,7 @@ class ChartController extends Controller
         $question = $this->getQuestion($legend);
         $equivalent = $tmp_data['prime'] ?? null;
         if ($legend == 't6' || $legend == 't7') {
-            $targets = $question['choices'];
+            $targets = [''];
         }else {
             $targets = $tmp_data != null ? collect($tmp_data['data'])->pluck('equivalent'): [];
         }
