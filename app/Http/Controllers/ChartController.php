@@ -42,7 +42,8 @@ class ChartController extends Controller
         $links = Link::where('office_id', $office->id)->get();
         // $filters = Filter::all();
         $data = [];
-        
+        $do_update = true;
+        $matched = false; // for cache, check records count
         foreach ($filters as $key => $filter) {
             $qry = Chart::where('filter_id',$filter->id);
             if(!$qry->exists()){
@@ -50,11 +51,17 @@ class ChartController extends Controller
                     'title' => $office->name,
                     'filter_id' => $filter->id
                 ]);
+                $do_update = true;
             }else {
                 $chart = $qry->first();
+                if ($matched) {
+                    $do_update = false;
+                }else {
+                    $do_update = true;
+                }
             }
 
-            // if ($request->update_series == true) {
+            if ($do_update == true) {
                 $series = [];
                 // $records = [];//Record::all();
                 $categories = [];
@@ -166,7 +173,7 @@ class ChartController extends Controller
                     'title' => $office->name,
                     'office_type' => $office->type
                 ]);
-            // }
+            }
 
             $data[] = $chart->only(['id', 'title', 'series', 'categories', 'office_type']);
         }
