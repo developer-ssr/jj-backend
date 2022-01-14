@@ -285,6 +285,10 @@ class ChartController extends Controller
                 'name' => 'Red Box %'
             ],
         ];
+        if ($legend == 't6' || $legend == 't7') {
+            unset($percentage['red']);
+            unset($percentage['orange']);
+        }
         $tcount = count($records);
         $tmp_data = [];
         foreach ($records as $record) {
@@ -359,8 +363,6 @@ class ChartController extends Controller
                             default:
                                 # t6 t7
                                 $percentage['green']['count'] += 1;
-                                unset($percentage['red']);
-                                unset($percentage['orange']);
                                 break;
                         }
                     }
