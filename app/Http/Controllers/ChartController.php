@@ -484,7 +484,7 @@ class ChartController extends Controller
                     "target" => '',
                     "equivalent" => '',
                     "index" => $prime,
-                    "value" => $prime
+                    "value" => $prime,
                     "selected" => $value == $prime ? true: false
                 ]
             ],
