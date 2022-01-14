@@ -362,7 +362,7 @@ class ChartController extends Controller
         $equivalent = $tmp_data['prime'] ?? null;
         return [
             'gscore' => ceil($score),
-            'prime' => $legend == 't5' ? $tmp_data['equivalent'].' '.$equivalent : $equivalent,
+            'prime' => $legend == 't5' ? ($tmp_data['equivalent'] ?? '').' '.$equivalent : $equivalent,
             'percentage' => $percentage,
             'question' => $question['question'],
             'dimension' => $question['dimension'],
