@@ -286,7 +286,10 @@ class ChartController extends Controller
             ],
         ];
         if ($legend == 't6') {
-            if ($prime == 1) {
+            unset($percentage['red']);
+            unset($percentage['orange']);
+            $colour = 'green';
+            /* if ($prime == 1) {
                 unset($percentage['orange']);
                 unset($percentage['green']);
                 $colour = 'red';
@@ -298,10 +301,13 @@ class ChartController extends Controller
                 unset($percentage['red']);
                 unset($percentage['orange']);
                 $colour = 'green';
-            }
+            } */
             
         } elseif ($legend == 't7') {
-            if ($prime <= 2) {
+            unset($percentage['red']);
+            unset($percentage['orange']);
+            $colour = 'green';
+            /* if ($prime <= 2) {
                 unset($percentage['orange']);
                 unset($percentage['green']);
                 $colour = 'red';
@@ -313,7 +319,7 @@ class ChartController extends Controller
                 unset($percentage['red']);
                 unset($percentage['orange']);
                 $colour = 'green';
-            }
+            } */
         }
         $tcount = count($records);
         $tmp_data = [];
