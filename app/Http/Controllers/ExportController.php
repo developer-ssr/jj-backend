@@ -322,7 +322,7 @@ class ExportController extends Controller
                     case 't8':
                     case 't9':
                     case 't10':
-                        $responses = $record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
+                        $responses = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
                         foreach ($responses['data'] as $reskey => $resdata) {
                             if ($resdata['selected']) {
                                 $val = $reskey + 1;
