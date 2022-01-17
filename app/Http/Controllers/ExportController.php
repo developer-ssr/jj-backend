@@ -109,10 +109,8 @@ class ExportController extends Controller
             $data = collect($data)->prepend($headers)->toArray(); 
         } else {
             $tmp_data = $this->exportTracker($chart, $legends);
-            dd($tmp_data);
             $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();;
-            $data = collect($data)->prepend($headers)->toArray(); 
-            dd($data);
+            $data = collect($tmp_data['results'])->prepend($headers)->toArray(); 
         }
         
         return Excel::download(CsvExport::new($data), $chart->title."_".$summary.".xlsx");
@@ -354,7 +352,7 @@ class ExportController extends Controller
             }
             $results[] = $tmp;
         }
-        return $results;
+        return ['results' => $results, 'headers' => collect($headers)->keys()];
     }
 
     public function getRepondentLevel($records, $legend) {
