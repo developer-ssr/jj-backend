@@ -277,11 +277,10 @@ class ExportController extends Controller
 
         foreach ($legends as $legend) {
             $series = collect($chart->series)->firstWhere('name', $legend);
-            if (!isset($series['data']['record_ids'])) {
-                dd($series);
-            }
-            $record_ids = $record_ids->merge($series['data']['record_ids']);       
-            $headers[$legend] = 0;
+            foreach ($series['data'] as $data) {
+                $record_ids = $record_ids->merge($data['record_ids']);
+            }    
+            $headers[$legend] = '-';
         }
 
         $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
