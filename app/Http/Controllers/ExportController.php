@@ -111,6 +111,7 @@ class ExportController extends Controller
             $data = $this->exportTracker($chart, $legends);
             $headers = ['','','',''];
             $data = collect($data)->prepend($headers)->toArray(); 
+            dd($data);
         }
         
         return Excel::download(CsvExport::new($data), $chart->title."_".$summary.".xlsx");
