@@ -109,6 +109,7 @@ class ExportController extends Controller
             $data = collect($data)->prepend($headers)->toArray(); 
         } else {
             $tmp_data = $this->exportTracker($chart, $legends);
+            dd($tmp_data);
             $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();;
             $data = collect($data)->prepend($headers)->toArray(); 
             dd($data);
@@ -271,16 +272,16 @@ class ExportController extends Controller
 
     public function exportTracker($chart, $legends) 
     {
-        $tmp_results = [];
+        $results = [];
         $headers = [];
         $record_ids = collect([]);
 
-        $headers['T2_1'] = '-';
-        $headers['T2_2'] = '-';
-        $headers['T2_3'] = '-';
+        $headers['T2_1'] = 'b3_1';
+        $headers['T2_2'] = 'b3_2';
+        $headers['T2_3'] = 'b3_3';
 
         ksort($legends, 4);// 4 = SORT_NATURAL
-        
+
         foreach ($legends as $legend) {
             $series = collect($chart->series)->firstWhere('name', $legend);
             foreach ($series['data'] as $data) { //loop for segment
@@ -289,27 +290,18 @@ class ExportController extends Controller
             $headers[$legend] = '-';
         }
         
-        $headers['T11'] = '-';
-        $headers['T12'] = '-';
-        $headers['F1_1'] = '-';
-        $headers['F1_2'] = '-';
-        $headers['F1_3'] = '-';
-        $headers['F1_4'] = '-';
-        $headers['F1_5'] = '-';
-        $headers['F2_1'] = '-';
-        $headers['F2_2'] = '-';
-        $headers['F2_3'] = '-';
-        $headers['F2_4'] = '-';
-        $headers['F2_5'] = '-';
-
-        // ksort($headers, 4);// 4 = SORT_NATURAL
-        dd($headers);
-        /* foreach ($header_keys as $ts) {
-            $results[] = $headers[$ts];//assign header
-            foreach ($tmp_results[$ts] as $value) {
-                $results[] = $value;
-            }
-        } */
+        $headers['T11'] = 'd1';
+        $headers['T12'] = 'd2';
+        $headers['F1_1'] = 'a1';
+        $headers['F1_2'] = 'a1';
+        $headers['F1_3'] = 'a1';
+        $headers['F1_4'] = 'a1';
+        $headers['F1_5'] = 'a1';
+        $headers['F2_1'] = 'a2';
+        $headers['F2_2'] = 'a2';
+        $headers['F2_3'] = 'a2';
+        $headers['F2_4'] = 'a2';
+        $headers['F2_5'] = 'a2';
 
         $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
         foreach ($records as $record) {
@@ -319,23 +311,48 @@ class ExportController extends Controller
                 $record->meta['query']['b2_1'] ?? '-',
                 $record->meta['query']['b2_2'] ?? '-'
             ];
-            foreach (generator($headers) as $header) {
-                // $tmp[] = $record['url_data']['internal'][$header] ?? '-';
-                $response = collect($record['responses'])->firstWhere('VAR', $header);
-                $tmp[] = $response[$display] ?? $record['url_data']['internal'][$header] ?? '-';
+            foreach ($headers as $hkey => $header) {
+                $ts = Str::of($hkey)->explode('_');
+                $t = Str::lower($tmp[0]);//t3
+                $prime = $tmp[1] ?? null;
+                switch ($t) {
+                    case 't3':
+                    case 't4':
+                    case 't5':
+                    case 't8':
+                    case 't9':
+                    case 't10':
+                        $responses = $record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
+                        foreach ($responses['data'] as $reskey => $resdata) {
+                            if ($resdata['selected']) {
+                                $val = $reskey + 1;
+                                break 1;
+                            }
+                        }
+                        break;
+                    case 't6':
+                    case 't7':
+                        if ($prime == $record->data[$t]) {
+                            $val = 1;
+                        }else {
+                            $val = 0;
+                        }
+                        break;
+                    case 't11':
+                    case 't12':
+                        $val = $record->meta['query'][$header];
+                        break;
+                    default:
+                        if ($record->meta['query'][$header] == $prime) {
+                            $val = 1;
+                        }else {
+                            $val = 0;
+                        }
+                        break;
+                }
+                $tmp[] = $val ?? '-';
             }
-            $tmp_data[] = $tmp;
-        }
-
-        $tmp_results[$t][] = $this->getRepondentLevel($records, $legend);
-        $results = [];
-        $header_keys = collect($headers)->keys()->toArray();
-        natsort($header_keys);//sort list
-        foreach ($header_keys as $ts) {
-            $results[] = $headers[$ts];//assign header
-            foreach ($tmp_results[$ts] as $value) {
-                $results[] = $value;
-            }
+            $results[] = $tmp;
         }
         return $results;
     }
