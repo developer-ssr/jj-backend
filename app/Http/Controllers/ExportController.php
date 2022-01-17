@@ -313,8 +313,8 @@ class ExportController extends Controller
             ];
             foreach ($headers as $hkey => $header) {
                 $ts = Str::of($hkey)->explode('_');
-                $t = Str::lower($tmp[0]);//t3
-                $prime = $tmp[1] ?? null;
+                $t = Str::lower($ts[0]);//t3
+                $prime = $ts[1] ?? null;
                 switch ($t) {
                     case 't3':
                     case 't4':
@@ -343,9 +343,6 @@ class ExportController extends Controller
                         $val = $record->meta['query'][$header];
                         break;
                     default:
-                        if ($header == '-') {
-                            dd($hkey);
-                        }
                         if ($record->meta['query'][$header] == $prime) {
                             $val = 1;
                         }else {
