@@ -195,11 +195,19 @@ class ExportController extends Controller
         $data_count = 0;
         $total = 0;
         foreach ($records as $record) {
-            if (isset($record->data[$t]['responses'])) {
-                $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
-                $data_count = count($tmp_data['data']);
-            } else {
-                $tmp_data = null;
+            switch ($t) {
+                case 't6':
+                case 't7':
+                    $tmp_data = Chart::getExpData($legend, $record->data[$legend], $prime);
+                    break;
+                default:
+                    if (isset($record->data[$t]['responses'])) {
+                        $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
+                        $data_count = count($tmp_data['data']);
+                    } else {
+                        $tmp_data = null;
+                    }                    
+                    break;
             }
 
             if ($tmp_data != null) {
