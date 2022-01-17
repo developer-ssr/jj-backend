@@ -109,7 +109,7 @@ class ExportController extends Controller
             $data = collect($data)->prepend($headers)->toArray(); 
         } else {
             $data = $this->exportTracker($chart, $legends);
-            $headers = ['','','',''];
+            $headers = ['Respondent ID','Country','Name','Email Address'];
             $data = collect($data)->prepend($headers)->toArray(); 
             dd($data);
         }
@@ -271,6 +271,7 @@ class ExportController extends Controller
 
     public function exportTracker($chart, $legends) 
     {
+        dd($legends);
         $tmp_results = [];
         $headers = [];
         foreach ($legends as $legend) {
