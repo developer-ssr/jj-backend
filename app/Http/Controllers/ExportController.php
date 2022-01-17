@@ -273,30 +273,17 @@ class ExportController extends Controller
     {
         $tmp_results = [];
         $headers = [];
+        $record_ids = collect([]);
+
         foreach ($legends as $legend) {
-            $tmp = Str::of($legend)->explode('_');
-            $t = Str::lower($tmp[0]);//t3
-            $prime = $tmp[1];
-            $record_ids = collect([]);
             $series = collect($chart->series)->firstWhere('name', $legend);
-            $tmp_data = [];
-            dd($series['data']);
-            foreach ($series['data'] as $key => $data) {
-                $headers[] = $legend.'.'.$key;
-                if (count($tmp_data) < count($data)) {
-                    $tmp_data = $data; //find proper data
-                }
-                $record_ids = $record_ids->merge($data['record_ids']);
-            }
-            $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
-            $tmp_results[$t][] = $this->getData($records, $t, $prime, $tmp_data, 'respondent');
-            while (count($tmp_data['targets']) < 5) {//assign spacing
-                $tmp_data['targets'][] = '';
-            }
-            $tmp_data['targets'][] = 'TOTAL Completes';       
-            $headers[$t] = $headers[$t]->merge($tmp_data['targets'] ?? [])->toArray();
-            
+            $record_ids = $record_ids->merge($series['data']['record_ids']);       
+            $headers[$legend] = 0;
         }
+
+        $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
+        dd($records);
+        $tmp_results[$t][] = $this->getRepondentLevel($records, $legend);
         $results = [];
         $header_keys = collect($headers)->keys()->toArray();
         natsort($header_keys);//sort list
@@ -307,5 +294,27 @@ class ExportController extends Controller
             }
         }
         return $results;
+    }
+
+    public function getRepondentLevel($records, $legend) {
+        foreach (generator($records) as $record) {
+            $tmp = [
+                $record['participant_id'],
+                $record['agent']['device'] ?? '-',
+                $record['agent']['browser'] ?? '-',
+                $record['agent']['ip'] ?? '-',
+                Carbon::parse($record['created_at'])->toDateTimeString(),
+                Carbon::parse($record['updated_at'])->toDateTimeString(),
+                date('H:i:s',
+                    strtotime(Carbon::parse($record['updated_at'])->diff(Carbon::parse($record['updated_at']))->format('%H:%I:%S'))
+                )//Duration
+            ];
+            foreach (generator($headers) as $header) {
+                // $tmp[] = $record['url_data']['internal'][$header] ?? '-';
+                $response = collect($record['responses'])->firstWhere('VAR', $header);
+                $tmp[] = $response[$display] ?? $record['url_data']['internal'][$header] ?? '-';
+            }
+            $tmp_data[] = $tmp;
+        }
     }
 }
