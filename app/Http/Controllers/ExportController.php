@@ -304,7 +304,7 @@ class ExportController extends Controller
         $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
         foreach ($records as $record) {
             $tmp = [
-                $record->meta['query']['id'],
+                $record->participant_id,
                 Chart::getCountry($record->country),
                 $record->meta['query']['b2_1'] ?? '-',
                 $record->meta['query']['b2_2'] ?? '-'
@@ -338,9 +338,10 @@ class ExportController extends Controller
                         break;
                     case 't11':
                     case 't12':
+                    case 't2':
                         $val = $record->meta['query'][$header];
                         break;
-                    default:
+                    default: //f
                         if ($record->meta['query'][$header] == $prime) {
                             $val = 1;
                         }else {
