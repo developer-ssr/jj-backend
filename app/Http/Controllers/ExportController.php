@@ -277,14 +277,53 @@ class ExportController extends Controller
 
         foreach ($legends as $legend) {
             $series = collect($chart->series)->firstWhere('name', $legend);
-            foreach ($series['data'] as $data) {
+            foreach ($series['data'] as $data) { //loop for segment
                 $record_ids = $record_ids->merge($data['record_ids']);
             }    
             $headers[$legend] = '-';
         }
 
+        $headers['T2_1'] = '-';
+        $headers['T2_2'] = '-';
+        $headers['T2_3'] = '-';
+        $headers['T11'] = '-';
+        $headers['T12'] = '-';
+        $headers['F1_1'] = '-';
+        $headers['F1_2'] = '-';
+        $headers['F1_3'] = '-';
+        $headers['F1_4'] = '-';
+        $headers['F1_5'] = '-';
+        $headers['F2_1'] = '-';
+        $headers['F2_2'] = '-';
+        $headers['F2_3'] = '-';
+        $headers['F2_4'] = '-';
+        $headers['F2_5'] = '-';
+
+        ksort($headers, 4);// 4 = SORT_NATURAL
+        dd($headers);
+        /* foreach ($header_keys as $ts) {
+            $results[] = $headers[$ts];//assign header
+            foreach ($tmp_results[$ts] as $value) {
+                $results[] = $value;
+            }
+        } */
+
         $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
-        dd($records);
+        foreach ($records as $record) {
+            $tmp = [
+                $record->meta['query']['id'],
+                Chart::getCountry($record->country),
+                $record->meta['query']['b2_1'] ?? '-',
+                $record->meta['query']['b2_2'] ?? '-'
+            ];
+            foreach (generator($headers) as $header) {
+                // $tmp[] = $record['url_data']['internal'][$header] ?? '-';
+                $response = collect($record['responses'])->firstWhere('VAR', $header);
+                $tmp[] = $response[$display] ?? $record['url_data']['internal'][$header] ?? '-';
+            }
+            $tmp_data[] = $tmp;
+        }
+
         $tmp_results[$t][] = $this->getRepondentLevel($records, $legend);
         $results = [];
         $header_keys = collect($headers)->keys()->toArray();
