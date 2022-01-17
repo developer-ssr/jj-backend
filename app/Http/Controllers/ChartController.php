@@ -185,7 +185,7 @@ class ChartController extends Controller
                 ]);
             }
 
-            $data[] = $chart->only(['id', 'title', 'series', 'categories', 'office_type']);
+            $data[] = $chart->only(['id', 'title', 'series', 'categories', 'office_type', 'country']);
         }
         return response()->json($data[0]);
     }
