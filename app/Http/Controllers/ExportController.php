@@ -198,7 +198,7 @@ class ExportController extends Controller
             switch ($t) {
                 case 't6':
                 case 't7':
-                    $tmp_data = Chart::getExpData($legend, $record->data[$legend], $prime);
+                    $tmp_data = Chart::getExpData($t, $record->data[$t], $prime);
                     break;
                 default:
                     if (isset($record->data[$t]['responses'])) {
