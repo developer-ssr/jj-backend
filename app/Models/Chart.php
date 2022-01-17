@@ -56,4 +56,25 @@ class Chart extends Model
         ]; 
         return $tmp_data;
     }
+
+    public static function getCountry($code) {
+        switch ($code) {
+            case 'us':
+                $country = 'USA';
+                break;
+            case 'sg':
+                $country = 'Singapore';
+                break;
+            case 'hk':
+                $country = 'Hongkong';
+                break;
+            case 'ca':
+                $country = 'Canada';
+                break;
+            default:
+                $country = '';
+                break;
+        }
+        return $country;
+    }
 }

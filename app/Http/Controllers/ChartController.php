@@ -65,6 +65,7 @@ class ChartController extends Controller
                 $series = [];
                 // $records = [];//Record::all();
                 $categories = [];
+                $country = '';
                 foreach ($filter->data['legends'] as $legend) {
                     foreach ($legend['primes'] as $prime) {
                         $code = Str::of($legend['name'].'_'. $prime)->ucfirst();
@@ -95,6 +96,10 @@ class ChartController extends Controller
                                                                 ->whereDate('created_at', "<=", date($segments['to']))
                                                                 ->get();
                                     }
+                                    if (count($records[$s_key]) > 0) {
+                                        $country = $records[$s_key][0]->country;
+                                    }
+                                    
                                 }
                                 $tcount = count($records[$s_key]);
                                 $date = Carbon::parse($segments['from'])->format('d M Y');
@@ -125,6 +130,7 @@ class ChartController extends Controller
                                 if ($tcount > 0) {
                                     if (!isset($categories[$segment])) {
                                         $categories[$segment] = $records[$s_key][0]->created_at->format("d M Y");//'Segment '.($segment + 1);
+                                        $country = $records[$s_key][0]->country;
                                     }
                                     $score = $this->getScore($records[$s_key], $legend['name'], $prime);
                                     $date = $link->created_at->format("d M Y");
@@ -174,7 +180,8 @@ class ChartController extends Controller
                     'series' => $series,
                     'categories' => $categories,
                     'title' => $office->name,
-                    'office_type' => $office->type
+                    'office_type' => $office->type,
+                    'country' => Chart::getCountry($country)
                 ]);
             }
 

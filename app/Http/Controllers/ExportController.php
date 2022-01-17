@@ -98,15 +98,21 @@ class ExportController extends Controller
         }else {
             $legends = json_decode($request->legends);
         }
-        
+
         if ($summary == 'summary') {
             $data = $this->exportSummary($chart, $legends);
-        }else {
+            $headers = ['Dimension','','','Question Text','','','Answer Value'];
+            $data = collect($data)->prepend($headers)->toArray(); 
+        }elseif($summary == 'respondent') {
             $data = $this->exportRespondent($chart, $legends);
+            $headers = ['Dimension','','','Question Text','','','Answer Value'];
+            $data = collect($data)->prepend($headers)->toArray(); 
+        } else {
+            $data = $this->exportTracker($chart, $legends);
+            $headers = ['','','',''];
+            $data = collect($data)->prepend($headers)->toArray(); 
         }
-        $headers = ['Dimension','','','Question Text','','','Answer Value'];
-        $data = collect($data)->prepend($headers)->toArray(); 
-
+        
         return Excel::download(CsvExport::new($data), $chart->title."_".$summary.".xlsx");
     }
 
@@ -260,5 +266,44 @@ class ExportController extends Controller
         
 
         return $tmp_result->toArray();
+    }
+
+    public function exportTracker($chart, $legends) 
+    {
+        $tmp_results = [];
+        $headers = [];
+        foreach ($legends as $legend) {
+            $tmp = Str::of($legend)->explode('_');
+            $t = Str::lower($tmp[0]);//t3
+            $prime = $tmp[1];
+            $record_ids = collect([]);
+            $series = collect($chart->series)->firstWhere('name', $legend);
+            $tmp_data = [];
+            foreach ($series['data'] as $data) {
+                $headers[$t] = collect([$data['dimension'], $tmp[0], $tmp[0], $data['question']]);
+                if (count($tmp_data) < count($data)) {
+                    $tmp_data = $data; //find proper data
+                }
+                $record_ids = $record_ids->merge($data['record_ids']);
+            }
+            $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
+            $tmp_results[$t][] = $this->getData($records, $t, $prime, $tmp_data, 'respondent');
+            while (count($tmp_data['targets']) < 5) {//assign spacing
+                $tmp_data['targets'][] = '';
+            }
+            $tmp_data['targets'][] = 'TOTAL Completes';       
+            $headers[$t] = $headers[$t]->merge($tmp_data['targets'] ?? [])->toArray();
+            
+        }
+        $results = [];
+        $header_keys = collect($headers)->keys()->toArray();
+        natsort($header_keys);//sort list
+        foreach ($header_keys as $ts) {
+            $results[] = $headers[$ts];//assign header
+            foreach ($tmp_results[$ts] as $value) {
+                $results[] = $value;
+            }
+        }
+        return $results;
     }
 }
