@@ -279,6 +279,8 @@ class ExportController extends Controller
         $headers['T2_2'] = '-';
         $headers['T2_3'] = '-';
 
+        ksort($legends, 4);// 4 = SORT_NATURAL
+        
         foreach ($legends as $legend) {
             $series = collect($chart->series)->firstWhere('name', $legend);
             foreach ($series['data'] as $data) { //loop for segment
