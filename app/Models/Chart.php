@@ -49,7 +49,7 @@ class Chart extends Model
                     "target" => '',
                     "equivalent" => '',
                     "index" => $prime,
-                    "value" => $prime,
+                    "value" => 1,//$prime,
                     "selected" => $value == $prime ? true: false
                 ]
             ],
