@@ -108,8 +108,8 @@ class ExportController extends Controller
             $headers = ['Dimension','','','Question Text','','','Answer Value'];
             $data = collect($data)->prepend($headers)->toArray(); 
         } else {
-            $data = $this->exportTracker($chart, $legends);
-            $headers = ['Respondent ID','Country','Name','Email Address'];
+            $tmp_data = $this->exportTracker($chart, $legends);
+            $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();;
             $data = collect($data)->prepend($headers)->toArray(); 
             dd($data);
         }
@@ -271,7 +271,6 @@ class ExportController extends Controller
 
     public function exportTracker($chart, $legends) 
     {
-        dd($legends);
         $tmp_results = [];
         $headers = [];
         foreach ($legends as $legend) {
@@ -281,8 +280,9 @@ class ExportController extends Controller
             $record_ids = collect([]);
             $series = collect($chart->series)->firstWhere('name', $legend);
             $tmp_data = [];
-            foreach ($series['data'] as $data) {
-                $headers[$t] = collect([$data['dimension'], $tmp[0], $tmp[0], $data['question']]);
+            dd($series['data']);
+            foreach ($series['data'] as $key => $data) {
+                $headers[] = $legend.'.'.$key;
                 if (count($tmp_data) < count($data)) {
                     $tmp_data = $data; //find proper data
                 }
