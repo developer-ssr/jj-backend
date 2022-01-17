@@ -275,6 +275,10 @@ class ExportController extends Controller
         $headers = [];
         $record_ids = collect([]);
 
+        $headers['T2_1'] = '-';
+        $headers['T2_2'] = '-';
+        $headers['T2_3'] = '-';
+
         foreach ($legends as $legend) {
             $series = collect($chart->series)->firstWhere('name', $legend);
             foreach ($series['data'] as $data) { //loop for segment
@@ -282,10 +286,7 @@ class ExportController extends Controller
             }    
             $headers[$legend] = '-';
         }
-
-        $headers['T2_1'] = '-';
-        $headers['T2_2'] = '-';
-        $headers['T2_3'] = '-';
+        
         $headers['T11'] = '-';
         $headers['T12'] = '-';
         $headers['F1_1'] = '-';
@@ -299,7 +300,7 @@ class ExportController extends Controller
         $headers['F2_4'] = '-';
         $headers['F2_5'] = '-';
 
-        ksort($headers, 4);// 4 = SORT_NATURAL
+        // ksort($headers, 4);// 4 = SORT_NATURAL
         dd($headers);
         /* foreach ($header_keys as $ts) {
             $results[] = $headers[$ts];//assign header
