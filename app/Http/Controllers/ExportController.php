@@ -343,6 +343,9 @@ class ExportController extends Controller
                         $val = $record->meta['query'][$header];
                         break;
                     default:
+                        if ($header == '-') {
+                            dd($hkey);
+                        }
                         if ($record->meta['query'][$header] == $prime) {
                             $val = 1;
                         }else {
