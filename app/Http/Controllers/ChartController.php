@@ -368,6 +368,9 @@ class ChartController extends Controller
                         // $points+=($t_key + 1);
                         $points+=$tmp['value'];
                         switch ($legend) {
+                            case 't2':
+                                $percentage[$colour]['count'] += $tmp['value'];
+                            break;
                             case 't3':
                             case 't5':
                             case 't8':
@@ -419,7 +422,11 @@ class ChartController extends Controller
         
         if ($tcount > 0) {
             foreach ($percentage as $key =>  $percent) {
-                $percentage[$key]['value'] = floor(($percent['count'] / $tcount) * 100);
+                if ($legend == 't2') {
+                    $percentage[$key]['value'] = round($percent['count'] / $tcount);
+                }else {
+                    $percentage[$key]['value'] = round(($percent['count'] / $tcount) * 100);
+                }
                 // $percent['value'] = ceil($percent['count'] / $tcount);
                 /* if ($percentage[$key]['value'] > $this->tops['colours'][$key]) {
                     $this->tops['colours'][$key] = $percentage[$key]['value'];
@@ -437,7 +444,7 @@ class ChartController extends Controller
         }
         
         return [
-            'gscore' => floor($score),
+            'gscore' => round($score),
             'prime' => $legend == 't5' ? ($tmp_data['equivalent'] ?? '').' '.$equivalent : $equivalent,
             'percentage' => $percentage,
             'question' => $question['question'],

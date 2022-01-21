@@ -71,8 +71,8 @@ class Chart extends Model
                     "target" => '',
                     "equivalent" => '',
                     "index" => $prime,
-                    "value" => 1,//$prime,
-                    "selected" => $value == $prime ? true: false
+                    "value" => $legend == 't2' ? $value: 1,//$prime,
+                    "selected" => $legend == 't2' ? true : ($value == $prime ? true: false)
                 ]
             ],
         ]; 
