@@ -293,10 +293,10 @@ class ExportController extends Controller
                     $headers[$legend] = 'b3_1';
                     break;
                 case 'T2_2':
-                    $headers[$legend] = 'b3_1';
+                    $headers[$legend] = 'b3_2';
                     break;
                 case 'T2_3':
-                    $headers[$legend] = 'b3_1';
+                    $headers[$legend] = 'b3_3';
                     break;
                 case 'T11_1':
                     $headers[$legend] = 'd1';
