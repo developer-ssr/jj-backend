@@ -419,7 +419,7 @@ class ChartController extends Controller
         
         if ($tcount > 0) {
             foreach ($percentage as $key =>  $percent) {
-                $percentage[$key]['value'] = ceil(($percent['count'] / $tcount) * 100);
+                $percentage[$key]['value'] = floor(($percent['count'] / $tcount) * 100);
                 // $percent['value'] = ceil($percent['count'] / $tcount);
                 /* if ($percentage[$key]['value'] > $this->tops['colours'][$key]) {
                     $this->tops['colours'][$key] = $percentage[$key]['value'];
@@ -437,7 +437,7 @@ class ChartController extends Controller
         }
         
         return [
-            'gscore' => ceil($score),
+            'gscore' => floor($score),
             'prime' => $legend == 't5' ? ($tmp_data['equivalent'] ?? '').' '.$equivalent : $equivalent,
             'percentage' => $percentage,
             'question' => $question['question'],

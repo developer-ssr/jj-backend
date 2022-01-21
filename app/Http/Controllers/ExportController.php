@@ -255,7 +255,7 @@ class ExportController extends Controller
             if ($max_point == 0) {
                 $segment1 = 0;
             }else {
-                $segment1 = ceil(($total / $max_point) * 100); //segment 1
+                $segment1 = floor(($total / $max_point) * 100); //segment 1
             }
             
         }else {
