@@ -12,6 +12,11 @@ class FilterController extends Controller
     public function primes()
     {
         $items = [
+            "t2" => [
+                "No treatment recommended",
+                "Refractive only treatment: you fit only with single vision solutions (glasses or contact lenses)",
+                "Myopia management treatment: you fit with myopia management treatments (Ortho-K, multifocal soft contacts or glasses, myopia control soft contacts or glasses, atropine)"
+            ],
             "t3" => [
                 "Customer service",
                 "HealthCaring Conversations – The ISIGHT Model",
