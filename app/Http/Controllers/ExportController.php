@@ -202,8 +202,11 @@ class ExportController extends Controller
         $total = 0;
         foreach ($records as $record) {
             switch ($t) {
+                case 't2':
                 case 't6':
                 case 't7':
+                case 't11':
+                case 't12':
                     $tmp_data = Chart::getExpData($t, $record, $prime);
                     break;
                 default:
