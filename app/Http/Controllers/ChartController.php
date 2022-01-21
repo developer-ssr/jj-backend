@@ -327,18 +327,21 @@ class ChartController extends Controller
                 unset($percentage['orange']);
                 $colour = 'green';
             } */
-        } elseif ($legend == 't2') {
+        } elseif ($legend == 't2'|| $legend == 't11' || $legend == 't12') {
             unset($percentage['red']);
             unset($percentage['orange']);
             $colour = 'green';
-        }
+        } 
         $tcount = count($records);
         $tmp_data = [];
         foreach ($records as $record) {
             switch ($legend) {
+                case 't2':
                 case 't6':
                 case 't7':
-                    $tmp_data = Chart::getExpData($legend, $record->data[$legend], $prime);
+                case 't11':
+                case 't12':
+                    $tmp_data = Chart::getExpData($legend, $record, $prime);
                     break;
                 default:
                     if (isset($record->data[$legend]['responses'])) {
@@ -404,7 +407,7 @@ class ChartController extends Controller
                                 }
                                 break;
                             default:
-                                # t2 t6 t7
+                                # t2 t6 t7 t11 t12
                                 $percentage[$colour]['count'] += 1;
                                 break;
                         }
@@ -427,7 +430,7 @@ class ChartController extends Controller
         $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
         $question = $this->getQuestion($legend);
         $equivalent = $tmp_data['prime'] ?? null;
-        if ($legend == 't6' || $legend == 't7') {
+        if ($legend == 't2' || $legend == 't6' || $legend == 't7' || $legend == 't11' || $legend == 't12') {
             $targets = [''];
         }else {
             $targets = $tmp_data != null ? collect($tmp_data['data'])->pluck('equivalent'): [];
@@ -447,6 +450,16 @@ class ChartController extends Controller
     {
         $choices = [];
         switch ($legend) {
+            case 't2':
+                $dimension = '';
+                $question = 'For your patients between 5-18 years of age, please estimate the percent of patients that fall within each category.
+                The total must sum to 100%';
+                $choices = [
+                    'No treatment recommended',
+                    'Refractive only treatment: you fit only with single vision solutions (glasses or contact lenses)',
+                    'Myopia management treatment: you fit with myopia management treatments (Ortho-K, multifocal soft contacts or glasses, myopia control soft contacts or glasses, atropine)'
+                ];
+                break;
             case 't3':
                 $dimension = 'Satisfaction';
                 $question = 'Please indicate your satisfaction level with Abiliti in the following areas:';
@@ -490,6 +503,20 @@ class ChartController extends Controller
             case 't10':
                 $dimension = 'Tool use/reco';
                 $question = 'Please indicate how often you use/recommend the following tools from Abiliti™:';
+                break;
+            case 't11':
+                $dimension = '';
+                $question = 'Please indicate what you like about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:';
+                $choices = [
+                    'Please indicate what you like about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:'
+                ];
+                break;
+            case 't12':
+                $dimension = '';
+                $question = 'Please indicate what you dislike about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:';
+                $choices = [
+                    'Please indicate what you dislike about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:'
+                ];
                 break;
             default:
                 $dimension = 'Dimension';

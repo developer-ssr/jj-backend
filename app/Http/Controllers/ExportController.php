@@ -288,9 +288,9 @@ class ExportController extends Controller
             $headers[$legend] = '-';
         }
         
-        $headers['T11'] = 'd1';
-        $headers['T12'] = 'd2';
-        $headers['F1_1'] = 'a1';
+        $headers['T11_1'] = 'd1';
+        $headers['T12_1'] = 'd2';
+        /* $headers['F1_1'] = 'a1';
         $headers['F1_2'] = 'a1';
         $headers['F1_3'] = 'a1';
         $headers['F1_4'] = 'a1';
@@ -299,7 +299,7 @@ class ExportController extends Controller
         $headers['F2_2'] = 'a2';
         $headers['F2_3'] = 'a2';
         $headers['F2_4'] = 'a2';
-        $headers['F2_5'] = 'a2';
+        $headers['F2_5'] = 'a2'; */
 
         $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
         foreach ($records as $record) {
@@ -342,11 +342,11 @@ class ExportController extends Controller
                         $val = $record->meta['query'][$header];
                         break;
                     default: //f
-                        if ($record->meta['query'][$header] == $prime) {
+                        /* if ($record->meta['query'][$header] == $prime) {
                             $val = 1;
                         }else {
                             $val = 0;
-                        }
+                        } */
                         break;
                 }
                 $tmp[] = $val ?? '-';
@@ -354,27 +354,5 @@ class ExportController extends Controller
             $results[] = $tmp;
         }
         return ['results' => $results, 'headers' => collect($headers)->keys()];
-    }
-
-    public function getRepondentLevel($records, $legend) {
-        foreach (generator($records) as $record) {
-            $tmp = [
-                $record['participant_id'],
-                $record['agent']['device'] ?? '-',
-                $record['agent']['browser'] ?? '-',
-                $record['agent']['ip'] ?? '-',
-                Carbon::parse($record['created_at'])->toDateTimeString(),
-                Carbon::parse($record['updated_at'])->toDateTimeString(),
-                date('H:i:s',
-                    strtotime(Carbon::parse($record['updated_at'])->diff(Carbon::parse($record['updated_at']))->format('%H:%I:%S'))
-                )//Duration
-            ];
-            foreach (generator($headers) as $header) {
-                // $tmp[] = $record['url_data']['internal'][$header] ?? '-';
-                $response = collect($record['responses'])->firstWhere('VAR', $header);
-                $tmp[] = $response[$display] ?? $record['url_data']['internal'][$header] ?? '-';
-            }
-            $tmp_data[] = $tmp;
-        }
     }
 }
