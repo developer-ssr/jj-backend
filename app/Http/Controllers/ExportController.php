@@ -274,9 +274,9 @@ class ExportController extends Controller
         $headers = [];
         $record_ids = collect([]);
 
-        $headers['T2_1'] = 'b3_1';
+        /* $headers['T2_1'] = 'b3_1';
         $headers['T2_2'] = 'b3_2';
-        $headers['T2_3'] = 'b3_3';
+        $headers['T2_3'] = 'b3_3'; */
 
         ksort($legends, 4);// 4 = SORT_NATURAL
 
@@ -285,12 +285,32 @@ class ExportController extends Controller
             foreach ($series['data'] as $data) { //loop for segment
                 $record_ids = $record_ids->merge($data['record_ids']);
             }    
-            $headers[$legend] = '-';
+            switch ($legend) {
+                case 'T2_1':
+                    $headers[$legend] = 'b3_1';
+                    break;
+                case 'T2_2':
+                    $headers[$legend] = 'b3_1';
+                    break;
+                case 'T2_3':
+                    $headers[$legend] = 'b3_1';
+                    break;
+                case 'T11_1':
+                    $headers[$legend] = 'd1';
+                    break;
+                case 'T12_1':
+                    $headers[$legend] = 'd2';
+                    break;
+                default:
+                    $headers[$legend] = '-';
+                    break;
+            }
+            
         }
         
-        $headers['T11_1'] = 'd1';
+        /* $headers['T11_1'] = 'd1';
         $headers['T12_1'] = 'd2';
-        /* $headers['F1_1'] = 'a1';
+        $headers['F1_1'] = 'a1';
         $headers['F1_2'] = 'a1';
         $headers['F1_3'] = 'a1';
         $headers['F1_4'] = 'a1';
