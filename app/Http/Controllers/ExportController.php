@@ -257,7 +257,7 @@ class ExportController extends Controller
             }else {
                 if ($t == 't2') {
                     $segment1 = round($total / $max_point);
-                    $max_point = 100;
+                    $max_point = 100 * $max_point;
                 }else {
                     $segment1 = round(($total / $max_point) * 100); //segment 1
                 }
