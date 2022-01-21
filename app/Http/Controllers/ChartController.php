@@ -140,7 +140,7 @@ class ChartController extends Controller
                                         'prime' => $score['prime'],
                                         'segment' => ($segment + 1),
                                         'date' => $date,
-                                        'tcount' => $legend['name'] == 't2' ? $tcount * 100 : $tcount,
+                                        'tcount' => $tcount,
                                         'gscore' => $score['gscore'],
                                         'percentage' => $score['percentage'],
                                         'record_ids' => $records[$s_key]->pluck('id'),
