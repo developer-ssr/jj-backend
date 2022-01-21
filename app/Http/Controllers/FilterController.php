@@ -125,6 +125,12 @@ class FilterController extends Controller
                 "Lifestyle Chart:  Used as worksheet between parent and ECP to determine treatment options that best-suit the patients’ lifestyle​",
                 "Tools (e.g., brochure(s), posters, etc.) that educate parents on the condition (myopia)",
                 "Tools (e.g. brochure(s), posters, etc.) that educate parents on the Abiliti"
+            ],
+            "t11" => [
+                "Please indicate what you like about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:"
+            ],
+            "t12" => [
+                "Please indicate what you dislike about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:"
             ]
         ];
         return response()->json($items);

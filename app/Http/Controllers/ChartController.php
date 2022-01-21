@@ -327,6 +327,10 @@ class ChartController extends Controller
                 unset($percentage['orange']);
                 $colour = 'green';
             } */
+        } elseif ($legend == 't2') {
+            unset($percentage['red']);
+            unset($percentage['orange']);
+            $colour = 'green';
         }
         $tcount = count($records);
         $tmp_data = [];
@@ -400,7 +404,7 @@ class ChartController extends Controller
                                 }
                                 break;
                             default:
-                                # t6 t7
+                                # t2 t6 t7
                                 $percentage[$colour]['count'] += 1;
                                 break;
                         }
