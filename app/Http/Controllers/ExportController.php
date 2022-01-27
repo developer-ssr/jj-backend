@@ -268,6 +268,9 @@ class ExportController extends Controller
             
         }else {
             $total = count($records);
+            if ($t == 't2') {
+                $tmp_result[5] = $tmp_result[5] / $total;
+            }
         }
         $tmp_result[5+$data_count] = $total; //total
         $tmp_result[] = $max_point ?? '';
