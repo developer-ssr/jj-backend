@@ -228,13 +228,15 @@ class ExportController extends Controller
                     if ($tmp['selected']) {
                         if ($summary == 'summary') {
                             $tmp_result[4+$t_key] += $tmp['value'];
-                            // $tmp_result[4+$t_key] += ($t_key + 1);
                             $total += $tmp['value']; //total using value
-                            // $total += ($t_key + 1); //total using key
                         }else {
-                            $tmp_result[4+$t_key] += 1;//increment selected
+                            if ($t == 't2') {
+                                $tmp_result[4+$t_key] += $tmp['value'];
+                                $total += $tmp['value']; //total using value
+                            }else {
+                                $tmp_result[4+$t_key] += 1;//increment selected
+                            }
                         }
-                        
                     }
                 }
             }
