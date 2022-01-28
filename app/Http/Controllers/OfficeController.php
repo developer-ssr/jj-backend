@@ -18,8 +18,17 @@ class OfficeController extends Controller
     {
         if ($request->user()->type === "user") {
             $offices = Office::where('id', $request->user()->office_id)->get();
-        } else {
+        } else if ($request->user()->type === "admin") {
             $offices = Office::with('links')->get()->toArray();
+            $offices = collect($offices)->map(function($values) {
+                $email = Email::where('email', $values['email'])->orderBy('created_at', 'desc')->first();
+                $values['emails'] = $email;
+                $taken = collect($values['links'])->filter(fn($v) => $v['taken'] === 'YES')->count();
+                $values['links'] = $taken . '/' . count($values['links']);
+                return $values;
+            });
+        } else if ($request->user()->type === 'group_user') {
+            $offices = Office::whereIn('id', $request->user()->office_ids)->with('links')->get()->toArray();
             $offices = collect($offices)->map(function($values) {
                 $email = Email::where('email', $values['email'])->orderBy('created_at', 'desc')->first();
                 $values['emails'] = $email;

@@ -33,7 +33,8 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
                 'email' => $request->email,
                 'type' => $request->type,
-                'office_id' => $request->office_id ?? 0
+                'office_id' => $request->office_id ?? 0,
+                'office_ids' => $request->office_ids ?? []
             ]), function (User $user) {
                 $this->createTeam($user);
             });
@@ -50,7 +51,8 @@ class UserController extends Controller
         $user->update([
             'name' => $request->name,
             'type' => $request->type,
-            'office_id' => $request->office_id ?? 0
+            'office_id' => $request->office_id ?? 0,
+            'office_ids' => $request->office_ids ?? []
         ]);
         return response()->json($user);
     }
