@@ -79,7 +79,7 @@ class RecordController extends Controller
         $data['t10'] = json_decode($http->body(), true);
 
         $data['t6'] = $request->c1;
-        $data['t7'] = $request->c2;
+        $data['t7'] = $country != 'hk' ? $request->c2 : ($request->c5 ?? $request->c2); //c2 if no c5 in hk
 
         $record = Record::create([
             'participant_id' => $request->id,
