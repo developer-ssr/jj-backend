@@ -13,41 +13,97 @@ class RecordController extends Controller
     public function complete(Request $request)
     {
 
+        $lang = $request->lang ?? 'en';
+
         $country_t5 = [
-            'us' => '244',
-            'sg' => '981',
-            'hk' => '1092',
-            'ca' => '983'
+            'us' => [
+                'en' => '244'
+            ],
+            'sg' => [
+                'en' => '981'
+            ],
+            'hk' => [
+                'en' => '1092',
+                'cn' => '1098'
+            ],
+            'ca' => [
+                'en' => '983'
+            ]
         ];
         $country_t3 = [
-            'us' => '242',
-            'sg' => '242',
-            'hk' => '1087',
-            'ca' => '242'
+            'us' => [
+                'en' => '242'
+            ],
+            'sg' => [
+                'en' => '242'
+            ],
+            'hk' => [
+                'en' => '1087',
+                'cn' => '1093'
+            ],
+            'ca' => [
+                'en' => '242'
+            ]
         ];
         $country_t4 = [
-            'us' => '243',
-            'sg' => '243',
-            'hk' => '1088',
-            'ca' => '243'
+            'us' => [
+                'en' => '243'
+            ],
+            'sg' => [
+                'en' => '243'
+            ],
+            'hk' => [
+                'en' => '1088',
+                'cn' => '1094'
+            ],
+            'ca' => [
+                'en' => '243'
+            ]
         ];
         $country_t8 = [
-            'us' => '245',
-            'sg' => '245',
-            'hk' => '1089',
-            'ca' => '245'
+            'us' => [
+                'en' => '245'
+            ],
+            'sg' => [
+                'en' => '245'
+            ],
+            'hk' => [
+                'en' => '1089',
+                'cn' => '1095'
+            ],
+            'ca' => [
+                'en' => '245'
+            ]
         ];
         $country_t9 = [
-            'us' => '246',
-            'sg' => '246',
-            'hk' => '1090',
-            'ca' => '246'
+            'us' => [
+                'en' => '246'
+            ],
+            'sg' => [
+                'en' => '246'
+            ],
+            'hk' => [
+                'en' => '1090',
+                'cn' => '1096'
+            ],
+            'ca' => [
+                'en' => '246'
+            ]
         ];
         $country_t10 = [
-            'us' => '247',
-            'sg' => '247',
-            'hk' => '1091',
-            'ca' => '247'
+            'us' => [
+                'en' => '247'
+            ],
+            'sg' => [
+                'en' => '247'
+            ],
+            'hk' => [
+                'en' => '1091',
+                'cn' => '1097'
+            ],
+            'ca' => [
+                'en' => '247'
+            ]
         ];
         $country_link = [
             'us' => 'V3n',
@@ -58,24 +114,24 @@ class RecordController extends Controller
 
         $country = $request->country ?? 'us';
 
-        $http = Http::get($this->act_api . "survey_id=" . $country_t3[$country] . "&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=" . $country_t3[$country][$lang] . "&id={$request->id}");
         $data = [
             't3' => json_decode($http->body(), true)
         ];
         
-        $http = Http::get($this->act_api . "survey_id=" . $country_t4[$country] . "&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=" . $country_t4[$country][$lang] . "&id={$request->id}");
         $data['t4'] = json_decode($http->body(), true);
 
-        $http = Http::get($this->act_api . "survey_id=" . $country_t5[$country] . "&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=" . $country_t5[$country][$lang] . "&id={$request->id}");
         $data['t5'] = json_decode($http->body(), true);
 
-        $http = Http::get($this->act_api . "survey_id=" . $country_t8[$country] . "&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=" . $country_t8[$country][$lang] . "&id={$request->id}");
         $data['t8'] = json_decode($http->body(), true);
 
-        $http = Http::get($this->act_api . "survey_id=" . $country_t9[$country] . "&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=" . $country_t9[$country][$lang] . "&id={$request->id}");
         $data['t9'] = json_decode($http->body(), true);
 
-        $http = Http::get($this->act_api . "survey_id=" . $country_t10[$country] . "&id={$request->id}");
+        $http = Http::get($this->act_api . "survey_id=" . $country_t10[$country][$lang] . "&id={$request->id}");
         $data['t10'] = json_decode($http->body(), true);
 
         $data['t6'] = $request->c1;
