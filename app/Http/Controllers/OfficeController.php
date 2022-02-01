@@ -50,7 +50,7 @@ class OfficeController extends Controller
         ];
         foreach ($offices as $office) {
             if ($office['type'] === 'office') {
-                $results[] = [$office['name'], $office['email'], $code[$office['code']], count($office['emails']) > 0 ? 'Yes' : 'No', explode('/', $office['links'])[0] == '1' ? 'Yes': 'No'];
+                $results[] = [$office['name'], $office['email'], $code[$office['code']], !is_null($office['emails']) ? 'Yes' : 'No', explode('/', $office['links'])[0] == '1' ? 'Yes': 'No'];
             }
                 
         }
