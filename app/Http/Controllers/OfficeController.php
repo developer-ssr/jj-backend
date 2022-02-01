@@ -7,6 +7,7 @@ use App\Models\Office;
 use App\Models\Record;
 use Illuminate\Http\Request;
 use App\Exports\CsvExport;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
 class OfficeController extends Controller
@@ -50,7 +51,7 @@ class OfficeController extends Controller
         ];
         foreach ($offices as $office) {
             if ($office['type'] === 'office') {
-                $results[] = [$office['name'], $office['email'], $code[$office['code']], !is_null($office['emails']) ? 'Yes' : 'No', explode('/', $office['links'])[0] == '1' ? 'Yes': 'No'];
+                $results[] = [$office['name'], $office['email'], $code[$office['code']], !is_null($office['emails']) ? Carbon::parse($office['emails'])->toDateTimeString() : 'No', explode('/', $office['links'])[0] == '1' ? 'Yes': 'No'];
             }
                 
         }
