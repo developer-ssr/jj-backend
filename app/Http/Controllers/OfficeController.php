@@ -14,6 +14,11 @@ class OfficeController extends Controller
         return Record::all()->pluck('meta')->map(fn ($v) => $v['office'])->unique()->toArray();
     }
 
+    public function download(Request $request)
+    {
+        return 'authenticated';
+    }
+
     public function index(Request $request)
     {
         if ($request->user()->type === "user") {

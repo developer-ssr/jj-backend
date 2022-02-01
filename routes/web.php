@@ -3,6 +3,7 @@
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\OfficeController;
 use App\Models\Email;
 use App\Models\Office;
 use Illuminate\Foundation\Application;
@@ -63,3 +64,5 @@ Route::get('test2', function() {
 Route::prefix('charts')->group(function () {
     Route::get('/download/{id}/{summary}', [ExportController::class, 'download']);
 });
+
+Route::get('/offices/download', [OfficeController::class, 'download'])->middleware('auth:sanctum');
