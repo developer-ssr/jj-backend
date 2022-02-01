@@ -6,6 +6,8 @@ use App\Models\Email;
 use App\Models\Office;
 use App\Models\Record;
 use Illuminate\Http\Request;
+use App\Exports\CsvExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OfficeController extends Controller
 {
@@ -16,7 +18,43 @@ class OfficeController extends Controller
 
     public function download(Request $request)
     {
-        return 'authenticated';
+        if ($request->user()->type === "user") {
+            $offices = Office::where('id', $request->user()->office_id)->get();
+        } else if ($request->user()->type === "admin") {
+            $offices = Office::with('links')->get()->toArray();
+            $offices = collect($offices)->map(function($values) {
+                $email = Email::where('email', $values['email'])->orderBy('created_at', 'desc')->first();
+                $values['emails'] = $email;
+                $taken = collect($values['links'])->filter(fn($v) => $v['taken'] === 'YES')->count();
+                $values['links'] = $taken . '/' . count($values['links']);
+                return $values;
+            });
+        } else if ($request->user()->type === 'group_user') {
+            $offices = Office::whereIn('id', $request->user()->office_ids)->with('links')->get()->toArray();
+            $offices = collect($offices)->map(function($values) {
+                $email = Email::where('email', $values['email'])->orderBy('created_at', 'desc')->first();
+                $values['emails'] = $email;
+                $taken = collect($values['links'])->filter(fn($v) => $v['taken'] === 'YES')->count();
+                $values['links'] = $taken . '/' . count($values['links']);
+                return $values;
+            });
+        }
+        $results = [
+            ['Name', 'Email', 'Country', 'Taken Test']
+        ];
+        $code = [
+            840 => "USA",
+            702 => 'Singapore',
+            344 => 'Hongkong',
+            124 => 'Canada'
+        ];
+        foreach ($offices as $office) {
+            if ($office['type'] === 'office') {
+                $results[] = [$office['name'], $office['email'], $code[$office['code']], explode('/', $office['links'])[0] == '1' ? 'Yes': 'No'];
+            }
+                
+        }
+        return Excel::download(CsvExport::new($results), "Offices.xlsx");
     }
 
     public function index(Request $request)
