@@ -51,7 +51,7 @@ class OfficeController extends Controller
         ];
         foreach ($offices as $office) {
             if ($office['type'] === 'office') {
-                $results[] = [$office['name'], $office['email'], $code[$office['code']], !is_null($office['emails']) ? Carbon::parse($office['emails']['created_at'])->toDateTimeString() : 'No', explode('/', $office['links'])[0] == '1' ? 'Yes': 'No'];
+                $results[] = [$office['name'], $office['email'], $code[$office['code']], !is_null($office['emails']) ? Carbon::parse($office['emails']['created_at'])->toDateTimeString() : null, explode('/', $office['links'])[0] == '1' ? 'Yes': 'No'];
             }
                 
         }
