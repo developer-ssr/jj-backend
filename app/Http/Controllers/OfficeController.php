@@ -40,7 +40,7 @@ class OfficeController extends Controller
             });
         }
         $results = [
-            ['Name', 'Email', 'Country', 'Taken Test']
+            ['Name', 'Email', 'Country', 'Invite Sent', 'Taken Test']
         ];
         $code = [
             840 => "USA",
@@ -50,7 +50,7 @@ class OfficeController extends Controller
         ];
         foreach ($offices as $office) {
             if ($office['type'] === 'office') {
-                $results[] = [$office['name'], $office['email'], $code[$office['code']], explode('/', $office['links'])[0] == '1' ? 'Yes': 'No'];
+                $results[] = [$office['name'], $office['email'], $code[$office['code']], count($office['emails']) > 0 ? 'Yes' : 'No', explode('/', $office['links'])[0] == '1' ? 'Yes': 'No'];
             }
                 
         }
