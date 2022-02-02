@@ -281,19 +281,22 @@ class ChartController extends Controller
                 'colour' => 'green',
                 'value' => 0,
                 'count' => 0,
-                'name' => 'Green Box %'
+                'name' => 'Green Box %',
+                'label' => ''//T2B
             ],
             'orange' => [
                 'colour' => 'orange',
                 'value' => 0,
                 'count' => 0,
-                'name' => 'Amber Box %'
+                'name' => 'Amber Box %',
+                'label' => ''//MB
             ],
             'red' => [
                 'colour' => 'red',
                 'value' => 0,
                 'count' => 0,
-                'name' => 'Red Box %'
+                'name' => 'Red Box %',
+                'label' => ''//B2B
             ],
         ];
         if ($legend == 't6') {
@@ -390,15 +393,15 @@ class ChartController extends Controller
                             case 't9':
                                 if ($prime == 19) {
                                     if ($t_key == 0) {
-                                        $percentage['green']['count'] += 1; //change 1/14/2021
+                                        $percentage['green']['count'] += 1; //change 1/14/2021 NO
                                     }else  {
-                                        $percentage['red']['count'] += 1; //change 1/14/2021
+                                        $percentage['red']['count'] += 1; //change 1/14/2021 YES
                                     }
                                 }else {
                                     if ($t_key == 0) {
-                                        $percentage['red']['count'] += 1;
+                                        $percentage['red']['count'] += 1; //NO
                                     }else  {
-                                        $percentage['green']['count'] += 1;
+                                        $percentage['green']['count'] += 1;//YES
                                     }
                                 }
                                 
