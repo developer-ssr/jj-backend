@@ -227,8 +227,14 @@ class ExportController extends Controller
                     }
                     if ($tmp['selected']) {
                         if ($summary == 'summary') {
-                            $tmp_result[4+$t_key] += $tmp['value'];
-                            $total += $tmp['value']; //total using value
+                            if ($t == 't4' || $t == 't9') {
+                                $total += 1; // increment 1 for yes and no
+                                $tmp_result[4+$t_key] += 1;//increment selected
+                                
+                            }else {
+                                $tmp_result[4+$t_key] += $tmp['value'];
+                                $total += $tmp['value']; //total using value
+                            }
                         }else {
                             if ($t == 't2') {
                                 $tmp_result[4+$t_key] += $tmp['value'];
@@ -266,7 +272,9 @@ class ExportController extends Controller
                 
             }
             if ($t == 't4' || $t == 't9') {
-                $tmp_result[4] = round(($tmp_result[4] / $max_point) * 100);
+                for ($i=0; $i < $data_count; $i++) { //loop and change value to percentage
+                    $tmp_result[4+$i] = round(($tmp_result[4+$i] / $max_point) * 100);
+                }
             }
             
         }else {
