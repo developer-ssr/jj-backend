@@ -282,21 +282,21 @@ class ChartController extends Controller
                 'value' => 0,
                 'count' => 0,
                 'name' => 'Green Box %',
-                'label' => ''//T2B
+                'label' => 'T2B'//T2B
             ],
             'orange' => [
                 'colour' => 'orange',
                 'value' => 0,
                 'count' => 0,
                 'name' => 'Amber Box %',
-                'label' => ''//MB
+                'label' => 'MB'//MB
             ],
             'red' => [
                 'colour' => 'red',
                 'value' => 0,
                 'count' => 0,
                 'name' => 'Red Box %',
-                'label' => ''//B2B
+                'label' => 'B2B'//B2B
             ],
         ];
         if ($legend == 't6') {
