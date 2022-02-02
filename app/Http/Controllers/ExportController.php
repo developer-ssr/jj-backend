@@ -266,7 +266,7 @@ class ExportController extends Controller
                 
             }
             if ($t == 't4' || $t == 't9') {
-                $tmp_result[4] = round(($tmp_result[4] / $total) * 100);
+                $tmp_result[4] = round(($tmp_result[4] / $max_point) * 100);
             }
             
         }else {
