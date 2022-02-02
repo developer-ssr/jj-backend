@@ -155,18 +155,22 @@ class ChartController extends Controller
                         if (!isset($score)) {
                             return response('No links or segments', 500);
                         }
-                        foreach ($score['percentage'] as $colour =>  $percent) {
+                        /* foreach ($score['percentage'] as $colour =>  $percent) {
                             if ($percent['value'] >= $this->tops['highest']['value']) {
                                 $this->tops['highest']['value'] = $percent['value'];
                                 $this->tops['highest']['colour'] = $colour;
                             }
-                        }
-                        /* foreach ($this->tops['colours'] as $colour => $top) {
-                            if ($top > $this->tops['highest']['value']) {
-                                $this->tops['highest']['value'] = $top;
-                                $this->tops['highest']['colour'] = $colour;
-                            }
                         } */
+                        $this->tops['highest']['value'] = $score['percentage']['green']['value'];
+                        if ($this->tops['highest']['value'] > 80) {
+                            $color = 'green';
+                        }else if ($this->tops['highest']['value'] <= 80 && $this->tops['highest']['value'] >= 60) {
+                            $color = 'orange';
+                        }else {
+                            $color = 'red';
+                        }
+                        $this->tops['highest']['colour'] = $color;
+                        
                         $this->tops['segment'] = last($series_data);
                         $series[] = [
                             'name' => $code,
