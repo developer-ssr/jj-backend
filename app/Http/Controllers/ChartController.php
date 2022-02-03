@@ -181,7 +181,7 @@ class ChartController extends Controller
                         ];
                     }
                 }
-                $info = Chart::getInfo($series);
+                
                 $chart->update([
                     'series' => $series,
                     'categories' => $categories,
