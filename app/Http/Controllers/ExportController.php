@@ -107,6 +107,10 @@ class ExportController extends Controller
             $data = $this->exportRespondent($chart, $legends);
             $headers = ['Dimension','','','Question Text','','','Answer Value'];
             $data = collect($data)->prepend($headers)->toArray(); 
+        }elseif($summary == 'table') {
+            $data = $this->exportSummary($chart, $legends);
+            $headers = ['Dimension','','','Question Text','','','Answer Value'];
+            $data = collect($data)->prepend($headers)->toArray();  
         } else {
             $tmp_data = $this->exportTracker($chart, $legends);
             $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();;
