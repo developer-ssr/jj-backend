@@ -75,7 +75,8 @@ class ChartController extends Controller
                         $this->tops = [
                             "highest" => [
                                 "value" => 0,
-                                "colour" => 'green'
+                                "colour" => 'green',
+                                "item" => Chart::items($legend['name'], $prime)
                             ]
                         ];
                         if ($office->type == 'country' || $office->type == 'global') {
@@ -180,6 +181,7 @@ class ChartController extends Controller
                         ];
                     }
                 }
+                $info = Chart::getInfo($series);
                 $chart->update([
                     'series' => $series,
                     'categories' => $categories,
@@ -282,21 +284,24 @@ class ChartController extends Controller
                 'value' => 0,
                 'count' => 0,
                 'name' => 'Green Box %',
-                'label' => 'T2B'//T2B
+                'label' => 'T2B',//T2B
+                'active' => true
             ],
             'orange' => [
                 'colour' => 'orange',
                 'value' => 0,
                 'count' => 0,
                 'name' => 'Amber Box %',
-                'label' => 'MB'//MB
+                'label' => 'MB',//MB
+                'active' => false
             ],
             'red' => [
                 'colour' => 'red',
                 'value' => 0,
                 'count' => 0,
                 'name' => 'Red Box %',
-                'label' => 'B2B'//B2B
+                'label' => 'B2B',//B2B
+                'active' => false
             ],
         ];
         if ($legend == 't6') {
