@@ -124,6 +124,7 @@ class ExportController extends Controller
     {
         $tmp_results = [];
         $headers = [];
+        dd($legends);
         foreach ($legends as $legend) {
             $tmp = Str::of($legend)->explode('_');
             $t = Str::lower($tmp[0]);//t3
