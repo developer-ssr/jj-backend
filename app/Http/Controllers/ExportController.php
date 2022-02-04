@@ -238,7 +238,7 @@ class ExportController extends Controller
                     }
                     
                     $data = $this->getData($records, $t, $prime, $tmp_data, 'respondent');//summary in table
-                    $removed = array_pop($stack);
+                    $removed = array_pop($data);
                     $score = $this->getScore($records, $t, $prime);
                     $data[] = $score['percentage']['green']['value'];
                     if (isset($score['percentage']['orange'])) {
