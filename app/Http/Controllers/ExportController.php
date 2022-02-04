@@ -237,15 +237,14 @@ class ExportController extends Controller
                         $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
                     }
                     
-                    $data = $this->getData($records, $t, $prime, $tmp_data, 'respondent');//summary in table
-                    $removed = array_pop($data);
+                    $data = $this->getData($records, $t, $prime, $tmp_data, 'respondent', true);//summary in table
                     $score = $this->getScore($records, $t, $prime);
                     $data[] = $score['percentage']['green']['value'];
                     if (isset($score['percentage']['orange'])) {
-                        $data[] = $score['percentage']['orange']['label'];
+                        $data[] = $score['percentage']['orange']['value'];
                     }
                     if (isset($score['percentage']['red'])) {
-                        $data[] = $score['percentage']['red']['label'];
+                        $data[] = $score['percentage']['red']['value'];
                     }
                     $tmp_results[$t][] = $data;
                 }
@@ -268,7 +267,7 @@ class ExportController extends Controller
         return $results;
     }
 
-    public function getData($records, $t, $prime, $data, $summary) {
+    public function getData($records, $t, $prime, $data, $summary, $table = false) {
         $tmp_data = [];
         $tmp_result = collect([$data['dimension'] ?? '', Str::upper($t), $prime, $data['question'] ?? '']);
         $data_count = 0;
@@ -354,9 +353,12 @@ class ExportController extends Controller
                 $tmp_result[4] = round($tmp_result[4] / $total);
             }
         }
-        $tmp_result[5+$data_count] = $total; //total
-        $tmp_result[] = $max_point ?? '';
-        $tmp_result[] = $segment1 ?? '';
+        if ($table == false) {
+            $tmp_result[5+$data_count] = $total; //total
+            $tmp_result[] = $max_point ?? '';
+            $tmp_result[] = $segment1 ?? '';
+        }
+        
         /* $tmp_result[6+$data_count] = $max_point ?? '';
         $tmp_result[7+$data_count] = $segment1 ?? ''; */
         
