@@ -124,7 +124,6 @@ class ExportController extends Controller
     {
         $tmp_results = [];
         $headers = [];
-        dd($legends);
         foreach ($legends as $legend) {
             $tmp = Str::of($legend)->explode('_');
             $t = Str::lower($tmp[0]);//t3
@@ -204,6 +203,7 @@ class ExportController extends Controller
     public function exportTable($chart, $legends, $summary) {
         $tmp_results = [];
         $headers = [];
+        dd($legends);
         if ($summary == 'table_summary') {
             foreach ($legends as $legend) {
                 $t = Str::lower($legend);//t3
