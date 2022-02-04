@@ -203,7 +203,7 @@ class ExportController extends Controller
     public function exportTable($chart, $legends, $summary) {
         $tmp_results = [];
         $headers = [];
-        dd($legends);
+
         if ($summary == 'table_summary') {
             foreach ($legends as $legend) {
                 $t = Str::lower($legend);//t3
