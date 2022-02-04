@@ -237,7 +237,7 @@ class ExportController extends Controller
                         $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
                     }
                     
-                    $data = $this->getData($records, $t, $prime, $tmp_data, 'summary');
+                    $data = $this->getData($records, $t, $prime, $tmp_data, 'respondent');
                     $tmp_results[$t][] = $data;
                 }
             }
