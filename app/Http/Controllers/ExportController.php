@@ -239,13 +239,13 @@ class ExportController extends Controller
                     
                     $data = $this->getData($records, $t, $prime, $tmp_data, 'respondent', true);//summary in table
                     $score = $this->getScore($records, $t, $prime);
-                    $data[] = $score['percentage']['green']['value'];
-                    if (isset($score['percentage']['orange'])) {
-                        $data[] = $score['percentage']['orange']['value'];
-                    }
                     if (isset($score['percentage']['red'])) {
                         $data[] = $score['percentage']['red']['value'];
                     }
+                    if (isset($score['percentage']['orange'])) {
+                        $data[] = $score['percentage']['orange']['value'];
+                    }
+                    $data[] = $score['percentage']['green']['value'];
                     $tmp_results[$t][] = $data;
                 }
             }
