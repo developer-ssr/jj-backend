@@ -447,7 +447,7 @@ class ChartController extends Controller
         }
         
         $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
-        $question = $this->getQuestion($legend);
+        $question = Chart::getQuestion($legend);
         $equivalent = $tmp_data['prime'] ?? null;
         if ($legend == 't2' || $legend == 't6' || $legend == 't7' || $legend == 't11' || $legend == 't12') {
             $targets = [''];
@@ -465,83 +465,4 @@ class ChartController extends Controller
         ];
     }    
 
-    public function getQuestion($legend) 
-    {
-        $choices = [];
-        switch ($legend) {
-            case 't2':
-                $dimension = '';
-                $question = 'For your patients between 5-18 years of age, please estimate the percent of patients that fall within each category.
-                The total must sum to 100%';
-                $choices = [
-                    'No treatment recommended',
-                    'Refractive only treatment: you fit only with single vision solutions (glasses or contact lenses)',
-                    'Myopia management treatment: you fit with myopia management treatments (Ortho-K, multifocal soft contacts or glasses, myopia control soft contacts or glasses, atropine)'
-                ];
-                break;
-            case 't3':
-                $dimension = 'Satisfaction';
-                $question = 'Please indicate your satisfaction level with Abiliti in the following areas:';
-                break;
-            case 't4':
-                $dimension = 'Value';
-                $question = 'Please indicate which of the following areas from Abiliti are effective and providing value to your myopia management practice.';
-                break;
-            case 't5':
-                $dimension = 'Brand';
-                $question = 'How likely would you be to recommend the following to your patients and their parents?';
-                break;
-            case 't6':
-                $dimension = '';
-                $question = 'Now we are going to ask you a little about the conversations you may have with the parents of your patients between 5-18 years. Please indicate if you agree with the following statement:  Abiliti HealthCaring Conversations, ISIGHT Model, provides me with usable strategies for engaging in high quality conversations with my patients.';
-                $choices = [
-                    'I DO NOT USE the HealthCaringTM Conversations ISIGHT Model',
-                    'NO, I DO NOT agree with HealthCaringTM Conversations ISIGHT Model',
-                    'YES, I agree with HealthCaringTM Conversations ISIGHT Model'
-                ];
-                break;
-            case 't7':
-                $dimension = '';
-                $question = 'For your patients between 5-18 years of age, please estimate the percent of parents/patients you approach to discuss myopia management as a treatment option during the first visit.';
-                $choices = [
-                    'None',
-                    'About 25%',
-                    'About 50%',
-                    'About 75%',
-                    'Virtually all of my patients'
-                ];
-                break;
-            case 't8':
-                $dimension = 'HC2 Behavior freq.';
-                $question = 'In general, how frequently are you able to do the following with your myopia patients and/or their parents? ';
-                break;
-            case 't9':
-                $dimension = 'HC2 Content';
-                $question = 'As part of the parent conversation, please indicate if you include the following information or language in your discussion:';
-                break;
-            case 't10':
-                $dimension = 'Tool use/reco';
-                $question = 'Please indicate how often you use/recommend the following tools from Abiliti™:';
-                break;
-            case 't11':
-                $dimension = '';
-                $question = 'Please indicate what you like about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:';
-                $choices = [
-                    'Please indicate what you like about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:'
-                ];
-                break;
-            case 't12':
-                $dimension = '';
-                $question = 'Please indicate what you dislike about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:';
-                $choices = [
-                    'Please indicate what you dislike about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:'
-                ];
-                break;
-            default:
-                $dimension = 'Dimension';
-                $question = 'How likely would you be to recommend the following to your patients and their parents?';
-                break;
-        }
-        return ['question' => $question, 'dimension' => $dimension, 'choices' => $choices];
-    }
 }

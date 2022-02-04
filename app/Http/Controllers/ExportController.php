@@ -237,7 +237,16 @@ class ExportController extends Controller
                         $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
                     }
                     
-                    $data = $this->getData($records, $t, $prime, $tmp_data, 'respondent');
+                    $data = $this->getData($records, $t, $prime, $tmp_data, 'respondent');//summary in table
+                    $removed = array_pop($stack);
+                    $score = getScore($records, $t, $prime);
+                    $data[] = $score['percentage']['green']['value'];
+                    if (isset($score['percentage']['orange'])) {
+                        $data[] = $score['percentage']['orange']['label'];
+                    }
+                    if (isset($score['percentage']['red'])) {
+                        $data[] = $score['percentage']['red']['label'];
+                    }
                     $tmp_results[$t][] = $data;
                 }
             }
@@ -254,7 +263,7 @@ class ExportController extends Controller
             foreach ($tmp_results[$ts] as $value) {
                 $results[] = $value;
             }
-            $results[] = []; //apply spacing below
+            $results[] = ["",""]; //apply spacing below
         }
         return $results;
     }
@@ -462,4 +471,195 @@ class ExportController extends Controller
         }
         return ['results' => $results, 'headers' => collect($headers)->keys()];
     }
+
+    public function getScore($records, $legend, $prime)
+    {
+        $max_value = 0;
+        $points = 0;
+        $percentage = [
+            'green' => [
+                'colour' => 'green',
+                'value' => 0,
+                'count' => 0,
+                'name' => 'Green Box %',
+                'label' => 'T2B',//T2B
+                'active' => true
+            ],
+            'orange' => [
+                'colour' => 'orange',
+                'value' => 0,
+                'count' => 0,
+                'name' => 'Amber Box %',
+                'label' => 'MB',//MB
+                'active' => false
+            ],
+            'red' => [
+                'colour' => 'red',
+                'value' => 0,
+                'count' => 0,
+                'name' => 'Red Box %',
+                'label' => 'B2B',//B2B
+                'active' => false
+            ],
+        ];
+        if ($legend == 't6') {
+            unset($percentage['red']);
+            unset($percentage['orange']);
+            $colour = 'green';
+            /* if ($prime == 1) {
+                unset($percentage['orange']);
+                unset($percentage['green']);
+                $colour = 'red';
+            }else if ($prime == 2) {
+                unset($percentage['red']);
+                unset($percentage['green']);
+                $colour = 'orange';
+            }else {
+                unset($percentage['red']);
+                unset($percentage['orange']);
+                $colour = 'green';
+            } */
+            
+        } elseif ($legend == 't7') {
+            unset($percentage['red']);
+            unset($percentage['orange']);
+            $colour = 'green';
+            /* if ($prime <= 2) {
+                unset($percentage['orange']);
+                unset($percentage['green']);
+                $colour = 'red';
+            }else if ($prime == 3) {
+                unset($percentage['red']);
+                unset($percentage['green']);
+                $colour = 'orange';
+            }else {
+                unset($percentage['red']);
+                unset($percentage['orange']);
+                $colour = 'green';
+            } */
+        } elseif ($legend == 't2'|| $legend == 't11' || $legend == 't12') {
+            unset($percentage['red']);
+            unset($percentage['orange']);
+            $colour = 'green';
+        } 
+        $tcount = count($records);
+        $tmp_data = [];
+        foreach ($records as $record) {
+            switch ($legend) {
+                case 't2':
+                case 't6':
+                case 't7':
+                case 't11':
+                case 't12':
+                    $tmp_data = Chart::getExpData($legend, $record, $prime);
+                    break;
+                default:
+                    if (isset($record->data[$legend]['responses'])) {
+                        $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime);
+                    }else {
+                        $tmp_data = null;
+                    }                    
+                    break;
+            }
+
+            if ($tmp_data != null) {
+                if ($max_value == 0) {
+                    if (count($tmp_data['data']) > 2) {
+                        $max_value = $tcount * count($tmp_data['data']);
+                    }else {
+                        $max_value = $tcount;
+                    }
+                }
+                foreach ($tmp_data['data'] as $t_key => $tmp) {
+                    /* if (!isset($points[$t_key])) {
+                        $points[$t_key] = 0;
+                    } */
+                    if ($tmp['selected']) {
+                        // $points+=($t_key + 1);
+                        $points+=$tmp['value'];
+                        switch ($legend) {
+                            case 't2':
+                                $percentage[$colour]['count'] += $tmp['value'];
+                            break;
+                            case 't3':
+                            case 't5':
+                            case 't8':
+                                if ($t_key <= 1) {
+                                    $percentage['red']['count'] += 1;
+                                }elseif ($t_key == 2) {
+                                    $percentage['orange']['count'] += 1;
+                                }else  {
+                                    $percentage['green']['count'] += 1;
+                                }
+                                break;
+                            case 't4':
+                            case 't9':
+                                if ($prime == 19) {
+                                    if ($t_key == 0) {
+                                        $percentage['green']['count'] += 1; //change 1/14/2021 NO
+                                    }else  {
+                                        $percentage['red']['count'] += 1; //change 1/14/2021 YES
+                                    }
+                                }else {
+                                    if ($t_key == 0) {
+                                        $percentage['red']['count'] += 1; //NO
+                                    }else  {
+                                        $percentage['green']['count'] += 1;//YES
+                                    }
+                                }
+                                
+                                unset($percentage['orange']);
+                                break;
+                            case 't10':
+                                if ($t_key == 0) {
+                                    $percentage['red']['count'] += 1;
+                                }elseif ($t_key == 3) {
+                                    $percentage['green']['count'] += 1;
+                                }else  {
+                                    $percentage['orange']['count'] += 1;
+                                }
+                                break;
+                            default:
+                                # t2 t6 t7 t11 t12
+                                $percentage[$colour]['count'] += 1;
+                                break;
+                        }
+                    }
+                }
+            }
+            
+        }
+        
+        if ($tcount > 0) {
+            foreach ($percentage as $key =>  $percent) {
+                if ($legend == 't2') {
+                    $percentage[$key]['value'] = round($percent['count'] / $tcount);
+                }else {
+                    $percentage[$key]['value'] = round(($percent['count'] / $tcount) * 100);
+                }
+                // $percent['value'] = ceil($percent['count'] / $tcount);
+                /* if ($percentage[$key]['value'] > $this->tops['colours'][$key]) {
+                    $this->tops['colours'][$key] = $percentage[$key]['value'];
+                } */
+            }
+        }
+        
+        $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
+        $question = Chart::getQuestion($legend);
+        $equivalent = $tmp_data['prime'] ?? null;
+        if ($legend == 't2' || $legend == 't6' || $legend == 't7' || $legend == 't11' || $legend == 't12') {
+            $targets = [''];
+        }else {
+            $targets = $tmp_data != null ? collect($tmp_data['data'])->pluck('equivalent'): [];
+        }
+        
+        return [
+            'gscore' => round($score),
+            'prime' => $legend == 't5' ? ($tmp_data['equivalent'] ?? '').' '.$equivalent : $equivalent,
+            'percentage' => $percentage,
+            'question' => $question['question'],
+            'dimension' => $question['dimension'],
+            'targets' => $targets
+        ];
+    }    
 }
