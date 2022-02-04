@@ -137,7 +137,7 @@ class Chart extends Model
         ];
     }
 
-    public static function items($legend, $prime) {
+    public static function items($legend, $prime = 0) {
         $items = [
             "t2" => [
                 "No treatment recommended",
@@ -261,7 +261,12 @@ class Chart extends Model
                 "Please indicate what you dislike about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:"
             ]
         ];
-        return $items[$legend][$prime - 1];
+        if ($prime == 0) {
+            return $items[$legend];
+        }else {
+            return $items[$legend][$prime - 1];
+        }
+        
     }
     public static function items_old() {
         return [

@@ -107,10 +107,10 @@ class ExportController extends Controller
             $data = $this->exportRespondent($chart, $legends);
             $headers = ['Dimension','','','Question Text','','','Answer Value'];
             $data = collect($data)->prepend($headers)->toArray(); 
-        }elseif($summary == 'table') {
-            $data = $this->exportSummary($chart, $legends);
-            $headers = ['Dimension','','','Question Text','','','Answer Value'];
-            $data = collect($data)->prepend($headers)->toArray();  
+        }elseif($summary == 'table_summary') {
+            $data = $this->exportTable($chart, $legends, $summary);
+        }elseif($summary == 'table_respondent') {
+            $data = $this->exportTable($chart, $legends, $summary);
         } else {
             $tmp_data = $this->exportTracker($chart, $legends);
             $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();;
@@ -199,6 +199,65 @@ class ExportController extends Controller
         }
         return $results;
     }
+
+    public function exportTable($chart, $legends, $summary) {
+        $tmp_results = [];
+        $headers = [];
+        if ($summary == 'table_summary') {
+            foreach ($legends as $legend) {
+                $t = Str::lower($legend);//t3
+                $record_ids = collect([]);
+                $items = Chart::items($t);
+                foreach ($items as $i_key => $description) {
+                    $prime = $i_key + 1;
+                    $item = $legend.'_'.$prime; //T3_1
+                    $series = collect($chart->series)->firstWhere('name', $item);
+                    $tmp_data = [];
+                    if ($i_key == 0) {
+                        foreach ($series['data'] as $data) { //for getting all completes
+                            if (count($tmp_data) < count($data)) {
+                                $tmp_data = $data; //find proper data
+                            }
+                            $record_ids = $record_ids->merge($data['record_ids']);
+                        }
+                        while (count($tmp_data['targets']) < 5) {//assign spacing
+                            $tmp_data['targets'][] = '';
+                        }
+                        //for headers
+                        $tmp_data['targets'][] = $tmp_data['percentage']['green']['label'];
+                        if (isset($tmp_data['percentage']['orange'])) {
+                            $tmp_data['targets'][] = $tmp_data['percentage']['orange']['label'];
+                        }
+                        if (isset($tmp_data['percentage']['red'])) {
+                            $tmp_data['targets'][] = $tmp_data['percentage']['red']['label'];
+                        }
+                        $headers[$t] = collect([$tmp_data['dimension'], $legend, $legend, $tmp_data['question']]);
+                        $headers[$t] = $headers[$t]->merge($tmp_data['targets'])->toArray();//merge T2B headers
+                        $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
+                    }
+                    
+                    $data = $this->getData($records, $t, $prime, $tmp_data, 'summary');
+                    $tmp_results[$t][] = $data;
+                }
+            }
+        }else { //table_respondent
+            
+        }
+        
+        
+        $results = [];
+        $header_keys = collect($headers)->keys()->toArray();
+        natsort($header_keys);//sort list
+        foreach ($header_keys as $ts) {
+            $results[] = $headers[$ts];//assign header
+            foreach ($tmp_results[$ts] as $value) {
+                $results[] = $value;
+            }
+            $results[] = []; //apply spacing below
+        }
+        return $results;
+    }
+
     public function getData($records, $t, $prime, $data, $summary) {
         $tmp_data = [];
         $tmp_result = collect([$data['dimension'] ?? '', Str::upper($t), $prime, $data['question'] ?? '']);
