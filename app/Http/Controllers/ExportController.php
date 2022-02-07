@@ -113,7 +113,7 @@ class ExportController extends Controller
             $data = $this->exportTable($chart, $legends, $summary);
         } else {
             $tmp_data = $this->exportTracker($chart, $legends);
-            $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();;
+            $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
             $data = collect($tmp_data['results'])->prepend($headers)->toArray(); 
         }
         
@@ -261,7 +261,6 @@ class ExportController extends Controller
                 $results[] = ["",""]; //apply spacing below
             }
         }else { //table_respondent
-            $headers = ['Respondent','Country','Name','Email Address'];
             $ts = [];
             foreach ($legends as $legend) {
                 $t = Str::lower($legend);//t3
@@ -273,6 +272,7 @@ class ExportController extends Controller
                 }
             }
             $tmp_data = $this->exportTracker($chart, $ts);
+            $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
             $results = collect($tmp_data['results'])->prepend($headers)->toArray(); 
         }
         
