@@ -141,7 +141,7 @@ class OfficeController extends Controller
             'csr_name' => $request->csr_name ?? null,
             'csr_email' => $request->csr_email ?? null,
             'client_name' => $request->client_name ?? null,
-            'client_email' => $request->email ?? null
+            'client_email' => $request->client_email ?? null
         ]);
         return response()->json($office);
     }
