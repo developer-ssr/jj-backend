@@ -297,7 +297,7 @@ class ExportController extends Controller
                 "red" => "B2B"
             ];
             foreach ($colours as $color => $tmp) {
-                $tmps[$tmp] = ["","",$tmp];
+                $tmps[$tmp] = ["","","",$tmp];
                 foreach ($ts as $key => $t_item) {
                     if (isset($scores[$t_item]['percentage'][$color]['value'])) {
                         $tmps[$tmp][] = $scores[$t_item]['percentage'][$color]['value'];
