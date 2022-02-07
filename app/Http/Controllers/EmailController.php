@@ -112,7 +112,11 @@ class EmailController extends Controller
                 'path' =>  $path,
                 'file' => $filename,
                 'subject' => $request->subject,
-                'status' => 'unsent'
+                'status' => 'unsent',
+                'meta' => [
+                    'cc' => $request->csr_email ?? null,
+                    'bc' => $request->client_email ?? null
+                ]
             ]);
         }else {
             $email = Email::create([
@@ -122,7 +126,11 @@ class EmailController extends Controller
                 'path' =>  $path,
                 'file' => $filename,
                 'subject' => $request->subject,
-                'status' => 'unsent'
+                'status' => 'unsent',
+                'meta' => [
+                    'cc' => $request->csr_email ?? null,
+                    'bc' => $request->client_email ?? null
+                ]
             ]);
         }
         
