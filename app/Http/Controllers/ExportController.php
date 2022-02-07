@@ -262,18 +262,55 @@ class ExportController extends Controller
             }
         }else { //table_respondent
             $ts = [];
+            $scores = [];
             foreach ($legends as $legend) {
                 $t = Str::lower($legend);//t3
                 $items = Chart::items($t);
+                $record_ids = collect([]);
                 foreach ($items as $i_key => $description) {
                     $prime = $i_key + 1;
                     $item = $legend.'_'.$prime; //T3_1
                     $ts[] = $item;
+
+                    if ($i_key == 0) {
+                        foreach ($series['data'] as $data) { //for getting all completes
+                            $record_ids = $record_ids->merge($data['record_ids']);
+                        }
+                        $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
+                    }
+                    $scores[$item] = $this->getScore($records, $t, $prime);
                 }
             }
             $tmp_data = $this->exportTracker($chart, $ts);
             $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
-            $results = collect($tmp_data['results'])->prepend($headers)->toArray(); 
+            $tmp_results = $tmp_data['results'];
+            $tmp_results[] = ["",""]; // add space
+            ksort($ts, 4);
+            $tmps = [
+                "T2B" => [],
+                "MB" => [],
+                "B2B" => []
+            ];
+            $colours = [
+                "green" => "T2B",
+                "orange" => "MB",
+                "red" => "B2B"
+            ];
+            foreach ($colours as $color => $tmp) {
+                $tmps[$tmp] = ["","",$tmp];
+                foreach ($ts as $key => $t_item) {
+                    if (isset($scores[$t_item]['percentage'][$color]['value'])) {
+                        $tmps[$tmp][] = $scores[$t_item]['percentage'][$color]['value'];
+                    } else {
+                        $tmps[$tmp][] = '-';
+                    }
+                }
+            }
+            $tmp_results[] = $tmps["T2B"];
+            $tmp_results[] = $tmps["MB"];
+            $tmp_results[] = $tmps["B2B"];
+
+            $results = collect($tmp_results)->prepend($headers)->toArray(); 
         }
         
         return $results;
