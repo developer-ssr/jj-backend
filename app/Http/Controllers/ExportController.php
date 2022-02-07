@@ -271,8 +271,8 @@ class ExportController extends Controller
                     $prime = $i_key + 1;
                     $item = $legend.'_'.$prime; //T3_1
                     $ts[] = $item;
-
                     if ($i_key == 0) {
+                        $series = collect($chart->series)->firstWhere('name', $item);
                         foreach ($series['data'] as $data) { //for getting all completes
                             $record_ids = $record_ids->merge($data['record_ids']);
                         }
