@@ -52,7 +52,11 @@ class EmailController extends Controller
                 'email' => $request->email,
                 'message' => $request->message,
                 'subject' => $request->subject,
-                'status' => 'sent'
+                'status' => 'sent',
+                'meta' => [
+                    'cc' => $request->csr_email ?? null,
+                    'bc' => $request->client_email ?? null
+                ]
             ]);
         }else {
             $email = Email::create([
@@ -61,13 +65,22 @@ class EmailController extends Controller
                 'user_id' => $request->user()->id,
                 'path' =>  $path,
                 'file' => $filename,
-                'subject' => $request->subject
+                'subject' => $request->subject,
+                'meta' => [
+                    'cc' => $request->csr_email ?? null,
+                    'bc' => $request->client_email ?? null
+                ]
             ]);
         }
         
         Mail::to($request->email)->send(new NotifyEcp($email));
         Mail::to("jnj@splitsecondresearch.co.uk")->send(new NotifyEcp($email));
         Mail::to("cris.tarpin@splitsecondsoftware.com")->send(new NotifyEcp($email));
+        if ($request->csr_email)
+            Mail::to($request->csr_email)->send(new NotifyEcp($email));
+        
+        if ($request->client_email)
+            Mail::to($request->client_email)->send(new NotifyEcp($email));
         
         return response()->json($email);
     }

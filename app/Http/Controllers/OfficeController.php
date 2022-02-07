@@ -96,7 +96,11 @@ class OfficeController extends Controller
             'name' => 'required',
             'email' => 'nullable',
             'type' => 'required',
-            'code' => 'required'
+            'code' => 'required',
+            'csr_name' => 'nullable',
+            'csr_email' => 'nullable',
+            'client_name' => 'nullable',
+            'client_email' => 'nullable'
         ]);
         $office = Office::create([
             'name' => $request->name,
@@ -104,7 +108,11 @@ class OfficeController extends Controller
             'user_id' => $request->user()->id,
             'type' => strtolower($request->type),
             'code' => $request->code,
-            'sequence' => $request->sequence
+            'sequence' => $request->sequence,
+            'csr_name' => $request->csr_name ?? null,
+            'csr_email' => $request->csr_email ?? null,
+            'client_name' => $request->client_name ?? null,
+            'client_email' => $request->email ?? null
         ]);
         return response()->json($office);
     }
@@ -117,6 +125,10 @@ class OfficeController extends Controller
             'type' => 'required',
             'code' => 'required',
             'email' => 'nullable',
+            'csr_name' => 'nullable',
+            'csr_email' => 'nullable',
+            'client_name' => 'nullable',
+            'client_email' => 'nullable'
             
         ]);
         $office->update([
@@ -125,7 +137,11 @@ class OfficeController extends Controller
             'type' => $request->type,
             'email' => $request->email,
             'code' => $request->code,
-            'sequence' => $request->sequence
+            'sequence' => $request->sequence,
+            'csr_name' => $request->csr_name ?? null,
+            'csr_email' => $request->csr_email ?? null,
+            'client_name' => $request->client_name ?? null,
+            'client_email' => $request->email ?? null
         ]);
         return response()->json($office);
     }
