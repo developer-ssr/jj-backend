@@ -239,31 +239,43 @@ class ExportController extends Controller
                     
                     $data = $this->getData($records, $t, $prime, $tmp_data, 'respondent', true);//summary in table
                     $score = $this->getScore($records, $t, $prime);
-                    if (isset($score['percentage']['red'])) {
-                        $data[] = $score['percentage']['red']['value'];
-                    }
+                    $data[] = $score['percentage']['green']['value'];
                     if (isset($score['percentage']['orange'])) {
                         $data[] = $score['percentage']['orange']['value'];
                     }
-                    $data[] = $score['percentage']['green']['value'];
+                    if (isset($score['percentage']['red'])) {
+                        $data[] = $score['percentage']['red']['value'];
+                    }
                     $tmp_results[$t][] = $data;
                 }
             }
-        }else { //table_respondent
-            
-        }
-        
-        
-        $results = [];
-        $header_keys = collect($headers)->keys()->toArray();
-        natsort($header_keys);//sort list
-        foreach ($header_keys as $ts) {
-            $results[] = $headers[$ts];//assign header
-            foreach ($tmp_results[$ts] as $value) {
-                $results[] = $value;
+
+            $results = [];
+            $header_keys = collect($headers)->keys()->toArray();
+            natsort($header_keys);//sort list
+            foreach ($header_keys as $ts) {
+                $results[] = $headers[$ts];//assign header
+                foreach ($tmp_results[$ts] as $value) {
+                    $results[] = $value;
+                }
+                $results[] = ["",""]; //apply spacing below
             }
-            $results[] = ["",""]; //apply spacing below
+        }else { //table_respondent
+            $headers = ['Respondent','Country','Name','Email Address'];
+            $ts = [];
+            foreach ($legends as $legend) {
+                $t = Str::lower($legend);//t3
+                $items = Chart::items($t);
+                foreach ($items as $i_key => $description) {
+                    $prime = $i_key + 1;
+                    $item = $legend.'_'.$prime; //T3_1
+                    $ts[] = $item;
+                }
+            }
+            $tmp_data = $this->exportTracker($chart, $ts);
+            $results = collect($tmp_data['results'])->prepend($headers)->toArray(); 
         }
+        
         return $results;
     }
 
