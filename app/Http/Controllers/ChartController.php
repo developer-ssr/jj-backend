@@ -61,7 +61,7 @@ class ChartController extends Controller
                 }
             }
 
-            if ($do_update == true) {
+            if ($do_update == false) {
                 $series = [];
                 // $records = [];//Record::all();
                 $categories = [];
