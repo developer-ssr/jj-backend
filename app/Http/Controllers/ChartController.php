@@ -107,7 +107,7 @@ class ChartController extends Controller
                                 if (!isset($categories[$s_key])) {
                                     $categories[$s_key] = $date;//'Segment '.($segment + 1);
                                 }
-                                $score = $this->getScore($records[$s_key], $legend['name'], $prime);
+                                $score = $this->getScore($records[$s_key], $legend['name'], $prime, $chart);
                                 
                                 $series_data[] = [
                                     'question' => $score['question'],
@@ -133,7 +133,7 @@ class ChartController extends Controller
                                         $categories[$segment] = $records[$s_key][0]->created_at->format("d M Y");//'Segment '.($segment + 1);
                                         $country = $records[$s_key][0]->country;
                                     }
-                                    $score = $this->getScore($records[$s_key], $legend['name'], $prime);
+                                    $score = $this->getScore($records[$s_key], $legend['name'], $prime, $chart);
                                     $date = $link->created_at->format("d M Y");
                                     $series_data[] = [
                                         'question' => $score['question'],
@@ -162,15 +162,17 @@ class ChartController extends Controller
                                 $this->tops['highest']['colour'] = $colour;
                             }
                         } */
-                        $this->tops['highest']['value'] = $score['percentage']['green']['value'];
-                        if ($this->tops['highest']['value'] > 80) {
-                            $color = 'green';
-                        }else if ($this->tops['highest']['value'] <= 80 && $this->tops['highest']['value'] >= 60) {
-                            $color = 'orange';
-                        }else {
-                            $color = 'red';
+                        if ($chart->office_type != 'office') {
+                            $this->tops['highest']['value'] = $score['percentage']['green']['value'];
+                            if ($this->tops['highest']['value'] > 80) {
+                                $color = 'green';
+                            }else if ($this->tops['highest']['value'] <= 80 && $this->tops['highest']['value'] >= 60) {
+                                $color = 'orange';
+                            }else {
+                                $color = 'red';
+                            }
+                            $this->tops['highest']['colour'] = $color;
                         }
-                        $this->tops['highest']['colour'] = $color;
                         
                         $this->tops['segment'] = last($series_data);
                         $series[] = [
@@ -274,7 +276,7 @@ class ChartController extends Controller
         $records = Record::all();
     }
 
-    public function getScore($records, $legend, $prime)
+    public function getScore($records, $legend, $prime, $chart)
     {
         $max_value = 0;
         $points = 0;
@@ -388,10 +390,19 @@ class ChartController extends Controller
                             case 't8':
                                 if ($t_key <= 1) {
                                     $percentage['red']['count'] += 1;
+                                    if ($chart->office_type == 'office') {
+                                        $percentage['red']['value'] = $tmp['value'];
+                                    }
                                 }elseif ($t_key == 2) {
                                     $percentage['orange']['count'] += 1;
+                                    if ($chart->office_type == 'office') {
+                                        $percentage['orange']['value'] = $tmp['value'];
+                                    }
                                 }else  {
                                     $percentage['green']['count'] += 1;
+                                    if ($chart->office_type == 'office') {
+                                        $percentage['green']['value'] = $tmp['value'];
+                                    }
                                 }
                                 break;
                             case 't4':
@@ -399,14 +410,26 @@ class ChartController extends Controller
                                 if ($prime == 19) {
                                     if ($t_key == 0) {
                                         $percentage['green']['count'] += 1; //change 1/14/2021 NO
+                                        if ($chart->office_type == 'office') {
+                                            $percentage['green']['value'] = 'N';
+                                        }
                                     }else  {
                                         $percentage['red']['count'] += 1; //change 1/14/2021 YES
+                                        if ($chart->office_type == 'office') {
+                                            $percentage['red']['value'] = 'Y';
+                                        }
                                     }
                                 }else {
                                     if ($t_key == 0) {
                                         $percentage['red']['count'] += 1; //NO
+                                        if ($chart->office_type == 'office') {
+                                            $percentage['red']['value'] = 'N';
+                                        }
                                     }else  {
                                         $percentage['green']['count'] += 1;//YES
+                                        if ($chart->office_type == 'office') {
+                                            $percentage['green']['value'] = 'Y';
+                                        }
                                     }
                                 }
                                 
@@ -415,10 +438,19 @@ class ChartController extends Controller
                             case 't10':
                                 if ($t_key == 0) {
                                     $percentage['red']['count'] += 1;
+                                    if ($chart->office_type == 'office') {
+                                        $percentage['red']['value'] = $tmp['value'];
+                                    }
                                 }elseif ($t_key == 3) {
                                     $percentage['green']['count'] += 1;
+                                    if ($chart->office_type == 'office') {
+                                        $percentage['green']['value'] = $tmp['value'];
+                                    }
                                 }else  {
                                     $percentage['orange']['count'] += 1;
+                                    if ($chart->office_type == 'office') {
+                                        $percentage['orange']['value'] = $tmp['value'];
+                                    }
                                 }
                                 break;
                             default:
@@ -437,7 +469,17 @@ class ChartController extends Controller
                 if ($legend == 't2') {
                     $percentage[$key]['value'] = round($percent['count'] / $tcount);
                 }else {
-                    $percentage[$key]['value'] = round(($percent['count'] / $tcount) * 100);
+                    if ($chart->office_type == 'office') {
+                        if ($percentage[$key]['count'] > 0) {
+                            $percentage[$key]['active'] = true;
+                            $this->tops['highest']['value'] = $percent['value'];
+                            $this->tops['highest']['colour'] = $key;
+                        }else {
+                            $percentage[$key]['active'] = false;
+                        }
+                    }else {
+                        $percentage[$key]['value'] = round(($percent['count'] / $tcount) * 100);
+                    }
                 }
                 // $percent['value'] = ceil($percent['count'] / $tcount);
                 /* if ($percentage[$key]['value'] > $this->tops['colours'][$key]) {
