@@ -590,14 +590,32 @@ class Chart extends Model
             case 't3':
                 $dimension = 'Satisfaction';
                 $question = 'Please indicate your satisfaction level with Abiliti in the following areas:';
+                $choices = [
+                    'Not at all satisfied',
+                    'Not very satisfied',
+                    'Somewhat satisfied',
+                    'Very satisfied',
+                    'Extremely satisfied'
+                ];
                 break;
             case 't4':
                 $dimension = 'Value';
                 $question = 'Please indicate which of the following areas from Abiliti are effective and providing value to your myopia management practice.';
+                $choices = [
+                    'No',
+                    'Yes'
+                ];
                 break;
             case 't5':
                 $dimension = 'Brand';
                 $question = 'How likely would you be to recommend the following to your patients and their parents?';
+                $choices = [
+                    'Definitely would not recommend',
+                    'Probably would not recommend',
+                    'Might or might not recommend',
+                    'Probably would recommend',
+                    'Definitely would recommend'
+                ];
                 break;
             case 't6':
                 $dimension = '';
@@ -621,15 +639,32 @@ class Chart extends Model
                 break;
             case 't8':
                 $dimension = 'HC2 Behavior freq.';
-                $question = 'In general, how frequently are you able to do the following with your myopia patients and/or their parents? ';
+                $question = 'In general, how frequently are you able to do the following with your myopia patients and/or their parents?';
+                $choices = [
+                    'Never',
+                    'Rarely',
+                    'Sometimes',
+                    'Almost always',
+                    'Always'
+                ];
                 break;
             case 't9':
                 $dimension = 'HC2 Content';
                 $question = 'As part of the parent conversation, please indicate if you include the following information or language in your discussion:';
+                $choices = [
+                    'No',
+                    'Yes'
+                ];
                 break;
             case 't10':
                 $dimension = 'Tool use/reco';
                 $question = 'Please indicate how often you use/recommend the following tools from Abiliti™:';
+                $choices = [
+                    'Do not use or recommend',
+                    'Occasionally use or recommend',
+                    'Sometimes use or recommend',
+                    'Always use or recommend'
+                ];
                 break;
             case 't11':
                 $dimension = '';

@@ -495,7 +495,7 @@ class ChartController extends Controller
         if ($legend == 't2' || $legend == 't6' || $legend == 't7' || $legend == 't11' || $legend == 't12') {
             $targets = [''];
         }else {
-            $targets = $tmp_data != null ? collect($tmp_data['data'])->pluck('equivalent'): [];
+            $targets = $question['choices'];
         }
         
         return [

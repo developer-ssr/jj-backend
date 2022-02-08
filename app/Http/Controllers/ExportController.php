@@ -697,11 +697,11 @@ class ExportController extends Controller
         
         $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
         $question = Chart::getQuestion($legend);
-        $equivalent = $tmp_data['prime'] ?? null;
+        $equivalent = Chart::items($legend, $prime); //$tmp_data['prime'] ?? null;
         if ($legend == 't2' || $legend == 't6' || $legend == 't7' || $legend == 't11' || $legend == 't12') {
             $targets = [''];
         }else {
-            $targets = $tmp_data != null ? collect($tmp_data['data'])->pluck('equivalent'): [];
+            $targets = $question['choices'];
         }
         
         return [
