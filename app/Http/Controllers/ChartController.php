@@ -43,7 +43,7 @@ class ChartController extends Controller
         // $filters = Filter::all();
         $data = [];
         $do_update = true;
-        $matched = true; // for cache, check records count
+        $matched = false; // for cache, check records count
         foreach ($filters as $key => $filter) {
             $qry = Chart::where('filter_id',$filter->id);
             if(!$qry->exists()){
