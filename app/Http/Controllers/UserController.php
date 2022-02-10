@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -70,5 +71,23 @@ class UserController extends Controller
             'name' => explode(' ', $user->name, 2)[0] . "'s Team",
             'personal_team' => true,
         ]));
+    }
+
+    public function change_password(Request $request)
+    {
+        $request->validate([
+            'password' => 'required',
+            'new_password' => 'required|confirmed'
+        ]);
+        if (Hash::check($request->new_password, $request->user()->password)) {
+            $request->user()->update([
+                'password' => bcrypt($request->new_password)
+            ]);
+            return response()->json(['result' => 'ok'], 200);
+        } else {
+            throw ValidationException::withMessages([
+                'password' => ['Incorrect password.']
+            ]);
+        }
     }
 }

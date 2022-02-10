@@ -43,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('/store', [UserController::class, 'store']);
         Route::put('/{user}', [UserController::class, 'update']);
         Route::delete('/{user}', [UserController::class, 'destroy']);
+        Route::post('/change_password', [UserController::class, 'change_password']);
     });
 
     Route::prefix('filters')->group(function () {
