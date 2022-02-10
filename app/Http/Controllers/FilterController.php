@@ -73,7 +73,9 @@ class FilterController extends Controller
                         'Euclid Emerald',
                         "MOONLENS",
                         'Wave NighLens',
-                        'Abiliti 1-Day'
+                        'Abiliti 1-Day',
+                        'Menicon',
+                        'GP Specialists'
                     ],
                     "t6" => [
                         "I DO NOT USE the HealthCaringTM Conversations ISIGHT Model",
