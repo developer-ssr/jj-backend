@@ -76,7 +76,7 @@ class UserController extends Controller
     public function change_password(Request $request)
     {
         $request->validate([
-            'password' => 'current_password:api',
+            'password' => 'current_password',
             'new_password' => 'required|confirmed'
         ]);
         if (Hash::check($request->password, $request->user()->password)) {
