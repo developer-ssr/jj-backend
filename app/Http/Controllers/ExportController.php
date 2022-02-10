@@ -93,6 +93,7 @@ class ExportController extends Controller
     {
         $chart = Chart::find($id);
         $all = json_decode($request->all);
+        $file_name = $request->file_name ?? $chart->title."_".$summary;
         if ($all) {
             if ($summary == 'table_summary' || $summary == 'table_respondent') {
                 $legends = ["T2","T3","T4","T5","T6","T7","T8","T9","T10","T11","T12"];
@@ -121,7 +122,7 @@ class ExportController extends Controller
             $data = collect($tmp_data['results'])->prepend($headers)->toArray(); 
         }
         
-        return Excel::download(CsvExport::new($data), $chart->title."_".$summary.".xlsx");
+        return Excel::download(CsvExport::new($data), $file_name.".xlsx");
     }
 
     public function exportSummary($chart, $legends) 
