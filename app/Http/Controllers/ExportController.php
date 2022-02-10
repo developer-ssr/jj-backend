@@ -94,7 +94,11 @@ class ExportController extends Controller
         $chart = Chart::find($id);
         $all = json_decode($request->all);
         if ($all) {
-            $legends = collect($chart->series)->pluck('name')->toArray();
+            if ($summary == 'table_summary' || $summary == 'table_respondent') {
+                $legends = ["T2","T3","T4","T5","T6","T7","T8","T9","T10","T11","T12"];
+            }else {
+                $legends = collect($chart->series)->pluck('name')->toArray();
+            }
         }else {
             $legends = json_decode($request->legends);
         }
@@ -333,7 +337,6 @@ class ExportController extends Controller
                 default:
                     if (isset($record->data[$t]['responses'])) {
                         $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
-                        $data_count = count($tmp_data['data']);
                     } else {
                         $tmp_data = null;
                     }                    
@@ -341,6 +344,7 @@ class ExportController extends Controller
             }
 
             if ($tmp_data != null) {
+                $data_count = count($tmp_data['data']);
                 foreach ($tmp_data['data'] as $t_key => $tmp) {
                     if (!isset($tmp_result[4+$t_key])) {
                         $tmp_result[3] = $tmp_data['equivalent'];//prime

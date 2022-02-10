@@ -243,7 +243,7 @@ class Chart extends Model
                 "Genetics is a risk factor for myopia",
                 "Lifestyle factors like lack of outdoor activities and extensive near work are risk factors for myopia",
                 "Use the word “prescribe” when talking about the treatment option (i.e. I am “prescribing” product “X” to treat your child’s myopia)",
-                "Use the word “recommend” when talking about the treatment option (i.e. I am “recommending” product “X” to treat your child’s myopia)"
+                "Use the word “does not recommend” when talking about the treatment option (i.e. I am “not recommending” product “X” to treat your child’s myopia)"
             ],
             "t10" => [
                 "The Healthcaring™Conversations Conversation Starter: filled out by the parent before entering the appointment room with the ECP. ​It identifies what matters to the parent and why; connects their values to treatment decisions and behaviors.​",
