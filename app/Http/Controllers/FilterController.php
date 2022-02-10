@@ -15,8 +15,8 @@ class FilterController extends Controller
         344: 'hk',
         702: 'sg',
         840: 'us' */
-        switch ($office->code) {
-            case 344: //hk
+        switch ($office->type) {
+            case 'global': //hk
                 $items = [
                     "t2" => [
                         "No treatment recommended",
