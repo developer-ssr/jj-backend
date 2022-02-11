@@ -92,7 +92,7 @@ class ExportController extends Controller
     public function download(Request $request, $id, $summary) 
     {
         $chart = Chart::find($id);
-        $all = json_decode($request->all);
+        $all = json_decode($request->all) ?? false;
         $file_name = $request->file_name ?? $chart->title."_".$summary;
         if ($all) {
             if ($summary == 'table_summary' || $summary == 'table_respondent') {
@@ -101,7 +101,21 @@ class ExportController extends Controller
                 $legends = collect($chart->series)->pluck('name')->toArray();
             }
         }else {
-            $legends = json_decode($request->legends);
+            if ($summary == 'table_summary' || $summary == 'table_respondent') {
+                $legends = [];
+                foreach (json_decode($request->legends) as $legend) {
+                    $tmp = Str::of($legend)->explode('_');
+                    $prime = $tmp[1];
+                    if (!isset($legends[$tmp[0]])) {
+                        $legends[$tmp[0]] = [];
+                        $legends[$tmp[0]][] = $prime;
+                    }else {
+                        $legends[$tmp[0]][] = $prime;
+                    }
+                }
+            }else {
+                $legends = json_decode($request->legends);
+            }
         }
 
         if ($summary == 'summary') {
@@ -113,9 +127,9 @@ class ExportController extends Controller
             $headers = ['Dimension','','','Question Text','','','Answer Value'];
             $data = collect($data)->prepend($headers)->toArray(); 
         }elseif($summary == 'table_summary') {
-            $data = $this->exportTable($chart, $legends, $summary);
+            $data = $this->exportTable($chart, $legends, $summary, $all);
         }elseif($summary == 'table_respondent') {
-            $data = $this->exportTable($chart, $legends, $summary);
+            $data = $this->exportTable($chart, $legends, $summary, $all);
         } else {
             $tmp_data = $this->exportTracker($chart, $legends);
             $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
@@ -205,15 +219,22 @@ class ExportController extends Controller
         return $results;
     }
 
-    public function exportTable($chart, $legends, $summary) {
+    public function exportTable($chart, $legends, $summary, $all) {
         $tmp_results = [];
         $headers = [];
-
         if ($summary == 'table_summary') {
-            foreach ($legends as $legend) {
-                $t = Str::lower($legend);//t3
+            foreach ($legends as $t_key => $legend) {
                 $record_ids = collect([]);
-                $items = Chart::items($t);
+                if ($all == false) {
+                    $items = [];
+                    foreach ($legend as $tmp_prime) {
+                        $t = Str::lower($t_key);//t3
+                        $items[] = Chart::items($t, $tmp_prime);
+                    }
+                }else {
+                    $t = Str::lower($legend);//t3
+                    $items = Chart::items($t);
+                }
                 foreach ($items as $i_key => $description) {
                     $prime = $i_key + 1;
                     $item = $legend.'_'.$prime; //T3_1
@@ -268,10 +289,18 @@ class ExportController extends Controller
         }else { //table_respondent
             $ts = [];
             $scores = [];
-            foreach ($legends as $legend) {
-                $t = Str::lower($legend);//t3
-                $items = Chart::items($t);
+            foreach ($legends as $t_key => $legend) {
                 $record_ids = collect([]);
+                if ($all == false) {
+                    $items = [];
+                    foreach ($legend as $tmp_prime) {
+                        $t = Str::lower($t_key);//t3
+                        $items[] = Chart::items($t, $tmp_prime);
+                    }
+                }else {
+                    $t = Str::lower($legend);//t3
+                    $items = Chart::items($t);
+                }
                 foreach ($items as $i_key => $description) {
                     $prime = $i_key + 1;
                     $item = $legend.'_'.$prime; //T3_1
