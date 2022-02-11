@@ -116,7 +116,7 @@ class ExportController extends Controller
                         }
                     }
                 } else {
-                    $legends = $_lg;
+                    $legends = json_decode($request->legends);
                     $all = true;
                 }
             }else {
