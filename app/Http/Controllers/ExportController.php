@@ -103,17 +103,16 @@ class ExportController extends Controller
         }else {
             if ($summary == 'table_summary' || $summary == 'table_respondent') {
                 $legends = [];
-                // foreach (json_decode($request->legends) as $legend) {
-                //     $tmp = Str::of($legend)->explode('_');
-                //     $prime = $tmp[1];
-                //     if (!isset($legends[$tmp[0]])) {
-                //         $legends[$tmp[0]] = [];
-                //         $legends[$tmp[0]][] = $prime;
-                //     }else {
-                //         $legends[$tmp[0]][] = $prime;
-                //     }
-                // }
-                $legends = json_decode($request->legends);
+                foreach (json_decode($request->legends) as $legend) {
+                    $tmp = Str::of($legend)->explode('_');
+                    $prime = $tmp[1];
+                    if (!isset($legends[$tmp[0]])) {
+                        $legends[$tmp[0]] = [];
+                        $legends[$tmp[0]][] = $prime;
+                    }else {
+                        $legends[$tmp[0]][] = $prime;
+                    }
+                }
             }else {
                 $legends = json_decode($request->legends);
             }
