@@ -227,11 +227,12 @@ class ExportController extends Controller
                 $record_ids = collect([]);
                 if ($all == false) {
                     $items = [];
+                    $Tn_point = $t_key;
                     foreach ($legend as $tmp_prime) {
-                        $t = Str::lower($t_key);//t3
                         $items[] = $tmp_prime;
                     }
                 }else {
+                    $Tn_point = $legend;
                     $t = Str::lower($legend);//t3
                     $items = Chart::items($t);
                 }
@@ -264,7 +265,7 @@ class ExportController extends Controller
                         if (isset($tmp_data['percentage']['red'])) {
                             $tmp_data['targets'][] = $tmp_data['percentage']['red']['label'];
                         }
-                        $headers[$t] = collect([$tmp_data['dimension'], $legend, $legend, $tmp_data['question']]);
+                        $headers[$t] = collect([$tmp_data['dimension'], $Tn_point, $Tn_point, $tmp_data['question']]);
                         $headers[$t] = $headers[$t]->merge($tmp_data['targets'])->toArray();//merge T2B headers
                         $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
                     }
@@ -298,12 +299,13 @@ class ExportController extends Controller
             foreach ($legends as $t_key => $legend) {
                 $record_ids = collect([]);
                 if ($all == false) {
+                    $Tn_point = $t_key;
                     $items = [];
                     foreach ($legend as $tmp_prime) {
-                        $t = Str::lower($t_key);//t3
-                        $items[] = Chart::items($t, $tmp_prime);
+                        $items[] = $tmp_prime;
                     }
                 }else {
+                    $Tn_point = $t_key;
                     $t = Str::lower($legend);//t3
                     $items = Chart::items($t);
                 }
