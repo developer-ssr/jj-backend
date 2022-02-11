@@ -105,7 +105,7 @@ class ExportController extends Controller
                 $legends = [];
                 foreach (json_decode($request->legends) as $legend) {
                     $tmp = Str::of($legend)->explode('_');
-                    $prime = $tmp[1];
+                    $prime = $tmp[1] ?? $legend;
                     if (!isset($legends[$tmp[0]])) {
                         $legends[$tmp[0]] = [];
                         $legends[$tmp[0]][] = $prime;
