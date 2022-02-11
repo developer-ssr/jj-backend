@@ -229,15 +229,21 @@ class ExportController extends Controller
                     $items = [];
                     foreach ($legend as $tmp_prime) {
                         $t = Str::lower($t_key);//t3
-                        $items[] = Chart::items($t, $tmp_prime);
+                        $items[] = $tmp_prime;
                     }
                 }else {
                     $t = Str::lower($legend);//t3
                     $items = Chart::items($t);
                 }
-                foreach ($items as $i_key => $description) {
-                    $prime = $i_key + 1;
-                    $item = $legend.'_'.$prime; //T3_1
+                foreach ($items as $i_key => $prime_or_description) {
+                    if ($all == false) {
+                        $prime = $prime_or_description;
+                        $item = $t_key.'_'.$prime; //T3_1
+                    }else {
+                        $prime = $i_key + 1;
+                        $item = $legend.'_'.$prime; //T3_1
+                    }
+                    
                     $series = collect($chart->series)->firstWhere('name', $item);
                     $tmp_data = [];
                     if ($i_key == 0) {
@@ -301,9 +307,14 @@ class ExportController extends Controller
                     $t = Str::lower($legend);//t3
                     $items = Chart::items($t);
                 }
-                foreach ($items as $i_key => $description) {
-                    $prime = $i_key + 1;
-                    $item = $legend.'_'.$prime; //T3_1
+                foreach ($items as $i_key => $prime_or_description) {
+                    if ($all == false) {
+                        $prime = $prime_or_description;
+                        $item = $t_key.'_'.$prime; //T3_1
+                    }else {
+                        $prime = $i_key + 1;
+                        $item = $legend.'_'.$prime; //T3_1
+                    }
                     $ts[] = $item;
                     if ($i_key == 0) {
                         $series = collect($chart->series)->firstWhere('name', $item);
