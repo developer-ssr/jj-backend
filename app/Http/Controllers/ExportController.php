@@ -119,9 +119,6 @@ class ExportController extends Controller
                     $legends = $_lg;
                     $all = true;
                 }
-                
-                $legends = json_decode($request->legends);
-                $all = true;
             }else {
                 $legends = json_decode($request->legends);
             }
