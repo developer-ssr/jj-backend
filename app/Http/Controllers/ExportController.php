@@ -229,6 +229,7 @@ class ExportController extends Controller
                     $items = [];
                     $Tn_point = $t_key;
                     foreach ($legend as $tmp_prime) {
+                        $t = Str::lower($t_key);//t3
                         $items[] = $tmp_prime;
                     }
                 }else {
@@ -302,6 +303,7 @@ class ExportController extends Controller
                     $Tn_point = $t_key;
                     $items = [];
                     foreach ($legend as $tmp_prime) {
+                        $t = Str::lower($t_key);//t3
                         $items[] = $tmp_prime;
                     }
                 }else {
