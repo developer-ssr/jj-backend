@@ -101,20 +101,20 @@ class ExportController extends Controller
                 $legends = collect($chart->series)->pluck('name')->toArray();
             }
         }else {
-            $legends = collect($chart->series)->pluck('name')->toArray();
-            dd($legends);
             if ($summary == 'table_summary' || $summary == 'table_respondent') {
                 $legends = [];
-                foreach (json_decode($request->legends) as $legend) {
-                    $tmp = Str::of($legend)->explode('_');
-                    $prime = $tmp[1];
-                    if (!isset($legends[$tmp[0]])) {
-                        $legends[$tmp[0]] = [];
-                        $legends[$tmp[0]][] = $prime;
-                    }else {
-                        $legends[$tmp[0]][] = $prime;
-                    }
-                }
+                // foreach (json_decode($request->legends) as $legend) {
+                //     $tmp = Str::of($legend)->explode('_');
+                //     $prime = $tmp[1];
+                //     if (!isset($legends[$tmp[0]])) {
+                //         $legends[$tmp[0]] = [];
+                //         $legends[$tmp[0]][] = $prime;
+                //     }else {
+                //         $legends[$tmp[0]][] = $prime;
+                //     }
+                // }
+                $legends = json_decode($request->legends);
+                $all = true;
             }else {
                 $legends = json_decode($request->legends);
             }
