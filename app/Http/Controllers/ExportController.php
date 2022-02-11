@@ -101,6 +101,8 @@ class ExportController extends Controller
                 $legends = collect($chart->series)->pluck('name')->toArray();
             }
         }else {
+            $legends = collect($chart->series)->pluck('name')->toArray();
+            dd($legends);
             if ($summary == 'table_summary' || $summary == 'table_respondent') {
                 $legends = [];
                 foreach (json_decode($request->legends) as $legend) {
