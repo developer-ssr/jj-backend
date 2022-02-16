@@ -543,12 +543,15 @@ class ExportController extends Controller
                     case 't9':
                     case 't10':
                         $responses = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
-                        foreach ($responses['data'] as $reskey => $resdata) {
-                            if ($resdata['selected']) {
-                                $val = $reskey + 1;
-                                break 1;
+                        if ($responses != null) {
+                            foreach ($responses['data'] as $reskey => $resdata) {
+                                if ($resdata['selected']) {
+                                    $val = $reskey + 1;
+                                    break 1;
+                                }
                             }
                         }
+                        
                         break;
                     case 't6':
                     case 't7':
