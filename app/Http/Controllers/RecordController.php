@@ -23,8 +23,8 @@ class RecordController extends Controller
                 'en' => '1278'
             ],
             'hk' => [
-                'en' => '1092',
-                'cn' => '1098'
+                'en' => '1287',
+                'cn' => '1295'
             ],
             'ca' => [
                 'en' => '1270'
@@ -38,8 +38,8 @@ class RecordController extends Controller
                 'en' => '1282'
             ],
             'hk' => [
-                'en' => '1087',
-                'cn' => '1093'
+                'en' => '1291',
+                'cn' => '1299'
             ],
             'ca' => [
                 'en' => '1274'
@@ -53,8 +53,8 @@ class RecordController extends Controller
                 'en' => '1276'
             ],
             'hk' => [
-                'en' => '1087',
-                'cn' => '1093'
+                'en' => '1285',
+                'cn' => '1293'
             ],
             'ca' => [
                 'en' => '1268'
@@ -68,8 +68,8 @@ class RecordController extends Controller
                 'en' => '1277'
             ],
             'hk' => [
-                'en' => '1088',
-                'cn' => '1094'
+                'en' => '1286',
+                'cn' => '1294'
             ],
             'ca' => [
                 'en' => '1269'
@@ -83,8 +83,8 @@ class RecordController extends Controller
                 'en' => '1283'
             ],
             'hk' => [
-                'en' => '1088',
-                'cn' => '1094'
+                'en' => '1292',
+                'cn' => '1300'
             ],
             'ca' => [
                 'en' => '1275'
@@ -98,8 +98,8 @@ class RecordController extends Controller
                 'en' => '1279'
             ],
             'hk' => [
-                'en' => '1089',
-                'cn' => '1095'
+                'en' => '1288',
+                'cn' => '1296'
             ],
             'ca' => [
                 'en' => '1271'
@@ -113,8 +113,8 @@ class RecordController extends Controller
                 'en' => '1280'
             ],
             'hk' => [
-                'en' => '1090',
-                'cn' => '1096'
+                'en' => '1289',
+                'cn' => '1297'
             ],
             'ca' => [
                 'en' => '1272'
@@ -128,8 +128,8 @@ class RecordController extends Controller
                 'en' => '1281'
             ],
             'hk' => [
-                'en' => '1091',
-                'cn' => '1097'
+                'en' => '1290',
+                'cn' => '1298'
             ],
             'ca' => [
                 'en' => '1273'
