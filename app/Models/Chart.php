@@ -138,7 +138,7 @@ class Chart extends Model
     } */
 
     public static function items($legend, $prime = 0) {
-        $legends = [
+        /* $legends = [
             "t2" => [0,1,2],
             "t3" => [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
             "t4" => [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],
@@ -150,8 +150,8 @@ class Chart extends Model
             "t10" => [0,1,2,3,4,5,6],
             "t11" => [0],
             "t12" => [0]
-        ];
-        $items = Chart::getPrimes($legends);
+        ]; */
+        $items = Chart::getPrimes();
         if ($prime == 0) {
             return $items[$legend];
         }else {
@@ -579,7 +579,7 @@ class Chart extends Model
         return ['question' => $question, 'dimension' => $dimension, 'choices' => $choices];
     }
 
-    public static function getPrimes($legends) {
+    public static function getPrimes() {
         $all_items = [
             "t2" => [
                 "No treatment recommended",
@@ -719,13 +719,13 @@ class Chart extends Model
             ]
         ];
 
-        $items = [];
+        /* $items = [];
         foreach ($legends as $legend => $primes) {
             $items[$legend] = [];
             foreach ($primes as $prime) {
                 $items[$legend][] = $all_items[$legend][$prime];
             }
-        }
-        return $items;
+        } */
+        return $all_items;
     }
 }
