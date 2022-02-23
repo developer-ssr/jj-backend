@@ -394,6 +394,7 @@ class ChartController extends Controller
                                 $percentage[$colour]['count'] += $tmp['value'];
                             break;
                             case 't3':
+                            case 't3B':
                             case 't5':
                             case 't8':
                                 if ($t_key <= 1) {
@@ -414,6 +415,7 @@ class ChartController extends Controller
                                 }
                                 break;
                             case 't4':
+                            case 't4B':
                             case 't9':
                                 if ($prime == 19) {
                                     if ($t_key == 0) {
