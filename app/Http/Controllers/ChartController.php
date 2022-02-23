@@ -358,6 +358,13 @@ class ChartController extends Controller
                 case 't12':
                     $tmp_data = Chart::getExpData($legend, $record, $prime);
                     break;
+                case 't5':
+                    if (isset($record->data[$legend]['responses'])) {
+                        $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime);
+                    }else {
+                        $tmp_data = null;
+                    }
+                    break;
                 default:
                     if (isset($record->data[$legend]['responses'])) {
                         $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime);
