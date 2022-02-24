@@ -265,27 +265,8 @@ class Chart extends Model
                 "Master Your Abiliti Training Program",
                 "Share Your Abiliti donation with patient purchase to Sight for Kids",
                 "Turnaround time from product ordering to delivery",
-                "Software’s accuracy in getting the right product for patient from 1st order"
-            ],
-            "t3B" => [
-                "Customer service",
-                "HealthCaring Conversations – The ISIGHT Model",
-                "Training on the fitting process",
-                "Fitting guides",
-                "The SeeAbiliti App",
-                "Product ordering",
-                "The Clinical Sales Consultant: Johnson & Johnson Vision Myopia Subject Matter Expert",
-                "Helping me provide personalized care to my myopia management patients",
-                "Abiliti 1-Day therapeutic lens",
-                "Abiliti New Wearer Kit",
-                "On-line tools/programs that help me train myself and/or my staff",
-                "In Person tools/programs that help me train myself and/or my staff",
-                "Tools/programs that educate me on the disease (myopia) and the product science",
-                "Patient brochure(s) that educate the parent on the condition (myopia)",
-                "Patient brochure(s) that educate the parent on the brand (Abiliti)",
-                "Master Your Abiliti Training Program",
-                "Share Your Abiliti donation with patient purchase to Sight for Kids",
-                "Turnaround time from product ordering to delivery"
+                "Software’s accuracy in getting the right product for patient from 1st order",
+                "Abiliti 1-Day therapeutic lens"
             ],
             "t4" => [
                 "Customer service",
@@ -305,26 +286,8 @@ class Chart extends Model
                 "Patient brochure(s) that educate the parent on the condition (myopia)",
                 "Patient brochure(s) that educate the parent on the brand (Abiliti)",
                 "Master Your Abiliti Training Program",
-                "Share Your Abiliti donation with patient purchase to Sight for Kids"
-            ],
-            "t4B" => [
-                "Customer service",
-                "HealthCaring Conversations – The ISIGHT Model",
-                "Training on the fitting process",
-                "Fitting guides",
-                "The SeeAbiliti App",
-                "Product ordering",
-                "The Clinical Sales Consultant: Johnson & Johnson Vision Myopia Subject Matter Expert",
-                "Helping me provide personalized care to my myopia management patients",
+                "Share Your Abiliti donation with patient purchase to Sight for Kids",
                 "Abiliti 1-Day therapeutic lens",
-                "Abiliti New Wearer Kit",
-                "On-line tools/programs that help me train myself and/or my staff",
-                "In Person tools/programs that help me train myself and/or my staff",
-                "Tools/programs that educate me on the disease (myopia) and the product science",
-                "Patient brochure(s) that educate the parent on the condition (myopia)",
-                "Patient brochure(s) that educate the parent on the brand (Abiliti)",
-                "Master Your Abiliti Training Program",
-                "Share Your Abiliti donation with patient purchase to Sight for Kids"
             ],
             "t5" => [
                 "MiSight",
