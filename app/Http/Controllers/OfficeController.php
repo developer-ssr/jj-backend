@@ -41,7 +41,7 @@ class OfficeController extends Controller
             });
         }
         $results = [
-            ['Name', 'Email', 'Country', 'Invite Sent', 'Taken Test', 'CSR Name', 'CSR Email', 'Client Name', 'Client Email']
+            ['Name', 'Email', 'Country', 'Invite Sent', 'Taken Test', 'CSR Name', 'CSR Email', 'Client Name', 'Client Email', 'Classification']
         ];
         $code = [
             840 => "USA",
@@ -51,7 +51,7 @@ class OfficeController extends Controller
         ];
         foreach ($offices as $office) {
             if ($office['type'] === 'office') {
-                $results[] = [$office['name'], $office['email'], $code[$office['code']], !is_null($office['emails']) ? Carbon::parse($office['emails']['created_at'])->toDateTimeString() : null, explode('/', $office['links'])[0] == '1' ? 'Yes': 'No', $office['csr_name'], $office['csr_email'], $office['client_name'], $office['client_email']];
+                $results[] = [$office['name'], $office['email'], $code[$office['code']], !is_null($office['emails']) ? Carbon::parse($office['emails']['created_at'])->toDateTimeString() : null, explode('/', $office['links'])[0] == '1' ? 'Yes': 'No', $office['csr_name'], $office['csr_email'], $office['client_name'], $office['client_email'], $office['classification']];
             }
                 
         }
@@ -100,7 +100,8 @@ class OfficeController extends Controller
             'csr_name' => 'nullable',
             'csr_email' => 'nullable',
             'client_name' => 'nullable',
-            'client_email' => 'nullable'
+            'client_email' => 'nullable',
+            'classification' => 'nullable'
         ]);
         $office = Office::create([
             'name' => $request->name,
@@ -112,7 +113,8 @@ class OfficeController extends Controller
             'csr_name' => $request->csr_name ?? null,
             'csr_email' => $request->csr_email ?? null,
             'client_name' => $request->client_name ?? null,
-            'client_email' => $request->client_email ?? null
+            'client_email' => $request->client_email ?? null,
+            'classification' => $request->classification ?? null
         ]);
         return response()->json($office);
     }
