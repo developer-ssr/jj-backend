@@ -358,6 +358,7 @@ class ExportController extends Controller
                 $tmps[$tmp] = ["","","",$tmp];
                 foreach (generator($ts) as $key => $t_item) {
                     if ($tmp == 'Items') {
+                        dd($scores[$t_item]);
                         $brand_names[] = $scores[$t_item]['prime'];
                     }else {
                         if (isset($scores[$t_item]['percentage'][$color]['value'])) {
@@ -368,6 +369,7 @@ class ExportController extends Controller
                     }
                 }
             }
+            
             $tmp_results[] = $tmps["Items"];
             $tmp_results[] = $tmps["T2B"];
             $tmp_results[] = $tmps["MB"];
