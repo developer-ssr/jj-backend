@@ -303,6 +303,7 @@ class ExportController extends Controller
         }else { //table_respondent
             $ts = [];
             $scores = [];
+            $sample_size = [];
             foreach ($legends as $t_key => $legend) {
                 $record_ids = collect([]);
                 if ($all == false) {
@@ -333,6 +334,7 @@ class ExportController extends Controller
                         }
                         $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
                     }
+                    $sample_size[$item] = count($records);
                     $scores[$item] = $this->getScore($records, $t, $prime);
                 }
             }
@@ -342,6 +344,7 @@ class ExportController extends Controller
             $tmp_results[] = ["",""]; // add space
             ksort($ts, 4);
             $tmps = [
+                "Sample size" => [],
                 "Items" => [],
                 "T2B" => [],
                 "MB" => [],
@@ -349,6 +352,7 @@ class ExportController extends Controller
             ];
             
             $colours = [
+                "sample" => "Sample size",
                 "items" => "Items",
                 "green" => "T2B",
                 "orange" => "MB",
@@ -359,7 +363,9 @@ class ExportController extends Controller
                 foreach (generator($ts) as $key => $t_item) {
                     if ($tmp == 'Items') {
                         $tmps[$tmp][] = $scores[$t_item]['prime'];
-                    }else {
+                    }elseif($tmp == 'Sample size') {
+                        $tmps['Sample'][] = $sample_size[$t_item];
+                    } else {
                         if (isset($scores[$t_item]['percentage'][$color]['value'])) {
                             $tmps[$tmp][] = $scores[$t_item]['percentage'][$color]['value'];
                         } else {
@@ -369,6 +375,7 @@ class ExportController extends Controller
                 }
             }
             
+            $tmp_results[] = $tmps["Sample size"];
             $tmp_results[] = $tmps["Items"];
             $tmp_results[] = $tmps["T2B"];
             $tmp_results[] = $tmps["MB"];

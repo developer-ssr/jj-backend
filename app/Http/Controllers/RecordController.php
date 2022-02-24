@@ -14,6 +14,133 @@ class RecordController extends Controller
     {
 
         $lang = $request->lang ?? 'en';
+        $country = $request->country ?? 'us';
+
+        switch ($country) {
+            case 'us':
+            case 'sg':
+            case 'ca':
+                if ($request->MyopiaLenses == 2) { //night
+                    $country_t3 = [
+                        'us' => [
+                            'en' => '1266'
+                        ],
+                        'sg' => [
+                            'en' => '1282'
+                        ],
+                        'ca' => [
+                            'en' => '1274'
+                        ]
+                    ];
+                    $country_t4 = [
+                        'us' => [
+                            'en' => '1261'
+                        ],
+                        'sg' => [
+                            'en' => '1277'
+                        ],
+                        'ca' => [
+                            'en' => '1269'
+                        ]
+                    ];
+                }elseif ($request->MyopiaLenses == 1) { //day
+                    $country_t3 = [
+                        'us' => [
+                            'en' => '1260'
+                        ],
+                        'sg' => [
+                            'en' => '1276'
+                        ],
+                        'ca' => [
+                            'en' => '1268'
+                        ]
+                    ];
+                    $country_t4 = [
+                        'us' => [
+                            'en' => '1267'
+                        ],
+                        'sg' => [
+                            'en' => '1283'
+                        ],
+                        'ca' => [
+                            'en' => '1275'
+                        ]
+                    ];
+                }elseif ($request->MyopiaLenses == 3) { //both
+                    $country_t3 = [
+                        'us' => [
+                            'en' => '1266'
+                        ],
+                        'sg' => [
+                            'en' => '1282'
+                        ],
+                        'ca' => [
+                            'en' => '1274'
+                        ]
+                    ];
+                    $country_t4 = [
+                        'us' => [
+                            'en' => '1261'
+                        ],
+                        'sg' => [
+                            'en' => '1277'
+                        ],
+                        'ca' => [
+                            'en' => '1269'
+                        ]
+                    ];
+                }else {
+                    dd("Something went wrong");
+                }
+            break;
+            case 'hk':
+                if ($request->MyopiaLenses == 3 || $request->MyopiaLenses == 4) { //night
+                    $country_t3 = [
+                        'hk' => [
+                            'en' => '1291',
+                            'cn' => '1299'
+                        ]
+                    ];
+                    $country_t4 = [
+                        'hk' => [
+                            'en' => '1286',
+                            'cn' => '1294'
+                        ]
+                    ];
+                } elseif ($request->MyopiaLenses == 1 || $request->MyopiaLenses == 2) { //day
+                    $country_t3 = [
+                        'hk' => [
+                            'en' => '1285',
+                            'cn' => '1293'
+                        ]
+                    ];
+                    $country_t4 = [
+                        'hk' => [
+                            'en' => '1292',
+                            'cn' => '1300'
+                        ]
+                    ];
+                } elseif ($request->MyopiaLenses == 5 || $request->MyopiaLenses == 6) { //both
+                    $country_t3 = [
+                        'hk' => [
+                            'en' => '1291',
+                            'cn' => '1299'
+                        ]
+                    ];
+                    $country_t4 = [
+                        'hk' => [
+                            'en' => '1286',
+                            'cn' => '1294'
+                        ]
+                    ];
+                } else {
+                    dd("Something went wrong");
+                }
+            break;
+            default:
+                dd("Something went wrong");
+            break;
+        }
 
         $country_t5 = [
             'us' => [
@@ -30,66 +157,7 @@ class RecordController extends Controller
                 'en' => '1270'
             ]
         ];
-        $country_t3 = [
-            'us' => [
-                'en' => '1266'
-            ],
-            'sg' => [
-                'en' => '1282'
-            ],
-            'hk' => [
-                'en' => '1291',
-                'cn' => '1299'
-            ],
-            'ca' => [
-                'en' => '1274'
-            ]
-        ];
-        $country_t3B = [
-            'us' => [
-                'en' => '1260'
-            ],
-            'sg' => [
-                'en' => '1276'
-            ],
-            'hk' => [
-                'en' => '1285',
-                'cn' => '1293'
-            ],
-            'ca' => [
-                'en' => '1268'
-            ]
-        ];
-        $country_t4 = [
-            'us' => [
-                'en' => '1261'
-            ],
-            'sg' => [
-                'en' => '1277'
-            ],
-            'hk' => [
-                'en' => '1286',
-                'cn' => '1294'
-            ],
-            'ca' => [
-                'en' => '1269'
-            ]
-        ];
-        $country_t4B = [
-            'us' => [
-                'en' => '1267'
-            ],
-            'sg' => [
-                'en' => '1283'
-            ],
-            'hk' => [
-                'en' => '1292',
-                'cn' => '1300'
-            ],
-            'ca' => [
-                'en' => '1275'
-            ]
-        ];
+
         $country_t8 = [
             'us' => [
                 'en' => '1263'
@@ -135,14 +203,13 @@ class RecordController extends Controller
                 'en' => '1273'
             ]
         ];
+
         $country_link = [
             'us' => 'nax',
             'sg' => 'jqF',
             'hk' => '5vw',
             'ca' => 'sqV'
         ];
-
-        $country = $request->country ?? 'us';
 
         $http = Http::get($this->act_api . "survey_id=" . $country_t3[$country][$lang] . "&id={$request->id}");
         $data = [
