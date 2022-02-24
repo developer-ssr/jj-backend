@@ -130,7 +130,8 @@ class OfficeController extends Controller
             'csr_name' => 'nullable',
             'csr_email' => 'nullable',
             'client_name' => 'nullable',
-            'client_email' => 'nullable'
+            'client_email' => 'nullable',
+            'classification' => 'nullable'
             
         ]);
         $office->update([
@@ -143,7 +144,8 @@ class OfficeController extends Controller
             'csr_name' => $request->csr_name ?? null,
             'csr_email' => $request->csr_email ?? null,
             'client_name' => $request->client_name ?? null,
-            'client_email' => $request->client_email ?? null
+            'client_email' => $request->client_email ?? null,
+            'classification' => $request->classification ?? null
         ]);
         return response()->json($office);
     }
