@@ -231,7 +231,6 @@ class ExportController extends Controller
         $tmp_results = [];
         $headers = [];
         if ($summary == 'table_summary') {
-            dd($legends);
             foreach ($legends as $t_key => $legend) {
                 $record_ids = collect([]);
                 if ($all == false) {
@@ -257,6 +256,7 @@ class ExportController extends Controller
                     
                     $series = collect($chart->series)->firstWhere('name', $item);
                     if ($series == null) {
+                        dd($item);
                         continue;
                     }
                     $tmp_data = [];
