@@ -245,6 +245,7 @@ class ExportController extends Controller
                     $t = Str::lower($legend);//t3
                     $items = Chart::items($t);
                 }
+                $recorded = false;
                 foreach ($items as $i_key => $prime_or_description) {
                     if ($all == false) {
                         $prime = $prime_or_description;
@@ -255,14 +256,11 @@ class ExportController extends Controller
                     }
                     
                     $series = collect($chart->series)->firstWhere('name', $item);
-                    if ($item == 'T7_4') {
-                        dd($series);
-                    }
                     if ($series == null) {
                         continue;
                     }
                     $tmp_data = [];
-                    if ($i_key == 0) {
+                    while ($recorded == false) {
                         foreach ($series['data'] as $data) { //for getting all completes
                             if (count($tmp_data) < count($data)) {
                                 $tmp_data = $data; //find proper data
@@ -283,6 +281,7 @@ class ExportController extends Controller
                         $headers[$t] = collect([$tmp_data['dimension'], $Tn_point, $Tn_point, $tmp_data['question']]);
                         $headers[$t] = $headers[$t]->merge($tmp_data['targets'])->toArray();//merge T2B headers
                         $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
+                        $recorded = true;
                     }
                     
                     $data = $this->getData($records, $t, $prime, $tmp_data, 'respondent', true);//summary in table
