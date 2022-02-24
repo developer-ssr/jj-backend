@@ -329,7 +329,7 @@ class ExportController extends Controller
                     $ts[] = $item;
                     if ($i_key == 0) {
                         $series = collect($chart->series)->firstWhere('name', $item);
-                        dd($item);
+                        dd($series);
                         foreach ($series['data'] as $data) { //for getting all completes
                             $record_ids = $record_ids->merge($data['record_ids']);
                         }
