@@ -136,6 +136,8 @@ class ExportController extends Controller
             $data = $this->exportTable($chart, $legends, $summary, $all);
         }elseif($summary == 'table_respondent') {
             $data = $this->exportTable($chart, $legends, $summary, $all);
+        }elseif($summary == 'tracker_kpi') {
+            $data = $this->exportTable($chart, $legends, $summary, $all);
         } else {
             $tmp_data = $this->exportTracker($chart, $legends);
             $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
@@ -326,9 +328,12 @@ class ExportController extends Controller
                         $prime = $i_key + 1;
                         $item = $legend.'_'.$prime; //T3_1
                     }
+                    $series = collect($chart->series)->firstWhere('name', $item);
+                    if ($series == null) {
+                        continue;
+                    }
                     $ts[] = $item;
                     if ($i_key == 0) {
-                        $series = collect($chart->series)->firstWhere('name', $item);
                         foreach ($series['data'] as $data) { //for getting all completes
                             $record_ids = $record_ids->merge($data['record_ids']);
                         }
