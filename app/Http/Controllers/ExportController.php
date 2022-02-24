@@ -255,11 +255,10 @@ class ExportController extends Controller
                     }
                     
                     $series = collect($chart->series)->firstWhere('name', $item);
+                    if ($item == 'T7_4') {
+                        dd($series);
+                    }
                     if ($series == null) {
-                        if ($legend == 'T7') {
-                            dd($chart->series);
-                        }
-                        
                         continue;
                     }
                     $tmp_data = [];
