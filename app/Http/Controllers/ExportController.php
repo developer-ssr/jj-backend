@@ -347,7 +347,7 @@ class ExportController extends Controller
                 "MB" => [],
                 "B2B" => []
             ];
-            $brand_names = [];
+            
             $colours = [
                 "items" => "Items",
                 "green" => "T2B",
@@ -358,8 +358,7 @@ class ExportController extends Controller
                 $tmps[$tmp] = ["","","",$tmp];
                 foreach (generator($ts) as $key => $t_item) {
                     if ($tmp == 'Items') {
-                        dd($scores[$t_item]);
-                        $brand_names[] = $scores[$t_item]['prime'];
+                        $tmps[$tmp][] = $scores[$t_item]['prime'];
                     }else {
                         if (isset($scores[$t_item]['percentage'][$color]['value'])) {
                             $tmps[$tmp][] = $scores[$t_item]['percentage'][$color]['value'];
