@@ -255,6 +255,9 @@ class ExportController extends Controller
                     }
                     
                     $series = collect($chart->series)->firstWhere('name', $item);
+                    if ($series == null) {
+                        continue;
+                    }
                     $tmp_data = [];
                     if ($i_key == 0) {
                         foreach ($series['data'] as $data) { //for getting all completes
