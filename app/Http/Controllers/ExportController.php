@@ -342,25 +342,33 @@ class ExportController extends Controller
             $tmp_results[] = ["",""]; // add space
             ksort($ts, 4);
             $tmps = [
+                "Items" => [],
                 "T2B" => [],
                 "MB" => [],
                 "B2B" => []
             ];
+            $brand_names = [];
             $colours = [
+                "items" => "Items",
                 "green" => "T2B",
                 "orange" => "MB",
                 "red" => "B2B"
             ];
-            foreach ($colours as $color => $tmp) {
+            foreach (generator($colours) as $color => $tmp) {
                 $tmps[$tmp] = ["","","",$tmp];
-                foreach ($ts as $key => $t_item) {
-                    if (isset($scores[$t_item]['percentage'][$color]['value'])) {
-                        $tmps[$tmp][] = $scores[$t_item]['percentage'][$color]['value'];
-                    } else {
-                        $tmps[$tmp][] = '-';
+                foreach (generator($ts) as $key => $t_item) {
+                    if ($tmp == 'Items') {
+                        $brand_names[] = $scores[$t_item]['prime'];
+                    }else {
+                        if (isset($scores[$t_item]['percentage'][$color]['value'])) {
+                            $tmps[$tmp][] = $scores[$t_item]['percentage'][$color]['value'];
+                        } else {
+                            $tmps[$tmp][] = '-';
+                        }
                     }
                 }
             }
+            $tmp_results[] = $tmps["Items"];
             $tmp_results[] = $tmps["T2B"];
             $tmp_results[] = $tmps["MB"];
             $tmp_results[] = $tmps["B2B"];

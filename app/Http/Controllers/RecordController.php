@@ -148,15 +148,9 @@ class RecordController extends Controller
         $data = [
             't3' => json_decode($http->body(), true) ?? null
         ];
-        
-        $http = Http::get($this->act_api . "survey_id=" . $country_t3B[$country][$lang] . "&id={$request->id}");
-        $data['t3B'] = json_decode($http->body(), true) ?? null;
 
         $http = Http::get($this->act_api . "survey_id=" . $country_t4[$country][$lang] . "&id={$request->id}");
         $data['t4'] = json_decode($http->body(), true) ?? null;
-
-        $http = Http::get($this->act_api . "survey_id=" . $country_t4B[$country][$lang] . "&id={$request->id}");
-        $data['t4B'] = json_decode($http->body(), true) ?? null;
 
         $http = Http::get($this->act_api . "survey_id=" . $country_t5[$country][$lang] . "&id={$request->id}");
         $data['t5'] = json_decode($http->body(), true);
