@@ -369,7 +369,7 @@ class ExportController extends Controller
                     if ($tmp == 'Items') {
                         $tmps[$tmp][] = $scores[$t_item]['prime'];
                     }elseif($tmp == 'Sample size') {
-                        $tmps['Sample'][] = $sample_size[$t_item];
+                        $tmps['Sample size'][] = $sample_size[$t_item];
                     } else {
                         if (isset($scores[$t_item]['percentage'][$color]['value'])) {
                             $tmps[$tmp][] = $scores[$t_item]['percentage'][$color]['value'];
