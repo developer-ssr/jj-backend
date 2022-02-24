@@ -257,7 +257,7 @@ class ExportController extends Controller
                     $series = collect($chart->series)->firstWhere('name', $item);
                     if ($series == null) {
                         if ($legend == 'T7') {
-                            dd($series);
+                            dd($chart->series);
                         }
                         
                         continue;
