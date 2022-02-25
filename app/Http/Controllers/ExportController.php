@@ -137,7 +137,7 @@ class ExportController extends Controller
         }elseif($summary == 'table_respondent') {
             $data = $this->exportTable($chart, $legends, $summary, $all);
         }elseif($summary == 'tracker_kpi') {
-            $data = $this->exportTable($chart, $legends, $summary, $all);
+            $data = $this->exportKPI($chart, $legends, $summary, $all);
         } else {
             $tmp_data = $this->exportTracker($chart, $legends);
             $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
@@ -397,6 +397,72 @@ class ExportController extends Controller
         return $results;
     }
 
+    public function exportKPI($chart, $legends, $summary, $all) {
+        
+
+        $questions = [
+            [
+                'label' => 'Satisfaction w/ ordering',
+                'variables' => ['T3_19']
+            ],
+            [
+                'label' => 'Satisfaction w/ fitting software',
+                'variables' => ['T3_4']
+            ],
+            [
+                'label' => 'Satisfaction w/ cust. service',
+                'variables' => ['T3_1']
+            ],
+            [
+                'label' => '%ECPs discussing MM as a treatment option with all patients',
+                'variables' => ['T7_4','T7_5']
+            ],
+            [
+                'label' => '%ECPs discuss LT health risks w/ parents',
+                'variables' => ['T9_1']
+            ],
+            [
+                'label' => '%ECPs who value CSC support',
+                'variables' => ['T4_1']
+            ],
+            [
+                'label' => '%ECPs who would recommend Abiliti to their patients/parents',
+                'variables' => ['T5_4']
+            ],
+            [
+                'label' => '% ECPs satisfied with SeeAbiliti for their patients',
+                'variables' => ['T3_6']
+            ]
+        ];
+
+        $tmp_results = [];
+        $headers = ['KPIs', $chart->name];
+        $scores = [];
+        foreach ($questions as $key => $question) {
+            $tmp_data = [$question['label']];
+            foreach ($question['variables'] as $variable) {
+                $series = collect($chart->series)->firstWhere('name', $variable);
+                $record_ids = collect([]);
+                foreach ($series['data'] as $data) { //for getting all completes
+                    if (count($tmp_data) < count($data)) {
+                        $tmp_data = $data; //find proper data
+                    }
+                    $record_ids = $record_ids->merge($data['record_ids']);
+                }
+                $ts = Str::of($variable)->explode('_');
+                $t = Str::lower($ts[0]);//t3
+                $prime = $ts[1] ?? null;
+                $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
+                $scores[$key] = $this->getKPIData($records, $t, $prime, $tmp_data, $key);
+                $tmp_data[] = $scores[$key]['percent'];
+            }
+            $tmp_result[] = $tmp_data;
+        }
+
+        $results = collect($tmp_results)->prepend($headers)->toArray(); 
+        return $results;
+    }
+
     public function getData($records, $t, $prime, $data, $summary, $table = false) {
         $tmp_data = [];
         $tmp_result = collect([$data['dimension'] ?? '', Str::upper($t), $prime, $data['question'] ?? '']);
@@ -494,6 +560,65 @@ class ExportController extends Controller
         
 
         return $tmp_result->toArray();
+    }
+
+    public function getKPIData($records, $t, $prime, $data, $key) {
+        $counts = 0;
+        foreach ($records as $record) {
+            switch ($key) {
+                case 3: //T7
+                    $tmp_meta = $record->meta;
+                    break;
+                default:
+                    if (isset($record->data[$t]['responses'])) {
+                        $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
+                    } else {
+                        $tmp_data = null;
+                    }  
+                    break;
+            }
+            if ($tmp_data != null) {
+                switch ($t) {
+                    case 't3':
+                        $evaluate = [5];
+                        break;
+                    case 't4':
+                    case 't9':
+                        $evaluate = [2];
+                        break;
+                    case 't5':
+                        $evaluate = [4,5];
+                        break;
+                    default: //t7
+                        $evaluate = [];
+                        break;
+                }
+                foreach ($evaluate as $value) {
+                    if ($t == 't7') {
+                        if ($tmp_meta['c2'] == $value) {
+                            $counts++;
+                            break;
+                        }
+                    }else {
+                        $data = collect($tmp_data['data'])->firstWhere('value', $value);
+                        if ($data['selected']) {
+                            $counts++;
+                            break;
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+        $count_records = count($records);
+        if ($count_records > 0) {
+            $percent = round(($counts/ $count_records) * 100);
+        }else {
+            $percent = 0;
+        }
+        
+        return ['records' => $records, 'percent' => $percent];
     }
 
     public function exportTracker($chart, $legends) 
