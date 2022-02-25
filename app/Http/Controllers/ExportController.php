@@ -456,7 +456,7 @@ class ExportController extends Controller
                 $scores[$key] = $this->getKPIData($records, $t, $prime, $tmp_data, $key);
                 $tmp_data[] = $scores[$key]['percent'];
             }
-            $tmp_result[] = $tmp_data;
+            $tmp_results[] = $tmp_data;
         }
 
         $results = collect($tmp_results)->prepend($headers)->toArray(); 
@@ -600,11 +600,7 @@ class ExportController extends Controller
                             break;
                         }
                     }else {
-                        $data = collect($tmp_data['data'])->firstWhere('value', $value);
-                        /* if ($data == null) {
-                            dd($t);
-                        } */
-                        
+                        $data = collect($tmp_data['data'])->firstWhere('value', $value);                        
                         if ($data['selected']) {
                             $counts++;
                             break;
