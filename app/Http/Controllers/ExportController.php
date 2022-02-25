@@ -439,24 +439,21 @@ class ExportController extends Controller
         $headers = ['KPIs', $chart->name];
         $scores = [];
         foreach ($questions as $key => $question) {
-            $tmp_data = [$question['label']];
+            $tmp_result = [$question['label']];
             foreach ($question['variables'] as $variable) {
                 $series = collect($chart->series)->firstWhere('name', $variable);
                 $record_ids = collect([]);
                 foreach ($series['data'] as $data) { //for getting all completes
-                    if (count($tmp_data) < count($data)) {
-                        $tmp_data = $data; //find proper data
-                    }
                     $record_ids = $record_ids->merge($data['record_ids']);
                 }
                 $ts = Str::of($variable)->explode('_');
                 $t = Str::lower($ts[0]);//t3
                 $prime = $ts[1] ?? null;
                 $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
-                $scores[$key] = $this->getKPIData($records, $t, $prime, $tmp_data, $key);
-                $tmp_data[] = $scores[$key]['percent'];
+                $scores[$key] = $this->getKPIData($records, $t, $prime, $key);
+                $tmp_result[] = $scores[$key]['percent'];
             }
-            $tmp_results[] = $tmp_data;
+            $tmp_results[] = $tmp_result;
         }
 
         $results = collect($tmp_results)->prepend($headers)->toArray(); 
@@ -562,7 +559,7 @@ class ExportController extends Controller
         return $tmp_result->toArray();
     }
 
-    public function getKPIData($records, $t, $prime, $data, $key) {
+    public function getKPIData($records, $t, $prime, $key) {
         $counts = 0;
         foreach ($records as $record) {
             switch ($key) {
