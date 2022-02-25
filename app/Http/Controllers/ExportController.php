@@ -584,7 +584,7 @@ class ExportController extends Controller
                         break;
                     case 't4':
                     case 't9':
-                        $evaluate = [2];
+                        $evaluate = [1];
                         break;
                     case 't5':
                         $evaluate = [4,5];
@@ -601,9 +601,9 @@ class ExportController extends Controller
                         }
                     }else {
                         $data = collect($tmp_data['data'])->firstWhere('value', $value);
-                        if ($data == null) {
+                        /* if ($data == null) {
                             dd($t);
-                        }
+                        } */
                         
                         if ($data['selected']) {
                             $counts++;
