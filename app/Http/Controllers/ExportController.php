@@ -590,7 +590,7 @@ class ExportController extends Controller
                         $evaluate = [4,5];
                         break;
                     default: //t7
-                        $evaluate = [];
+                        $evaluate = [4,5];
                         break;
                 }
                 foreach ($evaluate as $value) {
@@ -601,6 +601,10 @@ class ExportController extends Controller
                         }
                     }else {
                         $data = collect($tmp_data['data'])->firstWhere('value', $value);
+                        if ($data == null) {
+                            dd($tmp_data['data']);
+                        }
+                        
                         if ($data['selected']) {
                             $counts++;
                             break;
