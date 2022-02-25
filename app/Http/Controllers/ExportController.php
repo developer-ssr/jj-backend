@@ -436,7 +436,7 @@ class ExportController extends Controller
         ];
 
         $tmp_results = [];
-        $headers = ['KPIs', $chart->name];
+        $headers = ['KPIs', $chart->title];
         $scores = [];
         foreach ($questions as $key => $question) {
             $tmp_result = [$question['label']];
