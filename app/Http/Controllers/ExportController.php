@@ -567,7 +567,7 @@ class ExportController extends Controller
         foreach ($records as $record) {
             switch ($key) {
                 case 3: //T7
-                    $tmp_data = $record->meta;
+                    $tmp_data = $record->data[$t];
                     break;
                 default:
                     if (isset($record->data[$t]['responses'])) {
@@ -595,8 +595,7 @@ class ExportController extends Controller
                 }
                 foreach ($evaluate as $value) {
                     if ($t == 't7') {
-                        dd($tmp_data['query']);
-                        if ($tmp_data['query']['c2'] == $value) {
+                        if ($tmp_data == $value) {
                             $counts++;
                             break;
                         }
