@@ -595,7 +595,7 @@ class ExportController extends Controller
                 }
                 foreach ($evaluate as $value) {
                     if ($t == 't7') {
-                        if ($tmp_data['c2'] == $value) {
+                        if ($tmp_data['query']['c2'] == $value) {
                             $counts++;
                             break;
                         }
