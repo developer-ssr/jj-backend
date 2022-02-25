@@ -602,7 +602,7 @@ class ExportController extends Controller
                     }else {
                         $data = collect($tmp_data['data'])->firstWhere('value', $value);
                         if ($data == null) {
-                            dd($tmp_data['data']);
+                            dd($t);
                         }
                         
                         if ($data['selected']) {
