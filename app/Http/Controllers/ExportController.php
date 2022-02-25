@@ -415,7 +415,7 @@ class ExportController extends Controller
             ],
             [
                 'label' => '%ECPs discussing MM as a treatment option with all patients',
-                'variables' => ['T7_4','T7_5']
+                'variables' => ['T7_4']
             ],
             [
                 'label' => '%ECPs discuss LT health risks w/ parents',
