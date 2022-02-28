@@ -123,14 +123,14 @@ class RecordController extends Controller
                 } elseif ($request->MyopiaLenses == 5 || $request->MyopiaLenses == 6) { //both
                     $country_t3 = [
                         'hk' => [
-                            'en' => '1291',
-                            'cn' => '1299'
+                            'en' => '1315',
+                            'cn' => '1317'
                         ]
                     ];
                     $country_t4 = [
                         'hk' => [
-                            'en' => '1286',
-                            'cn' => '1294'
+                            'en' => '1316',
+                            'cn' => '1318'
                         ]
                     ];
                 } else {
