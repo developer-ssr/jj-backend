@@ -69,24 +69,24 @@ class RecordController extends Controller
                 }elseif ($request->MyopiaLenses == 3) { //both
                     $country_t3 = [
                         'us' => [
-                            'en' => '1266'
+                            'en' => '1308'
                         ],
                         'sg' => [
-                            'en' => '1282'
+                            'en' => '1313'
                         ],
                         'ca' => [
-                            'en' => '1274'
+                            'en' => '1311'
                         ]
                     ];
                     $country_t4 = [
                         'us' => [
-                            'en' => '1261'
+                            'en' => '1310'
                         ],
                         'sg' => [
-                            'en' => '1277'
+                            'en' => '1314'
                         ],
                         'ca' => [
-                            'en' => '1269'
+                            'en' => '1312'
                         ]
                     ];
                 }else {
