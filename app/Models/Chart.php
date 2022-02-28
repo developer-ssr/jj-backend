@@ -22,9 +22,10 @@ class Chart extends Model
         switch ($legend) {
             case 't2':
                 $choices = [
-                    'No treatment recommended',
-                    'Refractive only treatment: you fit only with single vision solutions (glasses or contact lenses)',
-                    'Myopia management treatment: you fit with myopia management treatments (Ortho-K, multifocal soft contacts or glasses, myopia control soft contacts or glasses, atropine)'
+                    'No treatment',
+                    'Refractive only treatment for hyperopia',
+                    'Refractive only treatment for myopia',
+                    'Myopia management treatment'
                 ];
                 $value = $record->meta['query']['b3_'.$prime];
                 break;
@@ -132,9 +133,10 @@ class Chart extends Model
                 $question = 'For your patients between 5-18 years of age, please estimate the percent of patients that fall within each category.
                 The total must sum to 100%';
                 $choices = [
-                    'No treatment recommended',
-                    'Refractive only treatment: you fit only with single vision solutions (glasses or contact lenses)',
-                    'Myopia management treatment: you fit with myopia management treatments (Ortho-K, multifocal soft contacts or glasses, myopia control soft contacts or glasses, atropine)'
+                    'No treatment',
+                    'Refractive only treatment for hyperopia',
+                    'Refractive only treatment for myopia',
+                    'Myopia management treatment'
                 ];
                 break;
             case 't3':
@@ -241,9 +243,10 @@ class Chart extends Model
     public static function getPrimes() {
         $all_items = [
             "t2" => [
-                "No treatment recommended",
-                "Refractive only treatment: you fit only with single vision solutions (glasses or contact lenses)",
-                "Myopia management treatment: you fit with myopia management treatments (Ortho-K, multifocal soft contacts or glasses, myopia control soft contacts or glasses, atropine)"
+                "No treatment",
+                "Refractive only treatment for hyperopia",
+                "Refractive only treatment for myopia",
+                "Myopia management treatment"
             ],
             "t3" => [
                 "Customer service",
