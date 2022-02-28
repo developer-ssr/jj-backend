@@ -30,9 +30,9 @@ class Chart extends Model
                 break;
             case 't6':
                 $choices = [
-                    'I DO NOT USE the HealthCaringTM Conversations ISIGHT Model',
-                    'NO, I DO NOT agree with HealthCaringTM Conversations ISIGHT Model',
-                    'YES, I agree with HealthCaringTM Conversations ISIGHT Model'
+                    'I DO NOT USE the HealthCaringᵀᴹ Conversations ISIGHT Model',
+                    'NO, I DO NOT agree with HealthCaringᵀᴹ Conversations ISIGHT Model',
+                    'YES, I agree with HealthCaringᵀᴹ Conversations ISIGHT Model'
                 ];
                 $value = $record->data[$legend];
                 break;
@@ -171,9 +171,9 @@ class Chart extends Model
                 $dimension = '';
                 $question = 'Now we are going to ask you a little about the conversations you may have with the parents of your patients between 5-18 years. Please indicate if you agree with the following statement:  Abiliti HealthCaring Conversations, ISIGHT Model, provides me with usable strategies for engaging in high quality conversations with my patients.';
                 $choices = [
-                    'I DO NOT USE the HealthCaringTM Conversations ISIGHT Model',
-                    'NO, I DO NOT agree with HealthCaringTM Conversations ISIGHT Model',
-                    'YES, I agree with HealthCaringTM Conversations ISIGHT Model'
+                    'I DO NOT USE the HealthCaringᵀᴹ Conversations ISIGHT Model',
+                    'NO, I DO NOT agree with HealthCaringᵀᴹ Conversations ISIGHT Model',
+                    'YES, I agree with HealthCaringᵀᴹ Conversations ISIGHT Model'
                 ];
                 break;
             case 't7':
@@ -315,9 +315,9 @@ class Chart extends Model
                 'DISC'
             ],
             "t6" => [
-                "I DO NOT USE the HealthCaringTM Conversations ISIGHT Model",
-                "NO, I DO NOT agree with HealthCaringTM Conversations ISIGHT Model",
-                "YES, I agree with HealthCaringTM Conversations ISIGHT Model"
+                "I DO NOT USE the HealthCaringᵀᴹ Conversations ISIGHT Model",
+                "NO, I DO NOT agree with HealthCaringᵀᴹ  Conversations ISIGHT Model",
+                "YES, I agree with HealthCaringᵀᴹ Conversations ISIGHT Model"
             ],
             "t7" => [
                 "None",
@@ -370,7 +370,7 @@ class Chart extends Model
                 "New wearer kit: New wearer kits to be given to patients to help them start their Abiliti™ journey and properly care for their lenses.​",
                 "Lifestyle Chart:  Used as worksheet between parent and ECP to determine treatment options that best-suit the patients’ lifestyle​",
                 "Tools (e.g., brochure(s), posters, etc.) that educate parents on the condition (myopia)",
-                "Tools (e.g. brochure(s), posters, etc.) that educate parents on the Abiliti"
+                "Tools (e.g. brochure(s), posters, etc.) that educate parents on Abiliti"
             ],
             "t11" => [
                 "Please indicate what you like about Johnson & Johnson Vision’s approach to myopia management and the Abiliti™ brand:"
