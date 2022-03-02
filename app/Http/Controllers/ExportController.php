@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Record;
 use App\Models\Chart;
+use App\Models\Office;
 use App\Exports\CsvExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -89,6 +90,22 @@ class ExportController extends Controller
         //
     }
 
+    /* 
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classification=Leaders
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&classification=Believers
+    
+    */
+
+    public function downloadOffice(Request $request, $ecp) 
+    {
+        $all = json_decode($request->all) ?? false;
+        if ($all) {
+            $offices = Office::all();
+        }else {
+            $offices = Office::all();
+        }
+    }
+
     public function download(Request $request, $id, $summary) 
     {
         $chart = Chart::find($id);
@@ -137,6 +154,8 @@ class ExportController extends Controller
         }elseif($summary == 'table_respondent') {
             $data = $this->exportTable($chart, $legends, $summary, $all);
         }elseif($summary == 'tracker_kpi') {
+            $data = $this->exportKPI($chart, $legends, $summary, $all);
+        }elseif($summary == 'classification_kpi') {
             $data = $this->exportKPI($chart, $legends, $summary, $all);
         } else {
             $tmp_data = $this->exportTracker($chart, $legends);
