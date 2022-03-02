@@ -27,7 +27,7 @@ class Chart extends Model
                     'Refractive only treatment for myopia',
                     'Myopia management treatment'
                 ];
-                $value = $record->meta['query']['b3_'.$prime];
+                $value = $record->meta['query']['b3_'.$prime] ?? 0;
                 break;
             case 't6':
                 $choices = [
