@@ -46,7 +46,23 @@ class LinksController extends Controller
                         'links' => [
                             [
                                 'label' => 'Global Result',
-                                'url' => 'http://'
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/67/tracker_kpi?all=true'
+                            ],
+                            [
+                                'label' => 'United States',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/86/tracker_kpi?all=true'
+                            ],
+                            [
+                                'label' => 'Singapore',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/85/tracker_kpi?all=true'
+                            ],
+                            [
+                                'label' => 'Hong Kong',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/88/tracker_kpi?all=true'
+                            ],
+                            [
+                                'label' => 'Canada',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/78/tracker_kpi?all=true'
                             ]
                         ]
                     ],
@@ -56,22 +72,33 @@ class LinksController extends Controller
                         'links' => [
                             [
                                 'label' => 'All',
-                                'url' => 'htpp://'
+                                'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=all'
+                            ],
+                            /* [
+                                'label' => 'United States',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/86/tracker_kpi?all=true'
                             ],
                             [
-                                'label' => 'United States',
-                                'url' => 'htpp://'
-                            ]
+                                'label' => 'Singapore',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/85/tracker_kpi?all=true'
+                            ],
+                            [
+                                'label' => 'Hong Kong',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/88/tracker_kpi?all=true'
+                            ],
+                            [
+                                'label' => 'Canada',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/78/tracker_kpi?all=true'
+                            ] */
                         ]
                     ]
                 ];
                 break;
             
             default:
-                # code...
+                dd("Something went wrong");
                 break;
         }
-        dd($links);
         return response()->json(['links' => $links], 200);
     }
 }
