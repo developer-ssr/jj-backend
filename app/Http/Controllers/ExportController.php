@@ -100,11 +100,6 @@ class ExportController extends Controller
     https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Emerger"]
 
     Baseline KPI
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=true
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&classifications=["Leader"]
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&classifications=["Believer"]
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&classifications=["Leader","Believer"]
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&classifications=["Emerger"]
     
     */
 
@@ -126,8 +121,8 @@ class ExportController extends Controller
         ]);
         $offices = Office::whereIn('classification', $classifications)->whereIn('code', $codes->keys())->get();
         $filter_ids = $offices->pluck('id')->toArray();
-        // $charts = Chart::wh
-        dd($filter_ids);
+        $charts = Chart::whereIn('filter_id', $filter_ids)->get();
+        dd($charts);
     }
 
     public function download(Request $request, $id, $summary) 
