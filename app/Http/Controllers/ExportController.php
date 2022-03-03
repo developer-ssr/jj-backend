@@ -173,9 +173,9 @@ class ExportController extends Controller
         }elseif($summary == 'table_respondent') {
             $data = $this->exportTable($chart, $legends, $summary, $all);
         }elseif($summary == 'tracker_kpi') {
-            $data = $this->exportKPI($chart, $legends, $summary, $all);
+            $data = $this->exportKPI([$chart], $chart->title);
         }elseif($summary == 'classification_kpi') {
-            $data = $this->exportKPI($chart, $legends, $summary, $all);
+            $data = $this->exportKPI($chart, $chart->title);
         } else {
             $tmp_data = $this->exportTracker($chart, $legends);
             $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
@@ -435,7 +435,7 @@ class ExportController extends Controller
         return $results;
     }
 
-    public function exportKPI($chart, $legends, $summary, $all) {
+    public function exportKPI($charts ,$title) {
         
 
         $questions = [
@@ -474,15 +474,17 @@ class ExportController extends Controller
         ];
 
         $tmp_results = [];
-        $headers = ['KPIs', $chart->title];
+        $headers = ['KPIs', $title];
         $scores = [];
         foreach ($questions as $key => $question) {
             $tmp_result = [$question['label']];
             foreach ($question['variables'] as $variable) {
-                $series = collect($chart->series)->firstWhere('name', $variable);
                 $record_ids = collect([]);
-                foreach ($series['data'] as $data) { //for getting all completes
-                    $record_ids = $record_ids->merge($data['record_ids']);
+                foreach ($charts as $chart) {
+                    $series = collect($chart->series)->firstWhere('name', $variable);
+                    foreach ($series['data'] as $data) { //for getting all completes
+                        $record_ids = $record_ids->merge($data['record_ids']);
+                    }
                 }
                 $ts = Str::of($variable)->explode('_');
                 $t = Str::lower($ts[0]);//t3
