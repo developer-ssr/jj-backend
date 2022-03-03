@@ -91,19 +91,42 @@ class ExportController extends Controller
     }
 
     /* 
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classification=Leaders
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&classification=Believers
+    Links
+    Tracker KPI
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=true
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Leader"]
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Believer"]
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Leader","Believer"]
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Emerger"]
+
+    Baseline KPI
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=true
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&classifications=["Leader"]
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&classifications=["Believer"]
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&classifications=["Leader","Believer"]
+    https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&classifications=["Emerger"]
     
     */
 
     public function downloadOffice(Request $request, $ecp) 
     {
         $all = json_decode($request->all) ?? false;
+
         if ($all) {
-            $offices = Office::all();
+            $classifications = ["Leader","Believer","Emerger"];
         }else {
-            $offices = Office::all();
+            $classifications = json_decode($request->classifications);
+            
         }
+        $codes = collect([
+            840 => "USA",
+            702 => 'Singapore',
+            344 => 'Hongkong',
+            124 => 'Canada'
+        ]);
+        $offices = Office::whereIn('classification', [$classifications])->whereIn('code', $codes->keys())->get();
+        $filter_ids = $offices->pluck('id')->toArray();
+        dd($filter_ids);
     }
 
     public function download(Request $request, $id, $summary) 
