@@ -63,6 +63,22 @@ class LinksController extends Controller
                             [
                                 'label' => 'Canada',
                                 'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/88/tracker_kpi?all=true'
+                            ],
+                            [
+                                'label' => 'Leaders',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Leader"]'
+                            ],
+                            [
+                                'label' => 'Believers',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Believer"]'
+                            ],
+                            [
+                                'label' => 'Leaders & Believers',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Leader", "Believer"]'
+                            ],
+                            [
+                                'label' => 'Emerging ',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Emerger"]'
                             ]
                         ]
                     ],
