@@ -122,7 +122,9 @@ class ExportController extends Controller
         $offices = Office::whereIn('classification', $classifications)->whereIn('code', $codes->keys())->get();
         $filter_ids = $offices->pluck('id')->toArray();
         $charts = Chart::whereIn('filter_id', $filter_ids)->get();
-        dd($charts);
+        $data = $this->exportKPI($charts, $request->title);
+        $filename = $request->title;
+        return Excel::download(CsvExport::new($data), $filename.".xlsx");
     }
 
     public function download(Request $request, $id, $summary) 
