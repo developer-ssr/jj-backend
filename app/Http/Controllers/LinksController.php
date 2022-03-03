@@ -58,11 +58,11 @@ class LinksController extends Controller
                             ],
                             [
                                 'label' => 'Hong Kong',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/88/tracker_kpi?all=true'
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/78/tracker_kpi?all=true'
                             ],
                             [
                                 'label' => 'Canada',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/78/tracker_kpi?all=true'
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/88/tracker_kpi?all=true'
                             ]
                         ]
                     ],
@@ -74,22 +74,22 @@ class LinksController extends Controller
                                 'label' => 'All',
                                 'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=all'
                             ],
-                            /* [
+                            [
                                 'label' => 'United States',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/86/tracker_kpi?all=true'
+                                'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=us'
                             ],
                             [
                                 'label' => 'Singapore',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/85/tracker_kpi?all=true'
+                                'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=sg'
                             ],
                             [
                                 'label' => 'Hong Kong',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/88/tracker_kpi?all=true'
+                                'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=hk'
                             ],
                             [
                                 'label' => 'Canada',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/78/tracker_kpi?all=true'
-                            ] */
+                                'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=ca'
+                            ]
                         ]
                     ]
                 ];
