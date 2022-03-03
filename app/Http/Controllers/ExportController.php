@@ -121,6 +121,7 @@ class ExportController extends Controller
                 'filter_emails' => $filter_emails
             ]);
             $data = json_decode($response->body(), true);
+            dd($data);
         }
         
         $filename = $request->title;
