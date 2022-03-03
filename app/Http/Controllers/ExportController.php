@@ -8,6 +8,7 @@ use App\Models\Office;
 use App\Exports\CsvExport;
 use Maatwebsite\Excel\Facades\Excel;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -116,7 +117,8 @@ class ExportController extends Controller
             $filter_emails = $offices->pluck('email')->map(function ($item, $key) {
                 return Str::lower($item);
             })->toArray();
-            dd($filter_emails);
+            $response = Http::get('https://fluent.splitsecondsurveys.co.uk/surveys/status/fac793d5-76b3-4009-b6e0-d7048d898a00/downloadables/cp/summary');
+            dd($response);
             $data = [];
         }
         
