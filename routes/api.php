@@ -68,7 +68,7 @@ Route::middleware('auth:sanctum')->group(function() {
     });
 
     Route::prefix('download_links')->group(function() {
-        Route::get('{div}', [LinksController::class, 'downloads']);
+        Route::get('{div}', [LinksController::class, 'downloadLinks']);
     });
 
     Route::prefix('charts')->group(function () {

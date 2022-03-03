@@ -34,7 +34,7 @@ class LinksController extends Controller
         return response('ok');
     }
 
-    public function downloads($div)
+    public function downloadLinks($div)
     {
         $links = [];
         switch ($div) {
