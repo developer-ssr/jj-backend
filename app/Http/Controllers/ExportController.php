@@ -90,19 +90,6 @@ class ExportController extends Controller
         //
     }
 
-    /* 
-    Links
-    Tracker KPI
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=true
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Leader"]
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Believer"]
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Leader","Believer"]
-    https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&classifications=["Emerger"]
-
-    Baseline KPI
-    
-    */
-
     public function downloadOffice(Request $request, $ecp) 
     {
         $all = json_decode($request->all) ?? false;
@@ -126,7 +113,9 @@ class ExportController extends Controller
             $charts = Chart::whereIn('filter_id', $filter_ids)->get();
             $data = $this->exportKPI($charts, $request->title);
         }else {
-            $filter_emails = $offices->pluck('email')->toArray();
+            $filter_emails = $offices->pluck('email')->map(function ($item, $key) {
+                return Str::lower($item);
+            })->toArray();
             dd($filter_emails);
             $data = [];
         }
