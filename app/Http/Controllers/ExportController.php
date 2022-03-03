@@ -120,9 +120,17 @@ class ExportController extends Controller
             124 => 'Canada'
         ]);
         $offices = Office::whereIn('classification', $classifications)->whereIn('code', $codes->keys())->get();
-        $filter_ids = $offices->pluck('id')->toArray();
-        $charts = Chart::whereIn('filter_id', $filter_ids)->get();
-        $data = $this->exportKPI($charts, $request->title);
+
+        if ($ecp == 'tracker') {
+            $filter_ids = $offices->pluck('id')->toArray();
+            $charts = Chart::whereIn('filter_id', $filter_ids)->get();
+            $data = $this->exportKPI($charts, $request->title);
+        }else {
+            $filter_emails = $offices->pluck('email')->toArray();
+            dd($filter_emails);
+            $data = [];
+        }
+        
         $filename = $request->title;
         return Excel::download(CsvExport::new($data), $filename.".xlsx");
     }
