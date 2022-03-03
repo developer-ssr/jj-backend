@@ -118,7 +118,7 @@ class ExportController extends Controller
                 return Str::lower($item);
             })->toArray();
             $response = Http::get('https://fluent.splitsecondsurveys.co.uk/surveys/status/fac793d5-76b3-4009-b6e0-d7048d898a00/downloadables/cp/summary');
-            dd($response);
+            dd(json_decode($response->body(), true));
             $data = [];
         }
         
