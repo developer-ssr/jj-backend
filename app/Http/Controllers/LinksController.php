@@ -71,6 +71,6 @@ class LinksController extends Controller
                 # code...
                 break;
         }
-        return $links;
+        return response()->json(['links' => $links], 200);
     }
 }
