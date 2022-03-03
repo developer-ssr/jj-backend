@@ -483,9 +483,11 @@ class ExportController extends Controller
             foreach ($question['variables'] as $variable) {
                 $record_ids = collect([]);
                 foreach ($charts as $chart) {
-                    $series = collect($chart->series)->firstWhere('name', $variable);
-                    foreach ($series['data'] as $data) { //for getting all completes
-                        $record_ids = $record_ids->merge($data['record_ids']);
+                    if ($chart->series != null) {
+                        $series = collect($chart->series)->firstWhere('name', $variable);
+                        foreach ($series['data'] as $data) { //for getting all completes
+                            $record_ids = $record_ids->merge($data['record_ids']);
+                        }
                     }
                 }
                 $ts = Str::of($variable)->explode('_');
