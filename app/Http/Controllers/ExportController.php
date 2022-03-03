@@ -124,12 +124,7 @@ class ExportController extends Controller
             344 => 'Hongkong',
             124 => 'Canada'
         ]);
-        $offices = Office::where(function($query) {
-            $query->where('code', 840)
-                  ->orWhere('code', 702)
-                  ->orWhere('code', 344)
-                  ->orWhere('code', 124);
-        })->whereIn('classification', [$classifications])->get(); //->whereIn('code', $codes->keys())
+        $offices = Office::whereIn('classification', $classifications)->whereIn('code', $codes->keys())->get();
         $filter_ids = $offices->pluck('id')->toArray();
         dd($filter_ids);
     }
