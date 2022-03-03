@@ -65,6 +65,7 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::get('/{office}', [LinksController::class, 'index']);
         Route::post('/{office}', [LinksController::class, 'store']);
         Route::delete('/{link}', [LinksController::class, 'destroy']);
+        Route::get('/downloads/{div}', [LinksController::class, 'downloads']);
     });
 
     Route::prefix('charts')->group(function () {

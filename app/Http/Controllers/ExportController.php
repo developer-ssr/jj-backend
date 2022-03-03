@@ -126,6 +126,7 @@ class ExportController extends Controller
         ]);
         $offices = Office::whereIn('classification', $classifications)->whereIn('code', $codes->keys())->get();
         $filter_ids = $offices->pluck('id')->toArray();
+        // $charts = Chart::wh
         dd($filter_ids);
     }
 

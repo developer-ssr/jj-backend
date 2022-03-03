@@ -33,4 +33,44 @@ class LinksController extends Controller
         $link->delete();
         return response('ok');
     }
+
+    public function downloads($div)
+    {
+        $links = [];
+        switch ($div) {
+            case 'sidebar':
+                $links = [
+                    [
+                        'label' => 'Tracker KPI',
+                        'url' => null,
+                        'links' => [
+                            [
+                                'label' => 'Global Result',
+                                'url' => 'http://'
+                            ]
+                        ]
+                    ],
+                    [
+                        'label' => 'Baseline KPI',
+                        'url' => null,
+                        'links' => [
+                            [
+                                'label' => 'All',
+                                'url' => 'htpp://'
+                            ],
+                            [
+                                'label' => 'United States',
+                                'url' => 'htpp://'
+                            ]
+                        ]
+                    ]
+                ];
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        return $links;
+    }
 }
