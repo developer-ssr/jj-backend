@@ -66,19 +66,19 @@ class LinksController extends Controller
                             ],
                             [
                                 'label' => 'Leaders',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_Leaders&classifications=["Leader"]'
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders&classifications=["Leader"]'
                             ],
                             [
                                 'label' => 'Believers',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_Believers&classifications=["Believer"]'
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Believers&classifications=["Believer"]'
                             ],
                             [
                                 'label' => 'Leaders & Believers',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_Leaders_Believers&classifications=["Leader", "Believer"]'
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders_Believers&classifications=["Leader", "Believer"]'
                             ],
                             [
                                 'label' => 'Emerging ',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_Emerging&classifications=["Emerger"]'
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Emerging&classifications=["Emerger"]'
                             ]
                         ]
                     ],
