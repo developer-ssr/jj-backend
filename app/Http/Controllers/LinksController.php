@@ -105,6 +105,22 @@ class LinksController extends Controller
                             [
                                 'label' => 'Canada',
                                 'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=ca'
+                            ],
+                            [
+                                'label' => 'Leaders',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&title=Baseline_KPI_Leaders&classifications=["Leader"]'
+                            ],
+                            [
+                                'label' => 'Believers',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&title=Baseline_KPI_Believers&classifications=["Believer"]'
+                            ],
+                            [
+                                'label' => 'Leaders & Believers',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&title=Baseline_KPI_Leaders_Believers&classifications=["Leader", "Believer"]'
+                            ],
+                            [
+                                'label' => 'Emerging ',
+                                'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=false&title=Baseline_KPI_Emerging&classifications=["Emerger"]'
                             ]
                         ]
                     ]
