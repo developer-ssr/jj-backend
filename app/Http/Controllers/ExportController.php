@@ -118,10 +118,10 @@ class ExportController extends Controller
                 return Str::lower($item);
             })->toArray();
             $response = Http::get('https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/classifications', [
-                'filter_emails' => $filter_emails
+                'filter_emails' => $filter_emails,
+                'title' => $request->title
             ]);
             $data = json_decode($response->body(), true);
-            dd($data);
         }
         
         $filename = $request->title;
