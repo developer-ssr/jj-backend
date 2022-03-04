@@ -117,7 +117,7 @@ class ExportController extends Controller
             $filter_emails = $offices->pluck('email')->map(function ($item, $key) {
                 return Str::lower($item);
             })->toArray();
-            $response = Http::post('https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/classifications', [
+            $response = Http::get('https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/classifications', [
                 'filter_emails' => $filter_emails
             ]);
             $data = json_decode($response->body(), true);
