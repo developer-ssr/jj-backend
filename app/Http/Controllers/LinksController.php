@@ -46,7 +46,13 @@ class LinksController extends Controller
                         'links' => [
                             [
                                 'label' => 'Global Result',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/67/tracker_kpi?all=true'
+                                'url' => null,
+                                'links' => [
+                                    [
+                                        'label' => 'All',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/67/tracker_kpi?all=true'
+                                    ],
+                                ]
                             ],
                             [
                                 'label' => 'United States',
