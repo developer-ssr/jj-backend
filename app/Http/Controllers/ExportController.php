@@ -116,7 +116,7 @@ class ExportController extends Controller
         if ($ecp == 'tracker') {
             $filter_ids = $offices->pluck('id')->toArray();
             $charts = Chart::whereIn('filter_id', $filter_ids)->get();
-            dd($offices);
+            dd($filter_ids);
             // $chart = Chart::find(env('CHART_GLOBAL', 67));
             $data = $this->exportKPI($charts, $request->title);
         }else {
