@@ -500,7 +500,7 @@ class ExportController extends Controller
                 $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
                 $scores[$key] = $this->getKPIData($records, $t, $prime, $key);
                 $tmp_result[] = $scores[$key]['percent'];
-                $tmp_records[] = $records;
+                $tmp_records[] = $record_ids->unique();
             }
             $tmp_results[] = $tmp_result;
         }
