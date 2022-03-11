@@ -177,9 +177,9 @@ class ExportController extends Controller
             $data = $this->exportTable($chart, $legends, $summary, $all);
         }elseif($summary == 'tracker_kpi') {
             $data = $this->exportKPI([$chart], $chart->title);
-        }elseif($summary == 'classification_kpi') {
+        }/* elseif($summary == 'classification_kpi') {
             $data = $this->exportKPI($chart, $chart->title);
-        } else {
+        } */ else {
             $tmp_data = $this->exportTracker($chart, $legends);
             $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
             $data = collect($tmp_data['results'])->prepend($headers)->toArray(); 
@@ -502,7 +502,7 @@ class ExportController extends Controller
             }
             $tmp_results[] = $tmp_result;
         }
-        // $tmp_results[] = ['Sample Size', ];
+        $tmp_results[] = ['Sample Size', count($records)];
         $results = collect($tmp_results)->prepend($headers)->toArray(); 
         return $results;
     }
