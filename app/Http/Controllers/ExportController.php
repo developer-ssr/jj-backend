@@ -500,7 +500,7 @@ class ExportController extends Controller
                 $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
                 $scores[$key] = $this->getKPIData($records, $t, $prime, $key);
                 $tmp_result[] = $scores[$key]['percent'];
-                $tmp_records[] = $record_ids->unique();
+                $tmp_records[] = $scores[$key]['count_records'];
             }
             $tmp_results[] = $tmp_result;
         }
@@ -611,6 +611,7 @@ class ExportController extends Controller
 
     public function getKPIData($records, $t, $prime, $key) {
         $counts = 0;
+        $count_records = count($records);
         foreach ($records as $record) {
             switch ($key) {
                 case 3: //T7
@@ -656,16 +657,18 @@ class ExportController extends Controller
                     
                 }
                 
+            }else {
+                $count_records--;
             }
         }
-        $count_records = count($records);
+        
         if ($count_records > 0) {
             $percent = round(($counts/ $count_records) * 100);
         }else {
             $percent = 0;
         }
         
-        return ['records' => $records, 'percent' => $percent];
+        return ['count_records' => $count_records, 'percent' => $percent];
     }
 
     public function exportTracker($chart, $legends) 
