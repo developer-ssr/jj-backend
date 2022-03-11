@@ -7,6 +7,7 @@ use App\Models\Chart;
 use App\Models\Office;
 use App\Models\Email;
 use App\Exports\CsvExport;
+use App\Models\Filter;
 use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Support\Facades\Http;
@@ -114,9 +115,10 @@ class ExportController extends Controller
             return $taken > 0;
         });
         if ($ecp == 'tracker') {
-            $filter_ids = $offices->pluck('id')->toArray();
-            $charts = Chart::whereIn('filter_id', $filter_ids)->get();
-            dd($offices->pluck('name')->toArray());
+            $office_ids = $offices->pluck('id')->toArray();
+            $filtes = Filter::whereIn('office_id', $office_ids)->get();
+            $charts = Chart::whereIn('filter_id', $filtes->pluck('id'))->get();
+            dd($charts->pluck('title')->toArray());
             // $chart = Chart::find(env('CHART_GLOBAL', 67));
             $data = $this->exportKPI($charts, $request->title);
         }else {
