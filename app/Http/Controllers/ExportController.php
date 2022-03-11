@@ -117,9 +117,9 @@ class ExportController extends Controller
         dd($offices->pluck('email')->toArray());
         if ($ecp == 'tracker') {
             $office_ids = $offices->pluck('id')->toArray();
-            $filters = Filter::whereIn('office_id', $office_ids)->distinct('office_id')->get();
+            $filters = Filter::whereIn('office_id', $office_ids)->groupBy('office_id')->get();
             $charts = Chart::whereIn('filter_id', $filters->pluck('id')->toArray())->get();
-            dd($filters->pluck('office_id')->toArray());
+            dd($filters);
             $kpi_data = $this->exportKPI($charts, $request->title);
             $data = $kpi_data['results'];
             $data[] = ['Sample Size', count($office_ids)];
