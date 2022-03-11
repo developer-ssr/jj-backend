@@ -112,7 +112,8 @@ class ExportController extends Controller
         if ($ecp == 'tracker') {
             $filter_ids = $offices->pluck('id')->toArray();
             $charts = Chart::whereIn('filter_id', $filter_ids)->get();
-            $data = $this->exportKPI($charts, $request->title);
+            $chart = Chart::find(67);
+            $data = $this->exportKPI([$chart], $request->title);
         }else {
             $filter_emails = $offices->pluck('email')->map(function ($item, $key) {
                 return Str::lower($item);
