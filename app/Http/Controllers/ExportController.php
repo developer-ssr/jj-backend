@@ -114,7 +114,7 @@ class ExportController extends Controller
             $taken = collect($values->links)->filter(fn($v) => $v['taken'] === 'YES')->count();
             return $taken > 0;
         });
-        dd($offices->pluck('email')->toArray());
+        //dd($offices->pluck('email')->toArray());
         if ($ecp == 'tracker') {
             $office_ids = $offices->pluck('id')->toArray();
             $filters = Filter::whereIn('office_id', $office_ids)->groupBy('office_id')->get();
