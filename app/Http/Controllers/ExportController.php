@@ -122,7 +122,7 @@ class ExportController extends Controller
             $filter_ids = $all_filters->groupBy('office_id')->map(function ($item, $key) {
                 return collect($item)->last()->id;
             });
-            dd($filter_ids);
+            dd($filter_ids->toArray());
             $charts = Chart::whereIn('filter_id', $filters->pluck('id')->toArray())->get();
             
             $kpi_data = $this->exportKPI($charts, $request->title);
