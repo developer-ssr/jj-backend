@@ -117,7 +117,12 @@ class ExportController extends Controller
         //dd($offices->pluck('email')->toArray());
         if ($ecp == 'tracker') {
             $office_ids = $offices->pluck('id')->toArray();
-            $filters = Filter::whereIn('office_id', $office_ids)->groupBy('office_id')->get();
+            $all_filters = Filter::whereIn('office_id', $office_ids)->orderBy('id','asc')->get();
+            dd($all_filters);
+            $filter_ids = [];
+            foreach ($all_filters as $f) {
+                $filter_ids[] = $f->id;
+            }
             $charts = Chart::whereIn('filter_id', $filters->pluck('id')->toArray())->get();
             dd($filters);
             $kpi_data = $this->exportKPI($charts, $request->title);
