@@ -53,7 +53,7 @@ class LinksController extends Controller
                                 'url' => null,
                                 'links' => [
                                     [
-                                        'label' => 'All',
+                                        'label' => 'KPI',
                                         'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/67/tracker_kpi?all=true'
                                     ],
                                     [
@@ -76,19 +76,107 @@ class LinksController extends Controller
                             ],
                             [
                                 'label' => 'United States',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/86/tracker_kpi?all=true'
+                                'url' => null,
+                                'links' => [
+                                    [
+                                        'label' => 'KPI',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/86/tracker_kpi?all=true'
+                                    ],
+                                    [
+                                        'label' => 'Leaders',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders&classifications=["Leader"]'
+                                    ],
+                                    [
+                                        'label' => 'Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Believers&classifications=["Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Leaders & Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders_Believers&classifications=["Leader", "Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Emerging ',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Emerging&classifications=["Emerger"]'
+                                    ]
+                                ]
                             ],
                             [
                                 'label' => 'Singapore',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/85/tracker_kpi?all=true'
+                                'url' => null,
+                                'links' => [
+                                    [
+                                        'label' => 'KPI',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/85/tracker_kpi?all=true'
+                                    ],
+                                    [
+                                        'label' => 'Leaders',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders&classifications=["Leader"]'
+                                    ],
+                                    [
+                                        'label' => 'Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Believers&classifications=["Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Leaders & Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders_Believers&classifications=["Leader", "Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Emerging ',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Emerging&classifications=["Emerger"]'
+                                    ]
+                                ]
                             ],
                             [
                                 'label' => 'Hong Kong',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/78/tracker_kpi?all=true'
+                                'url' => null,
+                                'links' => [
+                                    [
+                                        'label' => 'KPI',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/78/tracker_kpi?all=true'
+                                    ],
+                                    [
+                                        'label' => 'Leaders',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders&classifications=["Leader"]'
+                                    ],
+                                    [
+                                        'label' => 'Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Believers&classifications=["Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Leaders & Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders_Believers&classifications=["Leader", "Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Emerging ',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Emerging&classifications=["Emerger"]'
+                                    ]
+                                ]
                             ],
                             [
                                 'label' => 'Canada',
-                                'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/88/tracker_kpi?all=true'
+                                'url' => null,
+                                'links' => [
+                                    [
+                                        'label' => 'KPI',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/charts/download/88/tracker_kpi?all=true'
+                                    ],
+                                    [
+                                        'label' => 'Leaders',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders&classifications=["Leader"]'
+                                    ],
+                                    [
+                                        'label' => 'Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Believers&classifications=["Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Leaders & Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders_Believers&classifications=["Leader", "Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Emerging ',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Emerging&classifications=["Emerger"]'
+                                    ]
+                                ]
                             ],
                         ]
                     ],
@@ -128,19 +216,107 @@ class LinksController extends Controller
                             ],
                             [
                                 'label' => 'United States',
-                                'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=us'
+                                'url' => null,
+                                'links' => [
+                                    [
+                                        'label' => 'KPI',
+                                        'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=us'
+                                    ],
+                                    [
+                                        'label' => 'Leaders',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders&classifications=["Leader"]'
+                                    ],
+                                    [
+                                        'label' => 'Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Believers&classifications=["Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Leaders & Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders_Believers&classifications=["Leader", "Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Emerging ',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Emerging&classifications=["Emerger"]'
+                                    ]
+                                ]
                             ],
                             [
                                 'label' => 'Singapore',
-                                'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=sg'
+                                'url' => null,
+                                'links' => [
+                                    [
+                                        'label' => 'KPI',
+                                        'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=sg'
+                                    ],
+                                    [
+                                        'label' => 'Leaders',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders&classifications=["Leader"]'
+                                    ],
+                                    [
+                                        'label' => 'Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Believers&classifications=["Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Leaders & Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders_Believers&classifications=["Leader", "Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Emerging ',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Emerging&classifications=["Emerger"]'
+                                    ]
+                                ]
                             ],
                             [
                                 'label' => 'Hong Kong',
-                                'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=hk'
+                                'url' => null,
+                                'links' => [
+                                    [
+                                        'label' => 'KPI',
+                                        'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=hk'
+                                    ],
+                                    [
+                                        'label' => 'Leaders',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders&classifications=["Leader"]'
+                                    ],
+                                    [
+                                        'label' => 'Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Believers&classifications=["Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Leaders & Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders_Believers&classifications=["Leader", "Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Emerging ',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Emerging&classifications=["Emerger"]'
+                                    ]
+                                ]
                             ],
                             [
                                 'label' => 'Canada',
-                                'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=ca'
+                                'url' => null,
+                                'links' => [
+                                    [
+                                        'label' => 'KPI',
+                                        'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=ca'
+                                    ],
+                                    [
+                                        'label' => 'Leaders',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders&classifications=["Leader"]'
+                                    ],
+                                    [
+                                        'label' => 'Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Believers&classifications=["Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Leaders & Believers',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Leaders_Believers&classifications=["Leader", "Believer"]'
+                                    ],
+                                    [
+                                        'label' => 'Emerging ',
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/tracker?all=false&title=Tracker_KPI_Emerging&classifications=["Emerger"]'
+                                    ]
+                                ]
                             ],
                         ]
                     ]
