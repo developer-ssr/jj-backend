@@ -103,12 +103,37 @@ class ExportController extends Controller
             $classifications = json_decode($request->classifications);
             
         }
-        $codes = collect([
-            840 => "USA",
-            702 => 'Singapore',
-            344 => 'Hongkong',
-            124 => 'Canada'
-        ]);
+        $country = $request->country ?? 'all';
+        switch ($country) {
+            case 'us':
+                $codes = collect([
+                    840 => "USA"
+                ]);
+                break;
+            case 'sg':
+                $codes = collect([
+                    702 => 'Singapore',
+                ]);
+                break;
+            case 'hj':
+                $codes = collect([
+                    344 => 'Hongkong',
+                ]);
+                break;
+            case 'ca':
+                $codes = collect([
+                    124 => 'Canada'
+                ]);
+                break;
+            default:
+                $codes = collect([
+                    840 => "USA",
+                    702 => 'Singapore',
+                    344 => 'Hongkong',
+                    124 => 'Canada'
+                ]);
+                break;
+        }
         $all_offices = Office::with('links')->whereIn('classification', $classifications)->whereIn('code', $codes->keys())->get();
         $offices = $all_offices->filter(function($values) {
             $taken = collect($values->links)->filter(fn($v) => $v['taken'] === 'YES')->count();
@@ -121,7 +146,6 @@ class ExportController extends Controller
                 return collect($item)->last()->id;
             });
             $charts = Chart::whereIn('filter_id', $filter_ids->toArray())->get();
-            
             $kpi_data = $this->exportKPI($charts, $request->title);
             $data = $kpi_data['results'];
             $data[] = ['Sample Size', $kpi_data['sample_size']];
