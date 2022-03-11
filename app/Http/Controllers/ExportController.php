@@ -119,10 +119,6 @@ class ExportController extends Controller
             $office_ids = $offices->pluck('id')->toArray();
             $all_filters = Filter::whereIn('office_id', $office_ids)->orderBy('id','asc')->get();
             // dd($all_filters->groupBy('office_id'));
-            $filter_ids = [];
-            foreach ($all_filters as $f) {
-                $filter_ids[] = $f->id;
-            }
             $filter_ids = $all_filters->groupBy('office_id')->map(function ($item, $key) {
                 return collect($item)->last()->id;
             });
