@@ -114,16 +114,13 @@ class ExportController extends Controller
             $taken = collect($values->links)->filter(fn($v) => $v['taken'] === 'YES')->count();
             return $taken > 0;
         });
-        //dd($offices->pluck('email')->toArray());
         if ($ecp == 'tracker') {
             $office_ids = $offices->pluck('id')->toArray();
             $all_filters = Filter::whereIn('office_id', $office_ids)->orderBy('id','asc')->get();
-            dd($all_filters->pluck('id'));
             $filter_ids = $all_filters->groupBy('office_id')->map(function ($item, $key) {
                 return collect($item)->last()->id;
             });
-            dd($filter_ids->toArray());
-            $charts = Chart::whereIn('filter_id', $filters->pluck('id')->toArray())->get();
+            $charts = Chart::whereIn('filter_id', $filter_ids->toArray())->get();
             
             $kpi_data = $this->exportKPI($charts, $request->title);
             $data = $kpi_data['results'];
