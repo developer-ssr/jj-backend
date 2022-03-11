@@ -118,7 +118,7 @@ class ExportController extends Controller
         if ($ecp == 'tracker') {
             $office_ids = $offices->pluck('id')->toArray();
             $all_filters = Filter::whereIn('office_id', $office_ids)->orderBy('id','asc')->get();
-            // dd($all_filters->groupBy('office_id'));
+            dd($all_filters->pluck('id'));
             $filter_ids = $all_filters->groupBy('office_id')->map(function ($item, $key) {
                 return collect($item)->last()->id;
             });
