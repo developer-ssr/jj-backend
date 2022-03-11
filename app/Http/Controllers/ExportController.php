@@ -118,9 +118,8 @@ class ExportController extends Controller
             $office_ids = $offices->pluck('id')->toArray();
             $filters = Filter::whereIn('office_id', $office_ids)->get();
             $charts = Chart::whereIn('filter_id', $filters->pluck('id')->toArray())->get();
-            // dd($charts->pluck('title')->toArray());
-            // $chart = Chart::find(env('CHART_GLOBAL', 67));
-            $data = $this->exportKPI($charts, $request->title);
+            $kpi_data = $this->exportKPI($charts, $request->title);
+            $data = $kpi_data['results'];
             $data[] = ['Sample Size', count($office_ids)];
         }else {
             $filter_emails = $offices->pluck('email')->map(function ($item, $key) {
@@ -185,7 +184,9 @@ class ExportController extends Controller
         }elseif($summary == 'table_respondent') {
             $data = $this->exportTable($chart, $legends, $summary, $all);
         }elseif($summary == 'tracker_kpi') {
-            $data = $this->exportKPI([$chart], $chart->title);
+            $kpi_data = $this->exportKPI([$chart], $chart->title);
+            $data = $kpi_data['results'];
+            $data[] = ['Sample Size', $kpi_data['sample_size']];
         }/* elseif($summary == 'classification_kpi') {
             $data = $this->exportKPI($chart, $chart->title);
         } */ else {
@@ -488,6 +489,7 @@ class ExportController extends Controller
         $tmp_results = [];
         $headers = ['KPIs', $title];
         $scores = [];
+        $total_records = collect([]);
         foreach ($questions as $key => $question) {
             $tmp_result = [$question['label']];
             foreach ($question['variables'] as $variable) {
@@ -498,6 +500,7 @@ class ExportController extends Controller
                         foreach ($series['data'] as $data) { //for getting all completes
                             if (isset($data['record_ids'])) {
                                 $record_ids = $record_ids->merge($data['record_ids']);
+                                $total_records = $total_records->merge($data['record_ids']);
                             }
                         }
                     }
@@ -513,7 +516,8 @@ class ExportController extends Controller
         }
         // $tmp_results[] = ['Sample Size', count($records)];
         $results = collect($tmp_results)->prepend($headers)->toArray(); 
-        return $results;
+        $sample_size = $total_records->unique()->count();
+        return ['results' => $results, 'sample_size' => $sample_size];
     }
 
     public function getData($records, $t, $prime, $data, $summary, $table = false) {
