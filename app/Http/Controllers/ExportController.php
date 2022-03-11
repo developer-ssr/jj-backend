@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Record;
 use App\Models\Chart;
 use App\Models\Office;
+use App\Models\Email;
 use App\Exports\CsvExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -107,13 +108,16 @@ class ExportController extends Controller
             344 => 'Hongkong',
             124 => 'Canada'
         ]);
-        $offices = Office::whereIn('classification', $classifications)->whereIn('code', $codes->keys())->get();
-
+        $all_offices = Office::with('links')->whereIn('classification', $classifications)->whereIn('code', $codes->keys())->get();
+        $offices = $all_offices->filter(function($values) {
+            $taken = collect($values->links)->filter(fn($v) => $v['taken'] === 'YES')->count();
+            return $taken > 0;
+        });
         if ($ecp == 'tracker') {
             $filter_ids = $offices->pluck('id')->toArray();
             $charts = Chart::whereIn('filter_id', $filter_ids)->get();
-            $chart = Chart::find(env('CHART_GLOBAL', 67));
-            $data = $this->exportKPI([$chart], $request->title);
+            // $chart = Chart::find(env('CHART_GLOBAL', 67));
+            $data = $this->exportKPI($charts, $request->title);
         }else {
             $filter_emails = $offices->pluck('email')->map(function ($item, $key) {
                 return Str::lower($item);

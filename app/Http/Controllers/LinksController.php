@@ -54,7 +54,7 @@ class LinksController extends Controller
                                 'links' => [
                                     [
                                         'label' => 'KPI',
-                                        'url' => url('/charts/download/67/tracker_kpi').'?all=true'
+                                        'url' => url('/charts/download/'.env('CHART_GLOBAL', 67).'/tracker_kpi').'?all=true'
                                     ],
                                     [
                                         'label' => 'Leaders',
