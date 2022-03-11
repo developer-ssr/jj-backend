@@ -121,6 +121,7 @@ class ExportController extends Controller
             // dd($charts->pluck('title')->toArray());
             // $chart = Chart::find(env('CHART_GLOBAL', 67));
             $data = $this->exportKPI($charts, $request->title);
+            $data[] = ['Sample Size', count($office_ids)];
         }else {
             $filter_emails = $offices->pluck('email')->map(function ($item, $key) {
                 return Str::lower($item);
@@ -487,7 +488,6 @@ class ExportController extends Controller
         $tmp_results = [];
         $headers = ['KPIs', $title];
         $scores = [];
-        $tmp_records = [];
         foreach ($questions as $key => $question) {
             $tmp_result = [$question['label']];
             foreach ($question['variables'] as $variable) {
@@ -508,12 +508,10 @@ class ExportController extends Controller
                 $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
                 $scores[$key] = $this->getKPIData($records, $t, $prime, $key);
                 $tmp_result[] = $scores[$key]['percent'];
-                $tmp_records[] = $scores[$key]['count_records'];
             }
             $tmp_results[] = $tmp_result;
         }
-        dd($tmp_records);
-        $tmp_results[] = ['Sample Size', count($records)];
+        // $tmp_results[] = ['Sample Size', count($records)];
         $results = collect($tmp_results)->prepend($headers)->toArray(); 
         return $results;
     }
@@ -665,8 +663,6 @@ class ExportController extends Controller
                     
                 }
                 
-            }else {
-                $count_records--;
             }
         }
         
@@ -676,7 +672,7 @@ class ExportController extends Controller
             $percent = 0;
         }
         
-        return ['count_records' => $count_records, 'percent' => $percent];
+        return ['percent' => $percent];
     }
 
     public function exportTracker($chart, $legends) 
