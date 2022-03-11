@@ -479,6 +479,7 @@ class ExportController extends Controller
         $tmp_results = [];
         $headers = ['KPIs', $title];
         $scores = [];
+        $tmp_records = [];
         foreach ($questions as $key => $question) {
             $tmp_result = [$question['label']];
             foreach ($question['variables'] as $variable) {
@@ -499,9 +500,11 @@ class ExportController extends Controller
                 $records = Record::whereIn('id', $record_ids->unique()->toArray())->get();
                 $scores[$key] = $this->getKPIData($records, $t, $prime, $key);
                 $tmp_result[] = $scores[$key]['percent'];
+                $tmp_records[] = count($records);
             }
             $tmp_results[] = $tmp_result;
         }
+        dd($tmp_records);
         $tmp_results[] = ['Sample Size', count($records)];
         $results = collect($tmp_results)->prepend($headers)->toArray(); 
         return $results;
