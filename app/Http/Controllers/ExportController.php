@@ -118,7 +118,7 @@ class ExportController extends Controller
             $office_ids = $offices->pluck('id')->toArray();
             $filters = Filter::whereIn('office_id', $office_ids)->get();
             $charts = Chart::whereIn('filter_id', $filters->pluck('id')->toArray())->get();
-            dd($charts->pluck('title')->toArray());
+            // dd($charts->pluck('title')->toArray());
             // $chart = Chart::find(env('CHART_GLOBAL', 67));
             $data = $this->exportKPI($charts, $request->title);
         }else {
