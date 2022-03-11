@@ -517,6 +517,7 @@ class ExportController extends Controller
         // $tmp_results[] = ['Sample Size', count($records)];
         $results = collect($tmp_results)->prepend($headers)->toArray(); 
         $sample_size = $total_records->unique()->count();
+        dd($sample_size);
         return ['results' => $results, 'sample_size' => $sample_size];
     }
 
