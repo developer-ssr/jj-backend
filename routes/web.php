@@ -67,6 +67,7 @@ Route::prefix('charts')->group(function () {
 
 Route::prefix('offices')->group(function () {
     Route::get('/download', [OfficeController::class, 'download'])->middleware('auth:sanctum');
+    // Route::get('/download', [OfficeController::class, 'download']);
     Route::get('/download_office/{ecp}', [ExportController::class, 'downloadOffice']);
 });
 

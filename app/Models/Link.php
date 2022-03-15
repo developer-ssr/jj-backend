@@ -19,7 +19,8 @@ class Link extends Model
         'link',
         'created',
         'taken',
-        'link_id'
+        'link_id',
+        'record'
     ];
 
     protected $casts = [
@@ -61,5 +62,10 @@ class Link extends Model
     public function getTakenAttribute()
     {
         return Record::where('participant_id', $this->link_id)->exists() ? 'YES' : 'NO';
+    }
+
+    public function getRecordAttribute()
+    {
+        return Record::where('participant_id', $this->link_id)->first();
     }
 }
