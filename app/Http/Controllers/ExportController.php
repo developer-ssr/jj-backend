@@ -150,7 +150,7 @@ class ExportController extends Controller
             $data = $kpi_data['results'];
             $data[] = ['Sample Size', $kpi_data['sample_size']];
         }else {
-            $filter_emails = $offices->pluck('email')->map(function ($item, $key) {
+            $filter_emails = $all_offices->pluck('email')->map(function ($item, $key) {
                 return Str::lower($item);
             })->toArray();
             $response = Http::get('https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/classifications', [
