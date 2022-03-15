@@ -224,19 +224,19 @@ class LinksController extends Controller
                                     ],
                                     [
                                         'label' => 'Leaders',
-                                        'url' => url('/offices/download_office/baseline').'all=false&title=Baseline_KPI_US_Leaders&country=us&classifications=["Leader"]'
+                                        'url' => url('/offices/download_office/baseline').'?all=false&title=Baseline_KPI_US_Leaders&country=us&classifications=["Leader"]'
                                     ],
                                     [
                                         'label' => 'Believers',
-                                        'url' => url('/offices/download_office/baseline').'all=false&title=Baseline_KPI_US_Believers&country=us&classifications=["Believer"]'
+                                        'url' => url('/offices/download_office/baseline').'?all=false&title=Baseline_KPI_US_Believers&country=us&classifications=["Believer"]'
                                     ],
                                     [
                                         'label' => 'Leaders & Believers',
-                                        'url' => url('/offices/download_office/baseline').'all=false&title=Baseline_KPI_US_Leaders_Believers&country=us&classifications=["Leader", "Believer"]'
+                                        'url' => url('/offices/download_office/baseline').'?all=false&title=Baseline_KPI_US_Leaders_Believers&country=us&classifications=["Leader", "Believer"]'
                                     ],
                                     [
                                         'label' => 'Emerging ',
-                                        'url' => url('/offices/download_office/baseline').'all=false&title=Baseline_KPI_US_Emerging&country=us&classifications=["Emerger"]'
+                                        'url' => url('/offices/download_office/baseline').'?all=false&title=Baseline_KPI_US_Emerging&country=us&classifications=["Emerger"]'
                                     ]
                                 ]
                             ],
