@@ -103,54 +103,55 @@ class ExportController extends Controller
         switch ($country) {
             case 'us':
                 $codes = collect([
-                    840 => "USA"
+                    840 => ["country" => "USA", 'survey_code' => '4fa']
                 ]);
                 $survey_codes = ['4fa'];
                 break;
             case 'sg':
                 $codes = collect([
-                    702 => 'Singapore',
+                    702 => ["country" => 'Singapore', 'survey_code' => 'XWp']
                 ]);
                 $survey_codes = ['XWp'];
                 break;
             case 'hk':
                 $codes = collect([
-                    344 => 'Hongkong',
+                    344 => ["country" => 'Hongkong', 'survey_code' => '4xS']
                 ]);
                 $survey_codes = ['4xS'];
                 break;
             case 'ca':
                 $codes = collect([
-                    124 => 'Canada'
+                    124 => ["country" => 'Canada', 'survey_code' => '5Ph']
                 ]);
                 $survey_codes = ['5Ph'];
                 break;
             default:
                 $codes = collect([
-                    840 => "USA",
-                    702 => 'Singapore',
-                    344 => 'Hongkong',
-                    124 => 'Canada'
+                    840 => ["country" => "USA", 'survey_code' => '4fa'],
+                    702 => ["country" => 'Singapore', 'survey_code' => 'XWp'],
+                    344 => ["country" => 'Hongkong', 'survey_code' => '4xS'],
+                    124 => ["country" => 'Canada', 'survey_code' => '5Ph']
                 ]);
                 $survey_codes = ['4fa','XWp','5Ph','4xS'];
                 break;
         }
-
-        $survey_codes = ['4fa','XWp','5Ph','4xS'];
-        $response = Http::get('https://fluent.splitsecondsurveys.co.uk/api/records', [
-            'survey_codes' => $survey_codes
-        ]);
 
         $all_offices = Office::whereIn('code', $codes->keys())->get();
         $filter_emails = $all_offices->pluck('email')->map(function ($item, $key) {
             return Str::lower($item);
         })->toArray();
 
-        $records = collect(json_decode($response->body(), true))->filter(function ($record, $key) use ($filter_emails) {
-            return in_array(Str::lower($record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2']), $filter_emails);
-        });
-        $url_data = $records->pluck('url_data');
-        dd($url_data);
+        $survey_codes = ['4fa','XWp','5Ph','4xS'];
+        $records = [];
+        foreach ($codes as $code) {
+            $response = Http::get('https://fluent.splitsecondsurveys.co.uk/api/records', [
+                'survey_codes' => [$code['survey_code']]
+            ]);
+            $records[$code['country']] = collect(json_decode($response->body(), true))->filter(function ($record) use ($filter_emails) {
+                return in_array(Str::lower($record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2']), $filter_emails);
+            });
+        }   
+        dd($records);
         
         $filename = $request->title;
         $data = $this->getBaselinedata($records);
@@ -158,7 +159,11 @@ class ExportController extends Controller
         
     }
 
-    public function getBaselinedata() {
+    public function getBaselinedata($records) {
+        $tmp_data = [];
+        foreach ($records as $key => $record) {
+            $tmp_data[] = [$record['url_data']['id'], ];
+        }
         for ($i=1; $i <= 31 ; $i++) { 
             
         }
