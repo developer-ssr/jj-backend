@@ -72,6 +72,6 @@ Route::prefix('offices')->group(function () {
 });
 
 Route::prefix('baseline')->group(function () {
-    Route::get('/download/{summary}', [ExportController::class, 'downloadBaseline ']);
+    Route::get('/download/{summary}', [ExportController::class, 'downloadBaseline']);
 });
 
