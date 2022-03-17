@@ -149,10 +149,19 @@ class ExportController extends Controller
         $records = collect(json_decode($response->body(), true))->filter(function ($record, $key) use ($filter_emails) {
             return in_array(Str::lower($record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2']), $filter_emails);
         });
-        dd($records);
+        $url_data = $records->pluck('url_data');
+        dd($url_data);
+        
         $filename = $request->title;
+        $data = $this->getBaselinedata($records);
         return Excel::download(CsvExport::new($data), $filename.".xlsx");
         
+    }
+
+    public function getBaselinedata() {
+        for ($i=1; $i <= 31 ; $i++) { 
+            
+        }
     }
 
     public function downloadOffice(Request $request, $ecp) 
