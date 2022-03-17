@@ -151,18 +151,22 @@ class ExportController extends Controller
                 return in_array(Str::lower($record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2']), $filter_emails);
             });
         }   
-        dd($records);
         
-        $filename = $request->title;
         $data = $this->getBaselinedata($records);
+        dd($data);
+        $filename = $request->title;
         return Excel::download(CsvExport::new($data), $filename.".xlsx");
         
     }
 
-    public function getBaselinedata($records) {
-        $tmp_data = [];
-        foreach ($records as $key => $record) {
-            $tmp_data[] = [$record['url_data']['id'], ];
+    public function getBaselinedata($country_records) {
+        $data = [];
+        foreach ($country_records as $country => $records) {
+            foreach ($records as $record) {
+                $name = '';
+                $email = $record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2'];
+                $tmp_data = [$record['url_data']['id'], $country, $name, $email];
+            }
         }
         for ($i=1; $i <= 31 ; $i++) { 
             
