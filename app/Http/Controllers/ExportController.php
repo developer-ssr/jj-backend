@@ -146,7 +146,7 @@ class ExportController extends Controller
             return Str::lower($item);
         })->toArray();
 
-        $records = json_decode($response->body(), true)->filter(function ($record, $key) use ($filter_emails) {
+        $records = collect(json_decode($response->body(), true))->filter(function ($record, $key) use ($filter_emails) {
             return in_array(Str::lower($record->url_data['a2_2'] ?? $record->url_data['c2_2'] ?? $record->url_data['h2_2']), $filter_emails);
         });
         dd($records);
