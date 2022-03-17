@@ -71,3 +71,7 @@ Route::prefix('offices')->group(function () {
     Route::get('/download_office/{ecp}', [ExportController::class, 'downloadOffice']);
 });
 
+Route::prefix('baseline')->group(function () {
+    Route::get('/download/{summary}', [ExportController::class, 'downloadBaseline ']);
+});
+

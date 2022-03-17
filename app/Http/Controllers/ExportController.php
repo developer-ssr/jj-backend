@@ -93,9 +93,71 @@ class ExportController extends Controller
         //
     }
 
+    public function downloadBaseline(Request $request, $summary) {
+        if ($request->all) {
+            $country = $request->country ?? 'all';
+        }else {
+            $country = $request->country ?? 'all';
+        }
+        
+        switch ($country) {
+            case 'us':
+                $codes = collect([
+                    840 => "USA"
+                ]);
+                $survey_codes = ['4fa'];
+                break;
+            case 'sg':
+                $codes = collect([
+                    702 => 'Singapore',
+                ]);
+                $survey_codes = ['XWp'];
+                break;
+            case 'hk':
+                $codes = collect([
+                    344 => 'Hongkong',
+                ]);
+                $survey_codes = ['4xS'];
+                break;
+            case 'ca':
+                $codes = collect([
+                    124 => 'Canada'
+                ]);
+                $survey_codes = ['5Ph'];
+                break;
+            default:
+                $codes = collect([
+                    840 => "USA",
+                    702 => 'Singapore',
+                    344 => 'Hongkong',
+                    124 => 'Canada'
+                ]);
+                $survey_codes = ['4fa','XWp','5Ph','4xS'];
+                break;
+        }
+
+        $survey_codes = ['4fa','XWp','5Ph','4xS'];
+        $response = Http::get('https://fluent.splitsecondsurveys.co.uk/api/records', [
+            'survey_codes' => $survey_codes
+        ]);
+
+        $all_offices = Office::whereIn('code', $codes->keys())->get();
+        $filter_emails = $all_offices->pluck('email')->map(function ($item, $key) {
+            return Str::lower($item);
+        })->toArray();
+
+        $records = json_decode($response->body(), true)->filter(function ($record, $key) use ($filter_emails) {
+            return in_array(Str::lower($record->url_data['a2_2'] ?? $record->url_data['c2_2'] ?? $record->url_data['h2_2']), $filter_emails);
+        });
+        dd($records);
+        $filename = $request->title;
+        return Excel::download(CsvExport::new($data), $filename.".xlsx");
+        
+    }
+
     public function downloadOffice(Request $request, $ecp) 
     {
-        $all = json_decode($request->all) ?? false;
+        $all = json_decode($request->all) ?? false; 
 
         if ($all) {
             $classifications = ["Leader","Believer","Emerger"];
@@ -115,7 +177,7 @@ class ExportController extends Controller
                     702 => 'Singapore',
                 ]);
                 break;
-            case 'hj':
+            case 'hk':
                 $codes = collect([
                     344 => 'Hongkong',
                 ]);
