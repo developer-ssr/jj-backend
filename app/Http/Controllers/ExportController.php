@@ -195,12 +195,15 @@ class ExportController extends Controller
         $ts = [
             "T1" => [
                 "USA" => ['h','a','c'],
-                "Singapore" => ['h','a','c'],
-                "Hongkong" => ['h','a','c'],
-                "Canada" => ['h','a','c'],
+                "Singapore" => ['h'],
+                "Hongkong" => ['h','a'],
+                "Canada" => ['h','a'],
             ],
             "T2" => [
-                "variables" => ['h','a','c'],
+                "USA" => ['h','a','c'],
+                "Singapore" => ['h'],
+                "Hongkong" => ['h','a'],
+                "Canada" => ['h','a'],
             ],
             "T3" => [
                 "variables" => [],
