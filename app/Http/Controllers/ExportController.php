@@ -220,7 +220,10 @@ class ExportController extends Controller
                 "Canada" => ['h','a']
             ],
             "T5" => [
-                "variables" => [],
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
             ],
             "T6" => [
                 "variables" => [],
@@ -249,6 +252,8 @@ class ExportController extends Controller
         $data[] = baselineVal($record['url_data'], $ts['T3'][$country], '3');
         //T4
         $data[] = baselineVal($record['url_data'], $ts['T4'][$country], '4');
+        //T5
+        $data[] = baselineVal($record['url_data'], $ts['T5'][$country], '5');
         return $data;
     }
 
