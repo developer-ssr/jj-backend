@@ -197,16 +197,19 @@ class ExportController extends Controller
                 "USA" => ['h','a','c'],
                 "Singapore" => ['h'],
                 "Hongkong" => ['h','a'],
-                "Canada" => ['h','a'],
+                "Canada" => ['h','a']
             ],
             "T2" => [
                 "USA" => ['h','a','c'],
                 "Singapore" => ['h'],
                 "Hongkong" => ['h','a'],
-                "Canada" => ['h','a'],
+                "Canada" => ['h','a']
             ],
             "T3" => [
-                "variables" => [],
+                "USA" => ['h','a','c'],
+                "Singapore" => ['h'],
+                "Hongkong" => ['h','a'],
+                "Canada" => ['h','a']
             ],
             "T4" => [
                 "variables" => [],
