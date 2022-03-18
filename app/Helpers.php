@@ -8,3 +8,20 @@ if (!function_exists('generator')) {
         }
     }
 }
+
+if (!function_exists('baselineVal')) {
+    function baselineVal($url_data, $vars, $num)
+    {
+        $isset = false;
+        $val = '-';
+        $i = 0;
+        do {
+            if (isset($url_data[$vars[$i].$num])) {
+                $val = $url_data[$vars[$i].$num];
+                $isset = true;
+            }
+            $i++;
+        } while ($isset == false || $i < count($vars));
+        return $val;
+    }
+}

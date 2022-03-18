@@ -194,10 +194,13 @@ class ExportController extends Controller
     public function getBaselinedata($country, $record) {
         $ts = [
             "T1" => [
-                "variables" => ['h1','a1','c1'],
+                "USA" => ['h','a','c'],
+                "Singapore" => ['h','a','c'],
+                "Hongkong" => ['h','a','c'],
+                "Canada" => ['h','a','c'],
             ],
             "T2" => [
-                "variables" => [],
+                "variables" => ['h','a','c'],
             ],
             "T3" => [
                 "variables" => [],
@@ -229,26 +232,12 @@ class ExportController extends Controller
         $data =  [$record['url_data']['id'], $country, $name, $email];
         //'convert data to Tracker format here
         //T1
-        /* $i = 0;
-        $isset = false;
-        $val = '-';
-        do {
-            if (isset($record['url_data'][$ts['T1'][$i]])) {
-                $val = $record['url_data'][$ts['T1'][$i]];
-                $isset = true;
-            }
-            $i++;
-        } while ($isset == false && $i < 4); */
-        if (isset($record['url_data']['h1'])) {
-            $data[] = $record['url_data']['h1'];
-        }elseif (isset($record['url_data']['a1'])) {
-            $data[] = $record['url_data']['a1'];
-        }elseif (isset($record['url_data']['c1'])) {
-            $data[] = $record['url_data']['c1'];
-        }else {
-            $data[] = '';
-        }
+        $data[] = baselineVal($record['url_data'], $ts['T1'][$country], '1');
         //T2
+        for ($i=1; $i <= 3; $i++) { 
+            $data[] = baselineVal($record['url_data'], $ts['T2'][$country], '2_'.$i);
+        }
+
         return $data;
     }
 
