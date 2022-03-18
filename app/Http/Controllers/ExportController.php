@@ -242,7 +242,8 @@ class ExportController extends Controller
         for ($i=1; $i <= 3; $i++) { 
             $data[] = baselineVal($record['url_data'], $ts['T2'][$country], '2_'.$i);
         }
-
+        //T3
+        $data[] = baselineVal($record['url_data'], $ts['T3'][$country], '3');
         return $data;
     }
 
