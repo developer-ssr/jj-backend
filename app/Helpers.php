@@ -21,7 +21,7 @@ if (!function_exists('baselineVal')) {
                 $isset = true;
             }
             $i++;
-        } while ($isset == false || $i < (count($vars) - 1));
+        } while ($isset == false || $i < (count($vars) - 2));
         return $val;
     }
 }
