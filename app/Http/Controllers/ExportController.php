@@ -198,23 +198,26 @@ class ExportController extends Controller
             "T1" => [
                 "USA" => ['h','a','c'],
                 "Singapore" => ['h'],
-                "Hongkong" => ['h','a'],
+                "Hongkong" => ['h'],
                 "Canada" => ['h','a']
             ],
             "T2" => [
                 "USA" => ['h','a','c'],
                 "Singapore" => ['h'],
-                "Hongkong" => ['h','a'],
+                "Hongkong" => ['h'],
                 "Canada" => ['h','a']
             ],
             "T3" => [
                 "USA" => ['h'],//missing ,'a','c'
                 "Singapore" => ['h'],
-                "Hongkong" => ['h'], //missing ,'a'
-                "Canada" => ['h'] //missing ,'a'
+                "Hongkong" => ['h'],
+                "Canada" => ['h', 'a']
             ],
             "T4" => [
-                "variables" => [],
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
             ],
             "T5" => [
                 "variables" => [],
@@ -244,6 +247,8 @@ class ExportController extends Controller
         }
         //T3
         $data[] = baselineVal($record['url_data'], $ts['T3'][$country], '3');
+        //T4
+        $data[] = baselineVal($record['url_data'], $ts['T4'][$country], '4');
         return $data;
     }
 
