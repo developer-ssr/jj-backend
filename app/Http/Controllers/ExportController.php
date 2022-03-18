@@ -142,36 +142,113 @@ class ExportController extends Controller
         })->toArray();
 
         $survey_codes = ['4fa','XWp','5Ph','4xS'];
-        $records = [];
+        $country_records = [];
         foreach ($codes as $code) {
             $response = Http::get('https://fluent.splitsecondsurveys.co.uk/api/records', [
                 'survey_codes' => [$code['survey_code']]
             ]);
-            $records[$code['country']] = collect(json_decode($response->body(), true))->filter(function ($record) use ($filter_emails) {
+            //get records per country
+            $country_records[$code['country']] = collect(json_decode($response->body(), true))->filter(function ($record) use ($filter_emails) {
                 return in_array(Str::lower($record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2']), $filter_emails);
             });
-        }   
-        
-        $data = $this->getBaselinedata($records);
+        }  
+        $q_keys = [
+            "USA" => [
+                "variables" => [
+                    [ //A
+                        "a" => [ //explicit
+                            "questions" => 30
+                        ],
+                        "c" => [ //v2
+                            "questions" => 30
+                        ],
+                        "T1" => [],
+
+                        "variables" => ["a", "b", "c", "h", "i"]
+                    ],
+                    [ //B1
+                        "variables" => ["ii"]
+                    ],
+                    [ //B2
+                        "variables" => ["j"]
+                    ],
+                    [ //B12-19
+                        "variables" => ["k"]
+                    ]
+                ]
+            ],
+        ]; 
+        $data = [];
+        foreach ($country_records as $country => $records) {
+            foreach ($records as $record) {
+                //data per respondent
+                $data[] = $this->getBaselinedata($country, $record);
+            }
+        }
         dd($data);
         $filename = $request->title;
         return Excel::download(CsvExport::new($data), $filename.".xlsx");
         
     }
 
-    public function getBaselinedata($country_records) {
-        $data = [];
-        foreach ($country_records as $country => $records) {
-            foreach ($records as $record) {
-                $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
-                $email = $record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2'];
-                $tmp_data = [$record['url_data']['id'], $country, $name, $email];
-                $data[] = $tmp_data;
+    public function getBaselinedata($country, $record) {
+        $ts = [
+            "T1" => [
+                "variables" => ['h','a','c'],
+            ],
+            "T2" => [
+                "variables" => [],
+            ],
+            "T3" => [
+                "variables" => [],
+            ],
+            "T4" => [
+                "variables" => [],
+            ],
+            "T5" => [
+                "variables" => [],
+            ],
+            "T6" => [
+                "variables" => [],
+            ],
+            "T7" => [
+                "variables" => [],
+            ],
+            "T8" => [
+                "variables" => [],
+            ],
+            "T9" => [
+                "variables" => [],
+            ],
+            "T2" => [
+                "variables" => [],
+            ]
+        ];
+        $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
+        $email = $record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2'];
+        $data =  [$record['url_data']['id'], $country, $name, $email];
+        //'convert data to Tracker format here
+        //T1
+        /* $i = 0;
+        $isset = false;
+        $val = '-';
+        do {
+            if (isset($record['url_data'][$ts['T1'][$i]])) {
+                $val = $record['url_data'][$ts['T1'][$i]];
+                $isset = true;
             }
+            $i++;
+        } while ($isset == false && $i < 4); */
+        if (isset($record['url_data']['h1'])) {
+            $data[] = $record['url_data']['h1'];
+        }elseif (isset($record['url_data']['a1'])) {
+            $data[] = $record['url_data']['a1'];
+        }elseif (isset($record['url_data']['c1'])) {
+            $data[] = $record['url_data']['c1'];
+        }else {
+            $data[] = '';
         }
-        for ($i=1; $i <= 31 ; $i++) { 
-            
-        }
+        //T2
         return $data;
     }
 
