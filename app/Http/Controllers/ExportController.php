@@ -166,11 +166,13 @@ class ExportController extends Controller
                 $name = '';
                 $email = $record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2'];
                 $tmp_data = [$record['url_data']['id'], $country, $name, $email];
+                $data[] = $tmp_data;
             }
         }
         for ($i=1; $i <= 31 ; $i++) { 
             
         }
+        return $data;
     }
 
     public function downloadOffice(Request $request, $ecp) 
