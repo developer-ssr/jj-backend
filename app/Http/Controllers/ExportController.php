@@ -228,9 +228,6 @@ class ExportController extends Controller
             ],
             "T9" => [
                 "variables" => [],
-            ],
-            "T2" => [
-                "variables" => [],
             ]
         ];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
