@@ -335,6 +335,18 @@ class LinksController extends Controller
                                         [
                                             'label' => 'United States',
                                             'url' => url('/baseline/download/respondent').'?all=false&country=us'
+                                        ],
+                                        [
+                                            'label' => 'Singapore',
+                                            'url' => url('/baseline/download/respondent').'?all=false&country=sg'
+                                        ],
+                                        [
+                                            'label' => 'Hong Kong',
+                                            'url' => url('/baseline/download/respondent').'?all=false&country=hk'
+                                        ],
+                                        [
+                                            'label' => 'Canada',
+                                            'url' => url('/baseline/download/respondent').'?all=false&country=ca'
                                         ]
                                     ]
                                 ],
