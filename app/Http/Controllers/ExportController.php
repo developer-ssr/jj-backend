@@ -94,11 +94,13 @@ class ExportController extends Controller
     }
 
     public function downloadBaseline(Request $request, $summary) {
-        if ($request->all) {
+        /* if ($request->all) {
             $country = $request->country ?? 'all';
         }else {
             $country = $request->country ?? 'all';
-        }
+        } */
+
+        $country = $request->country ?? 'all';
         
         switch ($country) {
             case 'us':

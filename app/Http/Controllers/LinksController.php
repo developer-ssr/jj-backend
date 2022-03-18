@@ -329,8 +329,8 @@ class LinksController extends Controller
                                     'url' => null, 
                                     'links' => [
                                         [
-                                            'label' => 'All ',
-                                            'url' => url('/baseline/download/respondent').'?all=true'
+                                            'label' => 'United States',
+                                            'url' => url('/baseline/download/respondent').'?all=false&country=us'
                                         ]
                                     ]
                                 ],
