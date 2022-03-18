@@ -208,10 +208,10 @@ class ExportController extends Controller
                 "Canada" => ['h','a']
             ],
             "T3" => [
-                "USA" => ['h','a','c'],
+                "USA" => ['h'],//missing ,'a','c'
                 "Singapore" => ['h'],
-                "Hongkong" => ['h','a'],
-                "Canada" => ['h','a']
+                "Hongkong" => ['h'], //missing ,'a'
+                "Canada" => ['h'] //missing ,'a'
             ],
             "T4" => [
                 "variables" => [],
