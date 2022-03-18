@@ -16,15 +16,16 @@ if (!function_exists('baselineVal')) {
         $val = '-';
         $i = 0;
         do {
-            if (!isset($vars[$i])) {
-                dd($i);
-            }
-            if (isset($url_data[$vars[$i].$num])) {
-                $val = $url_data[$vars[$i].$num];
+            if ($i > (count($vars) - 1)) {
                 $isset = true;
+            }else {
+                if (isset($url_data[$vars[$i].$num])) {
+                    $val = $url_data[$vars[$i].$num];
+                    $isset = true;
+                }
             }
             $i++;
-        } while ($isset == false || $i < (count($vars) - 2));
+        } while ($isset == false);
         return $val;
     }
 }
