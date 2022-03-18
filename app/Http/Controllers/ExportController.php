@@ -883,7 +883,11 @@ class ExportController extends Controller
                     case 't11':
                     case 't12':
                     case 't2':
-                        $val = $record->meta['query'][$header];
+                        if (!isset($record->meta['query'][$header])) {
+                            $val = '-';
+                        }else {
+                            $val = $record->meta['query'][$header];
+                        }
                         break;
                     default: //f
                         /* if ($record->meta['query'][$header] == $prime) {
