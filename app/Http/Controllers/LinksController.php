@@ -330,27 +330,27 @@ class LinksController extends Controller
                                     'links' => [
                                         [
                                             'label' => 'All',
-                                            'url' => url('/baseline/download/respondent').'?all=true'
+                                            'url' => url('/baseline/download/respondent').'?all=true&title=raw_baseline_all'
                                         ],
                                         [
                                             'label' => 'United States',
-                                            'url' => url('/baseline/download/respondent').'?all=false&country=us'
+                                            'url' => url('/baseline/download/respondent').'?all=false&country=us&title=raw_baseline_us'
                                         ],
                                         [
                                             'label' => 'Singapore',
-                                            'url' => url('/baseline/download/respondent').'?all=false&country=sg'
+                                            'url' => url('/baseline/download/respondent').'?all=false&country=sg&title=raw_baseline_sg'
                                         ],
                                         [
                                             'label' => 'Hong Kong',
-                                            'url' => url('/baseline/download/respondent').'?all=false&country=hk'
+                                            'url' => url('/baseline/download/respondent').'?all=false&country=hk&title=raw_baseline_hk'
                                         ],
                                         [
                                             'label' => 'Canada',
-                                            'url' => url('/baseline/download/respondent').'?all=false&country=ca'
+                                            'url' => url('/baseline/download/respondent').'?all=false&country=ca&title=raw_baseline_ca'
                                         ]
                                     ]
                                 ],
-                                [
+                                /* [
                                     'label' => 'Summary data',
                                     'url' => null, 
                                     'links' => [
@@ -359,7 +359,7 @@ class LinksController extends Controller
                                             'url' => url('/baseline/download/summary').'?all=true'
                                         ]
                                     ]
-                                ]
+                                ] */
                             ]
                         ]
                 ];

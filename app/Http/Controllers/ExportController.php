@@ -180,14 +180,18 @@ class ExportController extends Controller
                 ]
             ],
         ]; 
+        
         $data = [];
         foreach ($country_records as $country => $records) {
             foreach ($records as $record) {
                 //data per respondent
-                $data[] = $this->getBaselinedata($country, $record);
+                $results = $this->getBaselinedata($country, $record);
+                $data[] = $results['data'];
             }
         }
-        dd($data);
+        // dd($data);
+        $headers = collect(["Respondent ID", "Country", "Name", "Email Address"])->merge($results['headers']);
+        $data = collect($data)->prepend($headers)->toArray(); 
         $filename = $request->title;
         return Excel::download(CsvExport::new($data), $filename.".xlsx");
         
@@ -241,25 +245,32 @@ class ExportController extends Controller
                 "variables" => [],
             ]
         ];
+        $headers = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
         $email = $record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2'];
         $data =  [$record['url_data']['id'], $country, $name, $email];
         //'convert data to Tracker format here
         //T1
+        $headers[] = "T1";
         $data[] = baselineVal($record['url_data'], $ts['T1'][$country], '1');
         //T2
         for ($i=1; $i <= 3; $i++) { 
+            $headers[] = "T2_".$i;
             $data[] = baselineVal($record['url_data'], $ts['T2'][$country], '2_'.$i);
         }
         //T3
+        $headers[] = "T3";
         $data[] = baselineVal($record['url_data'], $ts['T3'][$country], '3');
         //T4
+        $headers[] = "T4";
         $data[] = baselineVal($record['url_data'], $ts['T4'][$country], '4');
         //T5
+        $headers[] = "T5";
         $data[] = baselineVal($record['url_data'], $ts['T5'][$country], '5');
         //T6
+        $headers[] = "T6";
         $data[] = baselineVal($record['url_data'], $ts['T6'][$country], '6');
-        return $data;
+        return ["data" =>$data, "headers" => $headers];
     }
 
     public function downloadOffice(Request $request, $ecp) 
