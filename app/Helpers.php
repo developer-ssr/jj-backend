@@ -14,14 +14,13 @@ if (!function_exists('baselineVal')) {
     {
         $isset = false;
         $val = '-';
-        $i = 0;
+        $i = -1;
         do {
-            dd($vars);
+            $i++;
             if (isset($url_data[$vars[$i].$num])) {
                 $val = $url_data[$vars[$i].$num];
                 $isset = true;
             }
-            $i++;
         } while ($isset == false || $i < count($vars));
         return $val;
     }
