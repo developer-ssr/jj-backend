@@ -194,7 +194,7 @@ class ExportController extends Controller
     public function getBaselinedata($country, $record) {
         $ts = [
             "T1" => [
-                "variables" => ['h','a','c'],
+                "variables" => ['h1','a1','c1'],
             ],
             "T2" => [
                 "variables" => [],
