@@ -163,7 +163,7 @@ class ExportController extends Controller
         $data = [];
         foreach ($country_records as $country => $records) {
             foreach ($records as $record) {
-                $name = '';
+                $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
                 $email = $record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2'];
                 $tmp_data = [$record['url_data']['id'], $country, $name, $email];
                 $data[] = $tmp_data;
