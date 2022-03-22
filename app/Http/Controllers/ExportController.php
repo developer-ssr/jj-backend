@@ -403,6 +403,55 @@ class ExportController extends Controller
                 "Hongkong" => ['h'],
                 "Canada" => ['h','a']
             ],
+            "T24" => [
+                "Q_num" => 24,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
+            ],
+            "T25" => [
+                "Q_num" => 25,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
+            ],
+            "T26" => [
+                "Q_num" => 26,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
+            ],
+            "T27" => [
+                "Q_num" => 27,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
+            ],
+            "T27_6_wc" => [
+                "Q_num" => '_6_wc',
+                "USA" => ['h27'],//missing ,'a','c'
+                "Singapore" => ['h27'],
+                "Hongkong" => ['h27'],
+                "Canada" => ['h27','a27']
+            ],
+            "T27_6_wc_RTs" => [
+                "Q_num" => '_6_wc_RTs',
+                "USA" => ['h27'],//missing ,'a','c'
+                "Singapore" => ['h27'],
+                "Hongkong" => ['h27'],
+                "Canada" => ['h27','a27']
+            ],
+            "T27_7" => [
+                "Q_num" => '_7',
+                "USA" => ['h27'],//missing ,'a','c'
+                "Singapore" => ['h27'],
+                "Hongkong" => ['h27'],
+                "Canada" => ['h27','a27']
+            ],
         ];
         $headers = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
@@ -431,7 +480,14 @@ class ExportController extends Controller
                     }
                     break;
                 case 'T18':
+                case 'T26':
                     for ($i=1; $i <= 8; $i++) { 
+                        $headers[] = "{$t}_{$i}";
+                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                    }
+                    break;
+                case 'T27':
+                    for ($i=1; $i <= 6; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
                     }
