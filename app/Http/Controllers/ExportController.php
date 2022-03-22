@@ -276,6 +276,27 @@ class ExportController extends Controller
                 "Singapore" => ['h9'],
                 "Hongkong" => ['h9'],
                 "Canada" => ['h9','a9']
+            ],
+            "T10" => [
+                "Q_num" => 10,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
+            ],
+            "T10_wc" => [
+                "Q_num" => '_wc',
+                "USA" => ['h10'],//missing ,'a','c'
+                "Singapore" => ['h10'],
+                "Hongkong" => ['h10'],
+                "Canada" => ['h10','a10']
+            ],
+            "T10_wc_RTs" => [
+                "Q_num" => '_wc_RTs',
+                "USA" => ['h10'],//missing ,'a','c'
+                "Singapore" => ['h10'],
+                "Hongkong" => ['h10'],
+                "Canada" => ['h10','a10']
             ]
         ];
         $headers = [];
