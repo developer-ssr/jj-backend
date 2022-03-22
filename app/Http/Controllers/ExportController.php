@@ -192,6 +192,7 @@ class ExportController extends Controller
         // dd($data);
         $headers = collect(["Respondent ID", "Country", "Name", "Email Address"])->merge($results['headers']);
         $data = collect($data)->prepend($headers)->toArray(); 
+        dd($data);
         $filename = $request->title;
         return Excel::download(CsvExport::new($data), $filename.".xlsx");
         
@@ -251,7 +252,7 @@ class ExportController extends Controller
         $data =  [$record['url_data']['id'], $country, $name, $email];
         //'convert data to Tracker format here
         //T1
-        $headers[] = "T1";
+        /* $headers[] = "T1";
         $data[] = baselineVal($record['url_data'], $ts['T1'][$country], '1');
         //T2
         for ($i=1; $i <= 3; $i++) { 
@@ -270,6 +271,25 @@ class ExportController extends Controller
         //T6
         $headers[] = "T6";
         $data[] = baselineVal($record['url_data'], $ts['T6'][$country], '6');
+        //T7
+        $headers[] = "T7";
+        $data[] = baselineVal($record['url_data'], $ts['T7'][$country], '7'); */
+        
+
+        for ($a=1; $a<=8 ; $a++) { 
+            switch ($a) {
+                case 2:
+                    for ($i=1; $i <= 3; $i++) { 
+                        $headers[] = "T{$a}_".$i;
+                        $data[] = baselineVal($record['url_data'], $ts['T'.$a][$country], $a.'_'.$i);
+                    }
+                    break;
+                
+                default:
+                    $data[] = baselineVal($record['url_data'], $ts['T'.$a][$country], $a);
+                    break;
+            }
+        }
         return ["data" =>$data, "headers" => $headers];
     }
 
