@@ -199,7 +199,7 @@ class ExportController extends Controller
     }
 
     public function getBaselinedata($country, $record) {
-        $ts = [
+        $ts = [ //list of variables to process
             "T1" => [
                 "Q_num" => 1,
                 "USA" => ['h','a','c'],
@@ -340,36 +340,20 @@ class ExportController extends Controller
                 "Hongkong" => ['h'],
                 "Canada" => ['h','a']
             ],
+            "T17" => [
+                "Q_num" => '',
+                "USA" => ['h17','a5','c5'],
+                "Singapore" => ['h17'],
+                "Hongkong" => ['h17'],
+                "Canada" => ['h17','a17']
+            ],
         ];
         $headers = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
         $email = $record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2'];
-        $data =  [$record['url_data']['id'], $country, $name, $email];
-        //'convert data to Tracker format here
-        //T1
-        /* $headers[] = "T1";
-        $data[] = baselineVal($record['url_data'], $ts['T1'][$country], '1');
-        //T2
-        for ($i=1; $i <= 3; $i++) { 
-            $headers[] = "T2_".$i;
-            $data[] = baselineVal($record['url_data'], $ts['T2'][$country], '2_'.$i);
-        }
-        //T3
-        $headers[] = "T3";
-        $data[] = baselineVal($record['url_data'], $ts['T3'][$country], '3');
-        //T4
-        $headers[] = "T4";
-        $data[] = baselineVal($record['url_data'], $ts['T4'][$country], '4');
-        //T5
-        $headers[] = "T5";
-        $data[] = baselineVal($record['url_data'], $ts['T5'][$country], '5');
-        //T6
-        $headers[] = "T6";
-        $data[] = baselineVal($record['url_data'], $ts['T6'][$country], '6');
-        //T7
-        $headers[] = "T7";
-        $data[] = baselineVal($record['url_data'], $ts['T7'][$country], '7'); */
-        
+        $data =  [$record['url_data']['id'], $country, $name, $email]; //initialize data with id, name and email
+
+        //'convert data to Tracker format here        
         foreach ($ts as $t => $variables) {
             switch ($t) {
                 case 'T2':
@@ -396,20 +380,6 @@ class ExportController extends Controller
                     break;
             }
         }
-        /* for ($a=1; $a<=8 ; $a++) { 
-            switch ($a) {
-                case 2:
-                    for ($i=1; $i <= 3; $i++) { 
-                        $headers[] = "T{$a}_".$i;
-                        $data[] = baselineVal($record['url_data'], $ts['T'.$a][$country], $a.'_'.$i);
-                    }
-                    break;
-                
-                default:
-                    $data[] = baselineVal($record['url_data'], $ts['T'.$a][$country], $a);
-                    break;
-            }
-        } */
         return ["data" =>$data, "headers" => $headers];
     }
 
