@@ -270,8 +270,8 @@ class ExportController extends Controller
                 "Hongkong" => ['h9'],
                 "Canada" => ['h9','a9']
             ],
-            "T9_wc_RT" => [
-                "Q_num" => '_wc_RT',
+            "T9_wc_RTs" => [
+                "Q_num" => '_wc_RTs',
                 "USA" => ['h9'],//missing ,'a','c'
                 "Singapore" => ['h9'],
                 "Hongkong" => ['h9'],
