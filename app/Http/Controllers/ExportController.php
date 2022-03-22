@@ -262,6 +262,13 @@ class ExportController extends Controller
                 "Singapore" => ['h'],
                 "Hongkong" => ['h'],
                 "Canada" => ['h','a']
+            ],
+            "T9_wc" => [
+                "Q_num" => '_wc',
+                "USA" => ['h9'],//missing ,'a','c'
+                "Singapore" => ['h9'],
+                "Hongkong" => ['h9'],
+                "Canada" => ['h9','a9']
             ]
         ];
         $headers = [];
@@ -303,6 +310,7 @@ class ExportController extends Controller
                     break;
                 
                 default:
+                    $headers[] = $t;
                     $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num']);
                     break;
             }
