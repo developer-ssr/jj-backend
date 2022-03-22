@@ -269,6 +269,13 @@ class ExportController extends Controller
                 "Singapore" => ['h9'],
                 "Hongkong" => ['h9'],
                 "Canada" => ['h9','a9']
+            ],
+            "T9_wc_RT" => [
+                "Q_num" => '_wc_RT',
+                "USA" => ['h9'],//missing ,'a','c'
+                "Singapore" => ['h9'],
+                "Hongkong" => ['h9'],
+                "Canada" => ['h9','a9']
             ]
         ];
         $headers = [];
