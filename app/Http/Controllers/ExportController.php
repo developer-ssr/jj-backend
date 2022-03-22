@@ -487,20 +487,20 @@ class ExportController extends Controller
                 "Hongkong" => ['ii1'],
                 "Canada" => ['ii1','i1']
             ],
-            "T33" => [ //B1 Q2
+            "T33" => [ //B2 Q2
                 "Q_num" => '',
                 "USA" => ['ii2', 'a14', 'c14'],
                 "Singapore" => ['ii2','i2'],
                 "Hongkong" => ['ii2'],
                 "Canada" => ['ii2','i2']
             ],
-            /* "T34" => [ //B2 ACT
+            "T34" => [ //B3 ACT
                 "Q_num" => '',
-                "USA" => ['ii2', 'a14', 'c14'],
-                "Singapore" => ['ii2','i2'],
-                "Hongkong" => ['ii2'],
-                "Canada" => ['ii2','i2']
-            ], */
+                "USA" => ['b3', 'a15', 'c15'],
+                "Singapore" => ['b3','i3'],
+                "Hongkong" => ['b3'],
+                "Canada" => ['b3','i3']
+            ],
         ];
         $headers = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
@@ -537,6 +537,12 @@ class ExportController extends Controller
                     break;
                 case 'T27':
                     for ($i=1; $i <= 6; $i++) { 
+                        $headers[] = "{$t}_{$i}";
+                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                    }
+                    break;
+                case 'T34':
+                    for ($i=1; $i <= 7; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
                     }
