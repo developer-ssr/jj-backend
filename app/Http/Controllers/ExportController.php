@@ -201,49 +201,67 @@ class ExportController extends Controller
     public function getBaselinedata($country, $record) {
         $ts = [
             "T1" => [
+                "Q_num" => 1,
                 "USA" => ['h','a','c'],
                 "Singapore" => ['h'],
                 "Hongkong" => ['h'],
                 "Canada" => ['h','a']
             ],
             "T2" => [
+                "Q_num" => 2,
                 "USA" => ['h','a','c'],
                 "Singapore" => ['h'],
                 "Hongkong" => ['h'],
                 "Canada" => ['h','a']
             ],
             "T3" => [
+                "Q_num" => 3,
                 "USA" => ['h'],//missing ,'a','c'
                 "Singapore" => ['h'],
                 "Hongkong" => ['h'],
                 "Canada" => ['h', 'a']
             ],
             "T4" => [
+                "Q_num" => 4,
                 "USA" => ['h'],//missing ,'a','c'
                 "Singapore" => ['h'],
                 "Hongkong" => ['h'],
                 "Canada" => ['h','a']
             ],
             "T5" => [
+                "Q_num" => 5,
                 "USA" => ['h'],//missing ,'a','c'
                 "Singapore" => ['h'],
                 "Hongkong" => ['h'],
                 "Canada" => ['h','a']
             ],
             "T6" => [
+                "Q_num" => 6,
                 "USA" => ['h'],//missing ,'a','c'
                 "Singapore" => ['h'],
                 "Hongkong" => ['h'],
                 "Canada" => ['h','a']
             ],
             "T7" => [
-                "variables" => [],
+                "Q_num" => 7,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
             ],
             "T8" => [
-                "variables" => [],
+                "Q_num" => 8,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
             ],
             "T9" => [
-                "variables" => [],
+                "Q_num" => 9,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
             ]
         ];
         $headers = [];
@@ -275,8 +293,21 @@ class ExportController extends Controller
         $headers[] = "T7";
         $data[] = baselineVal($record['url_data'], $ts['T7'][$country], '7'); */
         
-
-        for ($a=1; $a<=8 ; $a++) { 
+        foreach ($ts as $t => $variables) {
+            switch ($t) {
+                case 'T2':
+                    for ($i=1; $i <= 3; $i++) { 
+                        $headers[] = "{$t}_{$i}";
+                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                    }
+                    break;
+                
+                default:
+                    $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num']);
+                    break;
+            }
+        }
+        /* for ($a=1; $a<=8 ; $a++) { 
             switch ($a) {
                 case 2:
                     for ($i=1; $i <= 3; $i++) { 
@@ -289,7 +320,7 @@ class ExportController extends Controller
                     $data[] = baselineVal($record['url_data'], $ts['T'.$a][$country], $a);
                     break;
             }
-        }
+        } */
         return ["data" =>$data, "headers" => $headers];
     }
 
