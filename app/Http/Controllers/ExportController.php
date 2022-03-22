@@ -333,6 +333,13 @@ class ExportController extends Controller
                 "Hongkong" => ['h'],
                 "Canada" => ['h','a']
             ],
+            "T16" => [
+                "Q_num" => 16,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
+            ],
         ];
         $headers = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
@@ -373,6 +380,12 @@ class ExportController extends Controller
                     break;
                 case 'T12':
                     for ($i=1; $i <= 7; $i++) { 
+                        $headers[] = "{$t}_{$i}";
+                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                    }
+                    break;
+                case 'T16':
+                    for ($i=1; $i <= 4; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
                     }
