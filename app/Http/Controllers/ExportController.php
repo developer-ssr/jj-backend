@@ -192,7 +192,7 @@ class ExportController extends Controller
         // dd($data);
         $headers = collect(["Respondent ID", "Country", "Name", "Email Address"])->merge($results['headers']);
         $data = collect($data)->prepend($headers)->toArray(); 
-        dd($data);
+        // dd($data);
         $filename = $request->title;
         return Excel::download(CsvExport::new($data), $filename.".xlsx");
         
