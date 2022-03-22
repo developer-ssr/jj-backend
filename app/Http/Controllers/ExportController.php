@@ -300,7 +300,7 @@ class ExportController extends Controller
             ],
             "T11" => [
                 "Q_num" => '',
-                "USA" => ['h11', 'a3', 'c3'],//missing ,'a','c'
+                "USA" => ['h11', 'a3', 'c3'],
                 "Singapore" => ['h11'],
                 "Hongkong" => ['h11'],
                 "Canada" => ['h11','a11']
@@ -311,6 +311,27 @@ class ExportController extends Controller
                 "Singapore" => ['h12'],
                 "Hongkong" => ['h12'],
                 "Canada" => ['h12','a12']
+            ],
+            "T13" => [
+                "Q_num" => 13,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
+            ],
+            "T14" => [
+                "Q_num" => 14,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
+            ],
+            "T15" => [
+                "Q_num" => 15,
+                "USA" => ['h'],//missing ,'a','c'
+                "Singapore" => ['h'],
+                "Hongkong" => ['h'],
+                "Canada" => ['h','a']
             ],
         ];
         $headers = [];
