@@ -350,7 +350,12 @@ class ExportController extends Controller
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
                     }
                     break;
-                
+                case 'T12':
+                    for ($i=1; $i <= 7; $i++) { 
+                        $headers[] = "{$t}_{$i}";
+                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                    }
+                    break;
                 default:
                     $headers[] = $t;
                     $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num']);
