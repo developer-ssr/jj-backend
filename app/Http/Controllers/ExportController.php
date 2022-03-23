@@ -153,33 +153,7 @@ class ExportController extends Controller
             $country_records[$code['country']] = collect(json_decode($response->body(), true))->filter(function ($record) use ($filter_emails) {
                 return in_array(Str::lower($record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2']), $filter_emails);
             });
-        }  
-        $q_keys = [
-            "USA" => [
-                "variables" => [
-                    [ //A
-                        "a" => [ //explicit
-                            "questions" => 30
-                        ],
-                        "c" => [ //v2
-                            "questions" => 30
-                        ],
-                        "T1" => [],
-
-                        "variables" => ["a", "b", "c", "h", "i"]
-                    ],
-                    [ //B1
-                        "variables" => ["ii"]
-                    ],
-                    [ //B2
-                        "variables" => ["j"]
-                    ],
-                    [ //B12-19
-                        "variables" => ["k"]
-                    ]
-                ]
-            ],
-        ]; 
+        } 
         
         $data = [];
         foreach ($country_records as $country => $records) {
@@ -501,6 +475,13 @@ class ExportController extends Controller
                 "Hongkong" => ['b3'],
                 "Canada" => ['b3','i3']
             ],
+            "T35" => [ //B4 ACT
+                "Q_num" => '',
+                "USA" => ['b4', 'a16', 'c16'],
+                "Singapore" => ['b4','i4'],
+                "Hongkong" => ['b4'],
+                "Canada" => ['b4','i4']
+            ],
         ];
         $headers = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
@@ -543,6 +524,12 @@ class ExportController extends Controller
                     break;
                 case 'T34':
                     for ($i=1; $i <= 7; $i++) { 
+                        $headers[] = "{$t}_{$i}";
+                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                    }
+                    break;
+                case 'T35':
+                    for ($i=1; $i <= 13; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
                     }
