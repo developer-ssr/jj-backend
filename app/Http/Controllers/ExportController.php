@@ -505,6 +505,14 @@ class ExportController extends Controller
                 "Singapore" => ['b7'],//explicit 'i5' multiple
                 "Hongkong" => ['b7'],
                 "Canada" => ['b7']//explicit 'i5' multiple
+            ],
+            "T39" => [ //B8 ACT
+                "Q_num" => '',
+                "Q_limit" => 14, //number of primes
+                "USA" => ['b8', 'a22', 'c22'],//a22 c22 inverted
+                "Singapore" => ['b8', 'i11'], //i11 inverted
+                "Hongkong" => ['b8'],
+                "Canada" => ['b8', 'i11']//i11 inverted
             ]
         ];
         $headers = [];
@@ -571,6 +579,12 @@ class ExportController extends Controller
                     for ($i=1; $i <= $variables['Q_limit']; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                    }
+                    break;
+                case 'T39': //single select
+                    for ($i=1; $i <= $variables['Q_limit']; $i++) { 
+                        $headers[] = "{$t}_{$i}";
+                        $data[] = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, 'b8', 5);
                     }
                     break;
                 default:
