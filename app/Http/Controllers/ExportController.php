@@ -559,7 +559,7 @@ class ExportController extends Controller
                     }
                     break;
                 case 'T37': //single select
-                    for ($i=1; $i <= $variables['Q_limit']; $i++) { 
+                    for ($i=1; $i < $variables['Q_limit']; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
                     }
