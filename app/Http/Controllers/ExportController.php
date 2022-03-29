@@ -547,7 +547,29 @@ class ExportController extends Controller
                 "Singapore" => ['y2', 'i12'],
                 "Hongkong" => ['k2'],
                 "Canada" => ['u2', 'i13']
-            ]
+            ],
+            "T44" => [ //K3
+                "Q_num" => '',
+                "Q_limit" => 10,
+                "USA" => ['k3', 'a25', 'c25'],
+                "Singapore" => ['y3', 'i13'],
+                "Hongkong" => ['k3'],
+                "Canada" => ['u3', 'i14']
+            ],
+            "T45" => [ //K4
+                "Q_num" => '',
+                "USA" => ['k4', 'a26', 'c26'],
+                "Singapore" => ['y4', 'i14'],
+                "Hongkong" => ['k4'],
+                "Canada" => ['u4', 'i15']
+            ],
+            "T46" => [ //K5
+                "Q_num" => '',
+                "USA" => ['k5', 'a26', 'c26'],
+                "Singapore" => ['y5', 'i14'],
+                "Hongkong" => ['k5'],
+                "Canada" => ['u5', 'i15']
+            ],
         ];
         $headers = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
@@ -613,6 +635,7 @@ class ExportController extends Controller
                 case 'T40':
                 case 'T42':
                 case 'T43':
+                case 'T44':
                     for ($i=1; $i <= $variables['Q_limit']; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
