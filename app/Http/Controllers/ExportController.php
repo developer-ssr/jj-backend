@@ -499,8 +499,8 @@ class ExportController extends Controller
                 "Canada" => ['b6','i6']
             ],
             "T38" => [ //B7 ACT
-                "Q_num" => 10,//number of primes
-                "Q_limit" => 25, //number of primes
+                "Q_num" => 25,//number of primes
+                "Q_limit" => 10, //number of primes
                 "USA" => ['b7'], //explicit single
                 "Singapore" => ['b7'],//explicit 'i5' multiple
                 "Hongkong" => ['b7'],
