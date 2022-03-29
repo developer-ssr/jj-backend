@@ -47,7 +47,11 @@ if (!function_exists('baselineValInvert')) {
                         for ($j=$num_choice; $j > 0; $j--) { 
                             $list[] = $j;
                         }
-                        $val = $list[$url_data[$vars[$i].$num]];
+                        if ($list[$url_data[$vars[$i].$num]]) {
+                            $val = $list[$url_data[$vars[$i].$num]];
+                        }else {
+                            $val = $url_data[$vars[$i].$num];
+                        }
                     }
                     $isset = true;
                 }
