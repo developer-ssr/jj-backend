@@ -482,6 +482,76 @@ class ExportController extends Controller
                 "Hongkong" => ['b4'],
                 "Canada" => ['b4','i4']
             ],
+            "T36_1" => [ //B5 ACT
+                "Q_num" => '_1',
+                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
+                "Singapore" => ['b5'],//explicit 'i5' multiple
+                "Hongkong" => ['b5'],
+                "Canada" => ['b5']//explicit 'i5' multiple
+            ],
+            "T36_2" => [ //B5 ACT
+                "Q_num" => '_2',
+                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
+                "Singapore" => ['b5'],//explicit 'i5' multiple
+                "Hongkong" => ['b5'],
+                "Canada" => ['b5']//explicit 'i5' multiple
+            ],
+            "T36_3" => [ //B5 ACT
+                "Q_num" => '_3',
+                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
+                "Singapore" => ['b5'],//explicit 'i5' multiple
+                "Hongkong" => ['b5'],
+                "Canada" => ['b5']//explicit 'i5' multiple
+            ],
+            "T36_4" => [ //B5 ACT
+                "Q_num" => '_4',
+                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
+                "Singapore" => ['b5'],//explicit 'i5' multiple
+                "Hongkong" => ['b5'],
+                "Canada" => ['b5']//explicit 'i5' multiple
+            ],
+            "T36_5" => [ //B5 ACT
+                "Q_num" => '_5',
+                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
+                "Singapore" => ['b5'],//explicit 'i5' multiple
+                "Hongkong" => ['b5'],
+                "Canada" => ['b5']//explicit 'i5' multiple
+            ],
+            "T36_6" => [ //B5 ACT
+                "Q_num" => '_6',
+                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
+                "Singapore" => ['b5'],//explicit 'i5' multiple
+                "Hongkong" => ['b5'],
+                "Canada" => ['b5']//explicit 'i5' multiple
+            ],
+            "T36_7" => [ //B5 ACT
+                "Q_num" => '_7',
+                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
+                "Singapore" => ['b5'],//explicit 'i5' multiple
+                "Hongkong" => ['b5'],
+                "Canada" => ['b5']//explicit 'i5' multiple
+            ],
+            "T36_8" => [ //B5 ACT
+                "Q_num" => '_8',
+                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
+                "Singapore" => ['b5'],//explicit 'i5' multiple
+                "Hongkong" => ['b5'],
+                "Canada" => ['b5']//explicit 'i5' multiple
+            ],
+            "T36_9" => [ //B5 ACT
+                "Q_num" => '_9',
+                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
+                "Singapore" => ['b5'],//explicit 'i5' multiple
+                "Hongkong" => ['b5'],
+                "Canada" => ['b5']//explicit 'i5' multiple
+            ],
+            "T36_10" => [ //B5 ACT
+                "Q_num" => '_10',
+                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
+                "Singapore" => ['b5'],//explicit 'i5' multiple
+                "Hongkong" => ['b5'],
+                "Canada" => ['b5']//explicit 'i5' multiple
+            ],
         ];
         $headers = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
