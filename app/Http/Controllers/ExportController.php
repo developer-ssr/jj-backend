@@ -593,6 +593,16 @@ class ExportController extends Controller
                     }
                     break;
                 case 'T34':
+                case 'T36_1':
+                case 'T36_2':
+                case 'T36_3':
+                    case 'T36_4':
+                        case 'T36_5':
+                            case 'T36_6':
+                                case 'T36_7':
+                                    case 'T36_8':
+                                        case 'T36_9':
+                                            case 'T36_10':
                     for ($i=1; $i <= 7; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
