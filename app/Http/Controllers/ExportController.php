@@ -565,7 +565,7 @@ class ExportController extends Controller
             ],
             "T46" => [ //K5
                 "Q_num" => '',
-                "USA" => ['k5', 'a26', 'c26'],
+                "USA" => ['k5', 'a27', 'c27'],
                 "Singapore" => ['y5', 'i14'],
                 "Hongkong" => ['k5'],
                 "Canada" => ['u5', 'i15']
