@@ -508,20 +508,30 @@ class ExportController extends Controller
             ],
             "T39" => [ //B8 ACT
                 "Q_num" => '',
-                "Q_limit" => 23, //number of primes
+                "Q_limit" => 20, //number of primes
+                "Q_not" => 'b8',
                 "USA" => ['b8', 'a19', 'c19'],//a22 c22 inverted
                 "Singapore" => ['b8', 'i7'], //i11 inverted
                 "Hongkong" => ['b8'],
                 "Canada" => ['b8', 'i8']//i11 inverted
             ],
-            /* "T39" => [ //B8 ACT
+            "T40" => [ //B9 ACT
+                "Q_num" => '',
+                "Q_limit" => 15, //number of primes
+                "USA" => ['b9', 'a20', 'c20'],//a22 c22 inverted
+                "Singapore" => ['b9', 'i8'], //i11 inverted
+                "Hongkong" => ['b9'],
+                "Canada" => ['b9', 'i9']//i11 inverted
+            ],
+            "T41" => [ //B10 ACT
                 "Q_num" => '',
                 "Q_limit" => 14, //number of primes
-                "USA" => ['b8', 'a22', 'c22'],//a22 c22 inverted
-                "Singapore" => ['b8', 'i10'], //i11 inverted
-                "Hongkong" => ['b8'],
-                "Canada" => ['b8', 'i11']//i11 inverted
-            ] */
+                "Q_not" => 'b10',
+                "USA" => ['b10', 'a22', 'c22'],//a22 c22 inverted
+                "Singapore" => ['b10', 'i10'], //i11 inverted
+                "Hongkong" => ['b10'],
+                "Canada" => ['b10', 'i11']//i11 inverted
+            ]
         ];
         $headers = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
@@ -584,13 +594,14 @@ class ExportController extends Controller
                     }
                     break;
                 case 'T37': //single select
+                case 'T40':
                     for ($i=1; $i <= $variables['Q_limit']; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
                     }
                     break;
-                case 'T39': //single select
-                    if ($country == 'Hongkong') {
+                case 'T39': //single select inverse
+                    if ($country == 'Hongkong') {  //hk not inverted
                         for ($i=1; $i <= $variables['Q_limit']; $i++) { 
                             $headers[] = "{$t}_{$i}";
                             $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
@@ -598,7 +609,21 @@ class ExportController extends Controller
                     }else {
                         for ($i=1; $i <= $variables['Q_limit']; $i++) { 
                             $headers[] = "{$t}_{$i}";
-                            $data[] = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, 'b8', 5);
+                            $data[] = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, $variables['Q_not'], 5);
+                        }
+                    }
+                    
+                    break;
+                case 'T41':
+                    if ($country == 'Hongkong' || $country == 'Canada') { //hk and canada not inverted
+                        for ($i=1; $i <= $variables['Q_limit']; $i++) { 
+                            $headers[] = "{$t}_{$i}";
+                            $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        }
+                    }else {
+                        for ($i=1; $i <= $variables['Q_limit']; $i++) { 
+                            $headers[] = "{$t}_{$i}";
+                            $data[] = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, $variables['Q_not'], 5);
                         }
                     }
                     
