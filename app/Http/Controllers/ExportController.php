@@ -482,7 +482,7 @@ class ExportController extends Controller
                 "Hongkong" => ['b4'],
                 "Canada" => ['b4','i4']
             ],
-            "T36_1" => [ //B5 ACT
+            /* "T36_1" => [ //B5 ACT
                 "Q_num" => '_1',
                 "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
                 "Singapore" => ['b5'],//explicit 'i5' multiple
@@ -551,6 +551,14 @@ class ExportController extends Controller
                 "Singapore" => ['b5'],//explicit 'i5' multiple
                 "Hongkong" => ['b5'],
                 "Canada" => ['b5']//explicit 'i5' multiple
+            ], */
+            "T36" => [ //B5 ACT
+                "Q_num" => 22, //number of primes
+                "Q_limit" => 7,
+                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
+                "Singapore" => ['b5'],//explicit 'i5' multiple
+                "Hongkong" => ['b5'],
+                "Canada" => ['b5']//explicit 'i5' multiple
             ],
         ];
         $headers = [];
@@ -593,7 +601,7 @@ class ExportController extends Controller
                     }
                     break;
                 case 'T34':
-                case 'T36_1':
+                /* case 'T36_1':
                 case 'T36_2':
                 case 'T36_3':
                     case 'T36_4':
@@ -602,7 +610,7 @@ class ExportController extends Controller
                                 case 'T36_7':
                                     case 'T36_8':
                                         case 'T36_9':
-                                            case 'T36_10':
+                                            case 'T36_10': */
                     for ($i=1; $i <= 7; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
@@ -612,6 +620,14 @@ class ExportController extends Controller
                     for ($i=1; $i <= 13; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                    }
+                    break;
+                case 'T36'://for matrix multiple
+                    for ($a=1; $a <= $variables['Q_num'] ; $a++) { 
+                        for ($i=1; $i <= $variables['Q_limit']; $i++) { 
+                            $headers[] = "{$t}_{$a}_{$i}";
+                            $data[] = baselineVal($record['url_data'], $variables[$country], '_'.$a.'_'.$i);
+                        }
                     }
                     break;
                 default:
