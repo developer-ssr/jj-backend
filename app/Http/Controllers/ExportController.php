@@ -510,7 +510,7 @@ class ExportController extends Controller
                 "Q_num" => '',
                 "Q_limit" => 14, //number of primes
                 "USA" => ['b8', 'a22', 'c22'],//a22 c22 inverted
-                "Singapore" => ['b8', 'i11'], //i11 inverted
+                "Singapore" => ['b8', 'i10'], //i11 inverted
                 "Hongkong" => ['b8'],
                 "Canada" => ['b8', 'i11']//i11 inverted
             ]
