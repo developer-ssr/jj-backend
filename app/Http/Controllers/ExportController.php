@@ -482,83 +482,21 @@ class ExportController extends Controller
                 "Hongkong" => ['b4'],
                 "Canada" => ['b4','i4']
             ],
-            /* "T36_1" => [ //B5 ACT
-                "Q_num" => '_1',
-                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
-                "Singapore" => ['b5'],//explicit 'i5' multiple
-                "Hongkong" => ['b5'],
-                "Canada" => ['b5']//explicit 'i5' multiple
-            ],
-            "T36_2" => [ //B5 ACT
-                "Q_num" => '_2',
-                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
-                "Singapore" => ['b5'],//explicit 'i5' multiple
-                "Hongkong" => ['b5'],
-                "Canada" => ['b5']//explicit 'i5' multiple
-            ],
-            "T36_3" => [ //B5 ACT
-                "Q_num" => '_3',
-                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
-                "Singapore" => ['b5'],//explicit 'i5' multiple
-                "Hongkong" => ['b5'],
-                "Canada" => ['b5']//explicit 'i5' multiple
-            ],
-            "T36_4" => [ //B5 ACT
-                "Q_num" => '_4',
-                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
-                "Singapore" => ['b5'],//explicit 'i5' multiple
-                "Hongkong" => ['b5'],
-                "Canada" => ['b5']//explicit 'i5' multiple
-            ],
-            "T36_5" => [ //B5 ACT
-                "Q_num" => '_5',
-                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
-                "Singapore" => ['b5'],//explicit 'i5' multiple
-                "Hongkong" => ['b5'],
-                "Canada" => ['b5']//explicit 'i5' multiple
-            ],
-            "T36_6" => [ //B5 ACT
-                "Q_num" => '_6',
-                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
-                "Singapore" => ['b5'],//explicit 'i5' multiple
-                "Hongkong" => ['b5'],
-                "Canada" => ['b5']//explicit 'i5' multiple
-            ],
-            "T36_7" => [ //B5 ACT
-                "Q_num" => '_7',
-                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
-                "Singapore" => ['b5'],//explicit 'i5' multiple
-                "Hongkong" => ['b5'],
-                "Canada" => ['b5']//explicit 'i5' multiple
-            ],
-            "T36_8" => [ //B5 ACT
-                "Q_num" => '_8',
-                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
-                "Singapore" => ['b5'],//explicit 'i5' multiple
-                "Hongkong" => ['b5'],
-                "Canada" => ['b5']//explicit 'i5' multiple
-            ],
-            "T36_9" => [ //B5 ACT
-                "Q_num" => '_9',
-                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
-                "Singapore" => ['b5'],//explicit 'i5' multiple
-                "Hongkong" => ['b5'],
-                "Canada" => ['b5']//explicit 'i5' multiple
-            ],
-            "T36_10" => [ //B5 ACT
-                "Q_num" => '_10',
-                "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
-                "Singapore" => ['b5'],//explicit 'i5' multiple
-                "Hongkong" => ['b5'],
-                "Canada" => ['b5']//explicit 'i5' multiple
-            ], */
             "T36" => [ //B5 ACT
                 "Q_num" => 22, //number of primes
-                "Q_limit" => 7,
+                "Q_limit" => 7, //max value of targets
                 "USA" => ['b5'], //explicit a17 single, 'a17', 'c17'
                 "Singapore" => ['b5'],//explicit 'i5' multiple
                 "Hongkong" => ['b5'],
                 "Canada" => ['b5']//explicit 'i5' multiple
+            ],
+            "T37" => [ //B6 ACT
+                "Q_num" => '',
+                "Q_limit" => 9, //number of primes
+                "USA" => ['b6', 'a18', 'c18'],
+                "Singapore" => ['b6','i6'],
+                "Hongkong" => ['b6'],
+                "Canada" => ['b6','i6']
             ],
         ];
         $headers = [];
@@ -601,16 +539,6 @@ class ExportController extends Controller
                     }
                     break;
                 case 'T34':
-                /* case 'T36_1':
-                case 'T36_2':
-                case 'T36_3':
-                    case 'T36_4':
-                        case 'T36_5':
-                            case 'T36_6':
-                                case 'T36_7':
-                                    case 'T36_8':
-                                        case 'T36_9':
-                                            case 'T36_10': */
                     for ($i=1; $i <= 7; $i++) { 
                         $headers[] = "{$t}_{$i}";
                         $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
@@ -630,6 +558,11 @@ class ExportController extends Controller
                         }
                     }
                     break;
+                case 'T37': //single select
+                    for ($i=1; $i <= $variables['Q_limit']; $i++) { 
+                        $headers[] = "{$t}_{$i}";
+                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                    }
                 default:
                     $headers[] = $t;
                     $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num']);
