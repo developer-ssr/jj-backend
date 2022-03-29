@@ -497,6 +497,14 @@ class ExportController extends Controller
                 "Singapore" => ['b6','i6'],
                 "Hongkong" => ['b6'],
                 "Canada" => ['b6','i6']
+            ],
+            "T38" => [ //B7 ACT
+                "Q_num" => 10,//number of primes
+                "Q_limit" => 25, //number of primes
+                "USA" => ['b7'], //explicit single
+                "Singapore" => ['b7'],//explicit 'i5' multiple
+                "Hongkong" => ['b7'],
+                "Canada" => ['b7']//explicit 'i5' multiple
             ]
         ];
         $headers = [];
@@ -551,6 +559,7 @@ class ExportController extends Controller
                     }
                     break;
                 case 'T36'://for matrix multiple
+                case 'T38':
                     for ($a=1; $a <= $variables['Q_num'] ; $a++) { 
                         for ($i=1; $i <= $variables['Q_limit']; $i++) { 
                             $headers[] = "{$t}_{$a}_{$i}";
