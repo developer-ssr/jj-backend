@@ -508,7 +508,7 @@ class ExportController extends Controller
             ],
             "T39" => [ //B8 ACT
                 "Q_num" => '',
-                "Q_limit" => 12, //number of primes
+                "Q_limit" => 23, //number of primes
                 "USA" => ['b8', 'a19', 'c19'],//a22 c22 inverted
                 "Singapore" => ['b8', 'i7'], //i11 inverted
                 "Hongkong" => ['b8'],
@@ -590,10 +590,18 @@ class ExportController extends Controller
                     }
                     break;
                 case 'T39': //single select
-                    for ($i=1; $i <= $variables['Q_limit']; $i++) { 
-                        $headers[] = "{$t}_{$i}";
-                        $data[] = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, 'b8', 5);
+                    if ($country == 'Hongkong') {
+                        for ($i=1; $i <= $variables['Q_limit']; $i++) { 
+                            $headers[] = "{$t}_{$i}";
+                            $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        }
+                    }else {
+                        for ($i=1; $i <= $variables['Q_limit']; $i++) { 
+                            $headers[] = "{$t}_{$i}";
+                            $data[] = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, 'b8', 5);
+                        }
                     }
+                    
                     break;
                 default:
                     $headers[] = $t;
