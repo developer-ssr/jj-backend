@@ -319,49 +319,49 @@ class LinksController extends Controller
                                 ]
                             ],
                         ]
-                        ],
-                        [
-                            'label' => 'Baseline',
-                            'url' => null,
-                            'links' => [
-                                [ 
-                                    'label' => 'Respondent level',
-                                    'url' => null, 
-                                    'links' => [
-                                        [
-                                            'label' => 'All',
-                                            'url' => url('/baseline/download/respondent').'?all=true&title=raw_baseline_all'
-                                        ],
-                                        [
-                                            'label' => 'United States',
-                                            'url' => url('/baseline/download/respondent').'?all=false&country=us&title=raw_baseline_us'
-                                        ],
-                                        [
-                                            'label' => 'Singapore',
-                                            'url' => url('/baseline/download/respondent').'?all=false&country=sg&title=raw_baseline_sg'
-                                        ],
-                                        [
-                                            'label' => 'Hong Kong',
-                                            'url' => url('/baseline/download/respondent').'?all=false&country=hk&title=raw_baseline_hk'
-                                        ],
-                                        [
-                                            'label' => 'Canada',
-                                            'url' => url('/baseline/download/respondent').'?all=false&country=ca&title=raw_baseline_ca'
-                                        ]
+                    ],
+                    [
+                        'label' => 'Baseline',
+                        'url' => null,
+                        'links' => [
+                            [ 
+                                'label' => 'Respondent level',
+                                'url' => null, 
+                                'links' => [
+                                    [
+                                        'label' => 'All',
+                                        'url' => url('/baseline/download/respondent').'?all=true&title=raw_baseline_all'
+                                    ],
+                                    [
+                                        'label' => 'United States',
+                                        'url' => url('/baseline/download/respondent').'?all=false&country=us&title=raw_baseline_us'
+                                    ],
+                                    [
+                                        'label' => 'Singapore',
+                                        'url' => url('/baseline/download/respondent').'?all=false&country=sg&title=raw_baseline_sg'
+                                    ],
+                                    [
+                                        'label' => 'Hong Kong',
+                                        'url' => url('/baseline/download/respondent').'?all=false&country=hk&title=raw_baseline_hk'
+                                    ],
+                                    [
+                                        'label' => 'Canada',
+                                        'url' => url('/baseline/download/respondent').'?all=false&country=ca&title=raw_baseline_ca'
                                     ]
-                                ],
-                                /* [
-                                    'label' => 'Summary data',
-                                    'url' => null, 
-                                    'links' => [
-                                        [
-                                            'label' => 'All ',
-                                            'url' => url('/baseline/download/summary').'?all=true'
-                                        ]
+                                ]
+                            ],
+                            [
+                                'label' => 'Summary data',
+                                'url' => null, 
+                                'links' => [
+                                    [
+                                        'label' => 'All ',
+                                        'url' => url('/baseline/download/summary').'?all=true&title=summary_baseline_all'
                                     ]
-                                ] */
+                                ]
                             ]
                         ]
+                    ]
                 ];
                 break;
             
