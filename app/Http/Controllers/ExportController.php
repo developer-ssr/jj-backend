@@ -177,7 +177,7 @@ class ExportController extends Controller
         $headers = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
         $email = $record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2'];
-        $finished = $record['url_data']['updated_at'];
+        $finished = $record['updated_at'];
         $data =  [$record['url_data']['id'], $country, $name, $email, $finished]; //initialize data with id, name and email
 
         //'convert data to Tracker format here        
