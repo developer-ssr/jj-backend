@@ -570,6 +570,13 @@ class ExportController extends Controller
                 "Hongkong" => ['k5'],
                 "Canada" => ['u5', 'i16']
             ],
+            "T47" => [ //K6
+                "Q_num" => '',
+                "USA" => ['k6', 'a28', 'c28'],
+                "Singapore" => ['y6', 'i16'],
+                "Hongkong" => ['k6'],
+                "Canada" => ['u6', 'i17']
+            ],
         ];
         $headers = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
