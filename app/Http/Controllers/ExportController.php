@@ -174,7 +174,16 @@ class ExportController extends Controller
             $data[] = [$key, $question['Question']];
             foreach ($question['choices']['rows'] as $row_key => $row) {
                 $rval = $row_key + 1;
-                $data[] = [$key.'.'.$rval, '','',$rval,$row];
+
+                if ($row_key == 0) {
+                    $tmp_col = [$key.'.'.$rval, '','',$rval,$row];
+                    foreach ($question['choices']['columns']as $col_key => $col) {
+                        $tmp_col[] = $key.'.'.$rval.'.'.($col_key + 1).' '.$col;
+                    }
+                    $data[] = $tmp_col;
+                }else {
+                    $data[] = [$key.'.'.$rval, '','',$rval,$row];
+                }
             }
         }
         $filename = $request->title;
