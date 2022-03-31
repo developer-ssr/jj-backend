@@ -171,13 +171,12 @@ class ExportController extends Controller
             $data = collect($data)->prepend($headers)->toArray(); 
             $data[] = [' '];
             $data[] = ['Answer Keys', 'Questions', '', 'Value', 'Description'];
-
+            //Add question keys
             foreach (generator($q_keys) as $key => $question) {
                 $data[] = [$key, $question['Question']];
                 foreach ($question['choices']['rows'] as $row_key => $row) {
                     $rval = $row_key + 1;
-    
-                    if ($row_key == 0) {
+                    if ($row_key == 0) {//add column keys
                         $tmp_col = [$key.'.'.$rval, '','',$rval,$row];
                         foreach ($question['choices']['columns']as $col_key => $col) {
                             $tmp_col[] = $key.'.'.$rval.'.'.($col_key + 1).' '.$col;
@@ -190,7 +189,6 @@ class ExportController extends Controller
             }
         }else {
             $records = collect($country_records)->flatten(1);
-            dd($records);
             foreach (generator($q_keys) as $key => $question) {
                 $tmp_data = [$key, $key, $question['Question']];
                 foreach ($question['choices']['columns'] as $col_key => $col) {
