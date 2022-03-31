@@ -189,6 +189,8 @@ class ExportController extends Controller
                 }
             }
         }else {
+            $records = collect($country_records)->flatten(1);
+            dd($records);
             foreach (generator($q_keys) as $key => $question) {
                 $tmp_data = [$key, $key, $question['Question']];
                 foreach ($question['choices']['columns'] as $col_key => $col) {
