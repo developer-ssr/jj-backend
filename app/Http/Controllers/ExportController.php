@@ -156,36 +156,52 @@ class ExportController extends Controller
         } 
         
         $data = [];
-        foreach ($country_records as $country => $records) {
-            foreach ($records as $record) {
-                //data per respondent
-                $results = $this->getBaselinedata($country, $record);
-                $data[] = $results['data'];
-            }
-        }
-        // dd($data);
-        $headers = collect(["Respondent ID", "Country", "Name", "Email Address", "Date Finished"])->merge($results['headers']);
-        $data = collect($data)->prepend($headers)->toArray(); 
-        $data[] = [' '];
-        $data[] = ['Answer Keys', 'Questions', '', 'Value', 'Description'];
-        $q_keys = baselineQuestions();
-        // $q_data = [];
-        foreach (generator($q_keys) as $key => $question) {
-            $data[] = [$key, $question['Question']];
-            foreach ($question['choices']['rows'] as $row_key => $row) {
-                $rval = $row_key + 1;
 
-                if ($row_key == 0) {
-                    $tmp_col = [$key.'.'.$rval, '','',$rval,$row];
-                    foreach ($question['choices']['columns']as $col_key => $col) {
-                        $tmp_col[] = $key.'.'.$rval.'.'.($col_key + 1).' '.$col;
+        $q_keys = baselineQuestions();
+        if ($summary == 'respondent') {
+            foreach ($country_records as $country => $records) {
+                foreach ($records as $record) {
+                    //data per respondent
+                    $results = $this->getBaselinedata($country, $record);
+                    $data[] = $results['data'];
+                }
+            }
+    
+            $headers = collect(["Respondent ID", "Country", "Name", "Email Address", "Date Finished"])->merge($results['headers']);
+            $data = collect($data)->prepend($headers)->toArray(); 
+            $data[] = [' '];
+            $data[] = ['Answer Keys', 'Questions', '', 'Value', 'Description'];
+
+            foreach (generator($q_keys) as $key => $question) {
+                $data[] = [$key, $question['Question']];
+                foreach ($question['choices']['rows'] as $row_key => $row) {
+                    $rval = $row_key + 1;
+    
+                    if ($row_key == 0) {
+                        $tmp_col = [$key.'.'.$rval, '','',$rval,$row];
+                        foreach ($question['choices']['columns']as $col_key => $col) {
+                            $tmp_col[] = $key.'.'.$rval.'.'.($col_key + 1).' '.$col;
+                        }
+                        $data[] = $tmp_col;
+                    }else {
+                        $data[] = [$key.'.'.$rval, '','',$rval,$row];
                     }
-                    $data[] = $tmp_col;
-                }else {
-                    $data[] = [$key.'.'.$rval, '','',$rval,$row];
+                }
+            }
+        }else {
+            foreach (generator($q_keys) as $key => $question) {
+                $tmp_data = [$key, $key, $question['Question']];
+                foreach ($question['columns'] as $col_key => $col) {
+                    $tmp_data[] = $col;
+                }
+                $data[] = $tmp_data;
+                foreach ($question['rows'] as $row_key => $row) {
+                    $val = $row_key + 1;
+                    $data[] = [$key.'.'.$val, $val, $row];
                 }
             }
         }
+        
         $filename = $request->title;
         return Excel::download(CsvExport::new($data), $filename.".xlsx");
         
