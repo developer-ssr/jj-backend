@@ -176,8 +176,6 @@ class ExportController extends Controller
                 $rval = $row_key + 1;
                 $data[] = [$key.'.'.$rval, '','',$rval,$row];
             }
-            
-            $data[] = [$key, $question['Question'], '', ];
         }
         $filename = $request->title;
         return Excel::download(CsvExport::new($data), $filename.".xlsx");
