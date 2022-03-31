@@ -191,11 +191,11 @@ class ExportController extends Controller
         }else {
             foreach (generator($q_keys) as $key => $question) {
                 $tmp_data = [$key, $key, $question['Question']];
-                foreach ($question['columns'] as $col_key => $col) {
+                foreach ($question['choices']['columns'] as $col_key => $col) {
                     $tmp_data[] = $col;
                 }
                 $data[] = $tmp_data;
-                foreach ($question['rows'] as $row_key => $row) {
+                foreach ($question['choices']['rows'] as $row_key => $row) {
                     $val = $row_key + 1;
                     $data[] = [$key.'.'.$val, $val, $row];
                 }
