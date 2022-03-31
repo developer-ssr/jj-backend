@@ -474,7 +474,7 @@ if (!function_exists('baselineVariables')) {
 }
 
 if (!function_exists('baselineQuestions')) {
-    function baselineQuestions($url_data, $vars, $num, $not, $num_choice)
+    function baselineQuestions()
     {
         return [ //list of variables to process
             "T1" => [

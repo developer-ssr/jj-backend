@@ -166,7 +166,19 @@ class ExportController extends Controller
         // dd($data);
         $headers = collect(["Respondent ID", "Country", "Name", "Email Address", "Date Finished"])->merge($results['headers']);
         $data = collect($data)->prepend($headers)->toArray(); 
-        // dd($data);
+        $data[] = [' '];
+        $data[] = ['Answer Keys', 'Questions', '', 'Value', 'Description'];
+        $q_keys = baselineQuestions();
+        // $q_data = [];
+        foreach (generator($q_keys) as $key => $question) {
+            $data[] = [$key, $question['Question']];
+            foreach ($question['choices']['rows'] as $row_key => $row) {
+                $rval = $row_key + 1;
+                $data[] = [$key.'.'.$rval, '','',$rval,$row];
+            }
+            
+            $data[] = [$key, $question['Question'], '', ];
+        }
         $filename = $request->title;
         return Excel::download(CsvExport::new($data), $filename.".xlsx");
         
