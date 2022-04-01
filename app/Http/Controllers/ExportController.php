@@ -196,16 +196,20 @@ class ExportController extends Controller
                     $tmp_data[] = $col;
                 }
                 $data[] = $tmp_data;
+                $col_count = count($question['choices']['columns']);
                 foreach ($question['choices']['rows'] as $row_key => $row) {
                     /* foreach ($records as $record) {
                         baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
                     } */
                     $col_val = [];
-                    foreach ($question['choices']['columns'] as $col_key => $col) {
-                        $col_val[] = $records->countBy(function ($record) {
-                            return substr(strrchr($email, "@"), 1);
-                        });
-                    }
+                    $i = 0;
+                    do {
+                        $i++;
+                        $col_val[] = baselineSummary($records, $key, $row_key, $i);
+                    } while ($i < $col_count);
+                    /* foreach ($question['choices']['columns'] as $col_key => $col) {
+                        $col_val[] = baselineSummary($records, $key, $row, $col);
+                    } */
                     $val = $row_key + 1;
                     $data[] = [$key.'.'.$val, $val, $row];
                 }
@@ -231,53 +235,93 @@ class ExportController extends Controller
             switch ($t) {
                 case 'T2':
                     for ($i=1; $i <= 3; $i++) { 
-                        $headers[] = "{$t}_{$i}";
-                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $header = "{$t}_{$i}";
+                        $headers[] = $header;
+                        $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $url_data[] = [
+                            $header => $val
+                        ];
+                        $data[] = $val;
                     }
                     break;
                 case 'T12':
                     for ($i=1; $i <= 7; $i++) { 
-                        $headers[] = "{$t}_{$i}";
-                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $header = "{$t}_{$i}";
+                        $headers[] = $header;
+                        $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $url_data[] = [
+                            $header => $val
+                        ];
+                        $data[] = $val;
                     }
                     break;
                 case 'T16':
                     for ($i=1; $i <= 4; $i++) { 
-                        $headers[] = "{$t}_{$i}";
-                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $header = "{$t}_{$i}";
+                        $headers[] = $header;
+                        $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $url_data[] = [
+                            $header => $val
+                        ];
+                        $data[] = $val;
                     }
                     break;
                 case 'T18':
                 case 'T26':
                     for ($i=1; $i <= 8; $i++) { 
-                        $headers[] = "{$t}_{$i}";
-                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $header = "{$t}_{$i}";
+                        $headers[] = $header;
+                        $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $url_data[] = [
+                            $header => $val
+                        ];
+                        $data[] = $val;
                     }
                     break;
                 case 'T27':
                     for ($i=1; $i <= 6; $i++) { 
-                        $headers[] = "{$t}_{$i}";
-                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $header = "{$t}_{$i}";
+                        $headers[] = $header;
+                        $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $url_data[] = [
+                            $header => $val
+                        ];
+                        $data[] = $val;
                     }
                     break;
                 case 'T34':
                     for ($i=1; $i <= 7; $i++) { 
-                        $headers[] = "{$t}_{$i}";
-                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $header = "{$t}_{$i}";
+                        $headers[] = $header;
+                        $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $url_data[] = [
+                            $header => $val
+                        ];
+                        $data[] = $val;
                     }
                     break;
                 case 'T35':
                     for ($i=1; $i <= 13; $i++) { 
-                        $headers[] = "{$t}_{$i}";
-                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $header = "{$t}_{$i}";
+                        $headers[] = $header;
+                        $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $url_data[] = [
+                            $header => $val
+                        ];
+                        $data[] = $val;
                     }
                     break;
                 case 'T36'://for matrix multiple
                 case 'T38':
                     for ($a=1; $a <= $variables['Q_num'] ; $a++) { 
-                        for ($i=1; $i <= $variables['Q_limit']; $i++) { 
-                            $headers[] = "{$t}_{$a}_{$i}";
-                            $data[] = baselineVal($record['url_data'], $variables[$country], '_'.$a.'_'.$i);
+                        for ($i=1; $i <= $variables['Q_limit']; $i++) {
+                            $header = "{$t}_{$a}_{$i}"; 
+                            $headers[] = $header;
+                            $val = baselineVal($record['url_data'], $variables[$country], '_'.$a.'_'.$i);
+                            $url_data[] = [
+                                $header => $val
+                            ];
+                            $data[] = $val;
                         }
                     }
                     break;
@@ -287,20 +331,35 @@ class ExportController extends Controller
                 case 'T43':
                 case 'T44':
                     for ($i=1; $i <= $variables['Q_limit']; $i++) { 
-                        $headers[] = "{$t}_{$i}";
-                        $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $header = "{$t}_{$i}";
+                        $headers[] = $header;
+                        $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                        $url_data[] = [
+                            $header => $val
+                        ];
+                        $data[] = $val;
                     }
                     break;
                 case 'T39': //single select inverse
                     if ($country == 'Hongkong') {  //hk not inverted
                         for ($i=1; $i <= $variables['Q_limit']; $i++) { 
-                            $headers[] = "{$t}_{$i}";
-                            $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                            $header = "{$t}_{$i}";
+                            $headers[] = $header;
+                            $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                            $url_data[] = [
+                                $header => $val
+                            ];
+                            $data[] = $val;
                         }
                     }else {
                         for ($i=1; $i <= $variables['Q_limit']; $i++) { 
-                            $headers[] = "{$t}_{$i}";
-                            $data[] = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, $variables['Q_not'], 5);
+                            $header = "{$t}_{$i}";
+                            $val = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, $variables['Q_not'], 5);
+                            $url_data[] = [
+                                $header => $val
+                            ];
+                            $headers[] = $header;
+                            $data[] = $val;
                         }
                     }
                     
@@ -308,23 +367,34 @@ class ExportController extends Controller
                 case 'T41':
                     if ($country == 'Hongkong' || $country == 'Canada') { //hk and canada not inverted
                         for ($i=1; $i <= $variables['Q_limit']; $i++) { 
-                            $headers[] = "{$t}_{$i}";
-                            $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                            $header = "{$t}_{$i}";
+                            $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                            $url_data[] = [
+                                $header => $val
+                            ];
+                            $headers[] = $header;
+                            $data[] = $val;
                         }
                     }else {
                         for ($i=1; $i <= $variables['Q_limit']; $i++) { 
-                            $headers[] = "{$t}_{$i}";
-                            $data[] = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, $variables['Q_not'], 5);
+                            $header = "{$t}_{$i}";
+                            $val = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, $variables['Q_not'], 5);
+                            $url_data[] = [
+                                $header => $val
+                            ];
+                            $headers[] = $header;
+                            $data[] = $val;
                         }
                     }
                     
                     break;
                 default:
-                    $headers[] = $t;
+                    $header = $t;
                     $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num']);
                     $url_data[] = [
                         $t => $val
                     ];
+                    $headers[] = $header;
                     $data[] = $val;
                     break;
             }

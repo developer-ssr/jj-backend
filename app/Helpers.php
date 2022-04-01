@@ -63,6 +63,16 @@ if (!function_exists('baselineValInvert')) {
     }
 }
 
+if (!function_exists('baselineSummary')) {
+    function baselineSummary($records, $key, $row, $col)
+    {
+        $val = $records->countBy(function ($url_data) use ($key, $row, $col) {
+            return $url_data[$key] == $row;
+        });
+        return $val;
+    }
+}
+
 if (!function_exists('baselineVariables')) {
     function baselineVariables() {
         return [ //list of variables to process
