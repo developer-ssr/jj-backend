@@ -155,20 +155,18 @@ class ExportController extends Controller
             });
         } 
         
-        $data = [];
-
+        $records_data = [];
         $q_keys = baselineQuestions();
-        if ($summary == 'respondent') {
-            foreach ($country_records as $country => $records) {
-                foreach ($records as $record) {
-                    //data per respondent
-                    $results = $this->getBaselinedata($country, $record);
-                    $data[] = $results['data'];
-                }
+        foreach ($country_records as $country => $records) {
+            foreach ($records as $record) {
+                //data per respondent
+                $results = $this->getBaselinedata($country, $record);
+                $records_data[] = $results['data'];
             }
-    
+        }
+        if ($summary == 'respondent') {
             $headers = collect(["Respondent ID", "Country", "Name", "Email Address", "Date Finished"])->merge($results['headers']);
-            $data = collect($data)->prepend($headers)->toArray(); 
+            $data = collect($records_data)->prepend($headers)->toArray(); 
             $data[] = [' '];
             $data[] = ['Answer Keys', 'Questions', '', 'Value', 'Description'];
             //Add question keys
@@ -188,14 +186,25 @@ class ExportController extends Controller
                 }
             }
         }else {
-            $records = collect($country_records)->flatten(1);
-            foreach (generator($q_keys) as $key => $question) {
+            $data = [];
+            $records = collect($records_data);
+            dd($records);
+            foreach (generator($q_keys) as $key => $question) { 
                 $tmp_data = [$key, $key, $question['Question']];
                 foreach ($question['choices']['columns'] as $col_key => $col) {
                     $tmp_data[] = $col;
                 }
                 $data[] = $tmp_data;
                 foreach ($question['choices']['rows'] as $row_key => $row) {
+                    /* foreach ($records as $record) {
+                        baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
+                    } */
+                    $col_val = [];
+                    foreach ($question['choices']['columns'] as $col_key => $col) {
+                        $col_val[] = $records->countBy(function ($record) {
+                            return substr(strrchr($email, "@"), 1);
+                        });
+                    }
                     $val = $row_key + 1;
                     $data[] = [$key.'.'.$val, $val, $row];
                 }
