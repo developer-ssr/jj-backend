@@ -189,7 +189,7 @@ class ExportController extends Controller
         }else {
             $data = [];
             $records = collect($records_url_data);
-            dd($records[0]);
+            dd($records[count($records) - 1]);
             foreach (generator($q_keys) as $key => $question) { 
                 $tmp_data = [$key, $key, $question['Question']];
                 foreach ($question['choices']['columns'] as $col_key => $col) {
