@@ -162,6 +162,7 @@ class ExportController extends Controller
                 //data per respondent
                 $results = $this->getBaselinedata($country, $record);
                 $records_data[] = $results['data'];
+                $records_url_data[] = $results['url_data'];
             }
         }
         if ($summary == 'respondent') {
@@ -187,7 +188,7 @@ class ExportController extends Controller
             }
         }else {
             $data = [];
-            $records = collect($records_data);
+            $records = collect($records_url_data);
             dd($records);
             foreach (generator($q_keys) as $key => $question) { 
                 $tmp_data = [$key, $key, $question['Question']];
@@ -219,6 +220,7 @@ class ExportController extends Controller
     public function getBaselinedata($country, $record) {
         $ts = baselineVariables();
         $headers = [];
+        $url_data = [];
         $name = $record['url_data']['a2_1'] ?? $record['url_data']['c2_1'] ?? $record['url_data']['h2_1'];
         $email = $record['url_data']['a2_2'] ?? $record['url_data']['c2_2'] ?? $record['url_data']['h2_2'];
         $finished = $record['updated_at'];
@@ -319,11 +321,15 @@ class ExportController extends Controller
                     break;
                 default:
                     $headers[] = $t;
-                    $data[] = baselineVal($record['url_data'], $variables[$country], $variables['Q_num']);
+                    $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num']);
+                    $url_data[] = [
+                        $t => $val
+                    ];
+                    $data[] = $val;
                     break;
             }
         }
-        return ["data" =>$data, "headers" => $headers];
+        return ["data" =>$data, "headers" => $headers, 'url_data' => $url_data];
     }
 
     public function downloadOffice(Request $request, $ecp) 
