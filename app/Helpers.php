@@ -64,11 +64,22 @@ if (!function_exists('baselineValInvert')) {
 }
 
 if (!function_exists('baselineSummary')) {
-    function baselineSummary($records, $key, $row, $col)
+    function baselineSummary($records, $key, $row, $col, $q_summary)
     {
-        $val = $records->countBy(function ($url_data) use ($key, $row, $col) {
-            return $url_data[$key] == $row;
-        });
+        $val = 0;
+        if ($q_summary['type'] == 'single') {
+            $val = $records->countBy(function ($url_data) use ($key, $row) {
+                return $url_data[$key] == $row;
+            });
+        } elseif ($q_summary['type'] == 'average') {
+            $count = $records->count();
+            if ($count > 0) {
+                $val = $records->sum($key) / $records->count();
+            }
+        } else {
+            $val = 0;
+        }
+        
         return $val;
     }
 }
@@ -492,7 +503,7 @@ if (!function_exists('summaryKeys')) {
                 "col" => 0
             ],
             "T3" => [
-                "type" => 'single',
+                "type" => 'average',
                 "row" => 0,
                 "col" => 0
             ],
