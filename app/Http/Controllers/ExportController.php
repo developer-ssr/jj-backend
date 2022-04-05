@@ -193,7 +193,7 @@ class ExportController extends Controller
             return; */
             // dd($records[count($records) - 1]);
             $summary_keys = summaryKeys();
-            foreach (generator($summary_keys) as $key => $summary) { 
+            foreach (generator($summary_keys) as $key => $q_summary) { 
                 $question = $q_keys[$key];
                 $tmp_data = [$key, $key, $question['Question']];
                 foreach ($question['choices']['columns'] as $col_key => $col) {
@@ -206,11 +206,11 @@ class ExportController extends Controller
                 do {
                     $r++;
                     $col_val = [$key.'.'.$r, $r, $question['choices']['rows'][$r -1] ?? 'Answer'];
-                    $i = 0;
+                    $c = 0;
                     do {
-                        $i++;
-                        $col_val[] = $i;//baselineSummary($records, $key, $row_key, $i);
-                    } while ($i < $col_count);
+                        $c++;
+                        $col_val[] = baselineSummary($records, $key, $r, $c, $q_summary);
+                    } while ($c < $col_count);
                     $data[] =  $col_val;
                 } while ($r < $row_count);
             }
