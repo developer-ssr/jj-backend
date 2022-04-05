@@ -70,8 +70,7 @@ if (!function_exists('baselineSummary')) {
         if ($q_summary['type'] == 'single' && $q_summary['col'] == 0) {
             $val = $records->countBy(function ($url_data) use ($key, $row) {
                 return $url_data[$key] == $row;
-            });
-            dd($val);
+            })[$row];
         } elseif ($q_summary['type'] == 'average') {
             /* $count = $records->count();
             if ($count > 0) {
