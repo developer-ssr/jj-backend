@@ -538,7 +538,7 @@ if (!function_exists('summaryKeys')) {
                 "col" => 0
             ],
             "T4" => [
-                "type" => 'single',
+                "type" => 'average',
                 "row" => 0,
                 "col" => 0
             ],
