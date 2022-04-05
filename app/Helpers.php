@@ -80,7 +80,7 @@ if (!function_exists('baselineSummary')) {
                         $sum += $url_data[$key];
                     }
                 }
-                $val = round(($sum / $count), 2, PHP_ROUND_HALF_UP);
+                $val = round(($sum / $count), 0, PHP_ROUND_HALF_UP);
             }
             
         } elseif ($q_summary['type'] == 'multiple' && $q_summary['col'] == 0) {
@@ -96,7 +96,7 @@ if (!function_exists('baselineSummary')) {
                         $sum += $url_data[$key.'_'.$row];
                     }
                 }
-                $val = round(($sum / $count), 2, PHP_ROUND_HALF_UP);
+                $val = round(($sum / $count), 0, PHP_ROUND_HALF_UP);
             }
         } else {
             $val = 0;
