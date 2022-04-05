@@ -192,7 +192,9 @@ class ExportController extends Controller
             /* echo "Under Maintenance";
             return; */
             // dd($records[count($records) - 1]);
-            foreach (generator($q_keys) as $key => $question) { 
+            $summary_keys = summaryKeys();
+            foreach (generator($summary_keys) as $key => $summary) { 
+                $question = $q_keys[$key];
                 $tmp_data = [$key, $key, $question['Question']];
                 foreach ($question['choices']['columns'] as $col_key => $col) {
                     $tmp_data[] = $col;
