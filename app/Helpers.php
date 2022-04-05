@@ -98,6 +98,10 @@ if (!function_exists('baselineSummary')) {
                 }
                 $val = round(($sum / $count), 0, PHP_ROUND_HALF_UP);
             }
+        } elseif ($q_summary['type'] == 'single' && $q_summary['col'] > 0) {
+            $val = $records->filter(function ($url_data) use ($key, $row, $col) {
+                return $url_data[$key.'_'.$row] == $col;
+            })->count();
         } elseif ($q_summary['type'] == 'multiple' && $q_summary['col'] > 0) {
             $val = $records->filter(function ($url_data) use ($key, $row, $col) {
                 return $url_data[$key.'_'.$row.'_'.$col] == 1;
@@ -679,12 +683,12 @@ if (!function_exists('summaryKeys')) {
                 "col" => 0
             ],
             "T34" => [ //B3 ACT
-                "type" => 'multiple',//single
+                "type" => 'single',
                 "row" => 7,
                 "col" => 5
             ],
             "T35" => [ //B4 ACT
-                "type" => 'multiple',//single
+                "type" => 'single',
                 "row" => 13,
                 "col" => 6
             ],
