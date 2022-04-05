@@ -209,7 +209,7 @@ class ExportController extends Controller
                     $i = 0;
                     do {
                         $i++;
-                        $col_val[] = 1;//baselineSummary($records, $key, $row_key, $i);
+                        $col_val[] = $i;//baselineSummary($records, $key, $row_key, $i);
                     } while ($i < $col_count);
                     $val = $r;
                     $data[] = [$key.'.'.$val, $val, $question['choices']['rows'][$r -1] ?? 'Answer'] + $col_val;
