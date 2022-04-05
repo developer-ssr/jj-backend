@@ -67,7 +67,7 @@ if (!function_exists('baselineSummary')) {
     function baselineSummary($records, $key, $row, $col, $q_summary)
     {
         $val = 0;
-        if ($q_summary['type'] == 'single') {
+        if ($q_summary['type'] == 'single' && $q_summary['col'] == 0) {
             $val = $records->countBy(function ($url_data) use ($key, $row) {
                 return $url_data[$key] == $row;
             });
