@@ -693,7 +693,7 @@ if (!function_exists('summaryKeys')) {
                 "col" => 6
             ],
             "T36" => [ //B5 ACT
-                "type" => 'single',
+                "type" => 'multiple',
                 "row" => 22,
                 "col" => 6
             ],
