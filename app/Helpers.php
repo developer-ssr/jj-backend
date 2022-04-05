@@ -98,6 +98,10 @@ if (!function_exists('baselineSummary')) {
                 }
                 $val = round(($sum / $count), 0, PHP_ROUND_HALF_UP);
             }
+        } elseif ($q_summary['type'] == 'multiple' && $q_summary['col'] > 0) {
+            $val = $records->filter(function ($url_data) use ($key, $row, $col) {
+                return $url_data[$key.'_'.$row.'_'.$col] == 1;
+            })->count();
         } else {
             $val = 0;
         }
