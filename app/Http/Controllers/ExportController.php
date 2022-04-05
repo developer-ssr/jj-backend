@@ -238,9 +238,7 @@ class ExportController extends Controller
                         $header = "{$t}_{$i}";
                         $headers[] = $header;
                         $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                        $url_data[] = [
-                            $header => $val
-                        ];
+                        $url_data[$header] = $val;
                         $data[] = $val;
                     }
                     break;
@@ -249,9 +247,7 @@ class ExportController extends Controller
                         $header = "{$t}_{$i}";
                         $headers[] = $header;
                         $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                        $url_data[] = [
-                            $header => $val
-                        ];
+                        $url_data[$header] = $val;
                         $data[] = $val;
                     }
                     break;
@@ -260,9 +256,7 @@ class ExportController extends Controller
                         $header = "{$t}_{$i}";
                         $headers[] = $header;
                         $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                        $url_data[] = [
-                            $header => $val
-                        ];
+                        $url_data[$header] = $val;
                         $data[] = $val;
                     }
                     break;
@@ -272,9 +266,7 @@ class ExportController extends Controller
                         $header = "{$t}_{$i}";
                         $headers[] = $header;
                         $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                        $url_data[] = [
-                            $header => $val
-                        ];
+                        $url_data[$header] = $val;
                         $data[] = $val;
                     }
                     break;
@@ -283,9 +275,7 @@ class ExportController extends Controller
                         $header = "{$t}_{$i}";
                         $headers[] = $header;
                         $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                        $url_data[] = [
-                            $header => $val
-                        ];
+                        $url_data[$header] = $val;
                         $data[] = $val;
                     }
                     break;
@@ -294,9 +284,7 @@ class ExportController extends Controller
                         $header = "{$t}_{$i}";
                         $headers[] = $header;
                         $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                        $url_data[] = [
-                            $header => $val
-                        ];
+                        $url_data[$header] = $val;
                         $data[] = $val;
                     }
                     break;
@@ -305,9 +293,7 @@ class ExportController extends Controller
                         $header = "{$t}_{$i}";
                         $headers[] = $header;
                         $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                        $url_data[] = [
-                            $header => $val
-                        ];
+                        $url_data[$header] = $val;
                         $data[] = $val;
                     }
                     break;
@@ -318,9 +304,7 @@ class ExportController extends Controller
                             $header = "{$t}_{$a}_{$i}"; 
                             $headers[] = $header;
                             $val = baselineVal($record['url_data'], $variables[$country], '_'.$a.'_'.$i);
-                            $url_data[] = [
-                                $header => $val
-                            ];
+                            $url_data[$header] = $val;
                             $data[] = $val;
                         }
                     }
@@ -334,9 +318,7 @@ class ExportController extends Controller
                         $header = "{$t}_{$i}";
                         $headers[] = $header;
                         $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                        $url_data[] = [
-                            $header => $val
-                        ];
+                        $url_data[$header] = $val;
                         $data[] = $val;
                     }
                     break;
@@ -346,18 +328,14 @@ class ExportController extends Controller
                             $header = "{$t}_{$i}";
                             $headers[] = $header;
                             $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                            $url_data[] = [
-                                $header => $val
-                            ];
+                            $url_data[$header] = $val;
                             $data[] = $val;
                         }
                     }else {
                         for ($i=1; $i <= $variables['Q_limit']; $i++) { 
                             $header = "{$t}_{$i}";
                             $val = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, $variables['Q_not'], 5);
-                            $url_data[] = [
-                                $header => $val
-                            ];
+                            $url_data[$header] = $val;
                             $headers[] = $header;
                             $data[] = $val;
                         }
@@ -369,9 +347,7 @@ class ExportController extends Controller
                         for ($i=1; $i <= $variables['Q_limit']; $i++) { 
                             $header = "{$t}_{$i}";
                             $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                            $url_data[] = [
-                                $header => $val
-                            ];
+                            $url_data[$header] = $val;
                             $headers[] = $header;
                             $data[] = $val;
                         }
@@ -379,9 +355,7 @@ class ExportController extends Controller
                         for ($i=1; $i <= $variables['Q_limit']; $i++) { 
                             $header = "{$t}_{$i}";
                             $val = baselineValInvert($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i, $variables['Q_not'], 5);
-                            $url_data[] = [
-                                $header => $val
-                            ];
+                            $url_data[$header] = $val;
                             $headers[] = $header;
                             $data[] = $val;
                         }
@@ -391,9 +365,7 @@ class ExportController extends Controller
                 default:
                     $header = $t;
                     $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num']);
-                    $url_data[] = [
-                        $t => $val
-                    ];
+                    $url_data[$header] = $val;
                     $headers[] = $header;
                     $data[] = $val;
                     break;
