@@ -189,9 +189,6 @@ class ExportController extends Controller
         }else {
             $data = [];
             $records = collect($records_url_data);
-            /* echo "Under Maintenance";
-            return; */
-            // dd($records[count($records) - 1]);
             $summary_keys = summaryKeys();
             foreach (generator($summary_keys) as $key => $q_summary) { 
                 $question = $q_keys[$key];
@@ -214,6 +211,7 @@ class ExportController extends Controller
                     $data[] =  $col_val;
                 } while ($r < $row_count);
             }
+            $data[] = ["Sample Size", $records->count()];
         }
         
         $filename = $request->title;
