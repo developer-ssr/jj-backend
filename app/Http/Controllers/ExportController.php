@@ -201,22 +201,29 @@ class ExportController extends Controller
                 }
                 $data[] = $tmp_data;
                 $col_count = count($question['choices']['columns']);
-                foreach ($question['choices']['rows'] as $row_key => $row) {
-                    /* foreach ($records as $record) {
-                        baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                    } */
+                $row_count = count($question['choices']['rows']);
+                $r = 0;
+                do {
+                    $r++;
                     $col_val = [];
                     $i = 0;
                     do {
                         $i++;
                         $col_val[] = 1;//baselineSummary($records, $key, $row_key, $i);
                     } while ($i < $col_count);
-                    /* foreach ($question['choices']['columns'] as $col_key => $col) {
-                        $col_val[] = baselineSummary($records, $key, $row, $col);
-                    } */
+                    $val = $r;
+                    $data[] = [$key.'.'.$val, $val, $question['choices']['rows'][$r -1] ?? ''] + $col_val;
+                } while ($r < $row_count);
+                /* foreach ($question['choices']['rows'] as $row_key => $row) {
+                    $col_val = [];
+                    $i = 0;
+                    do {
+                        $i++;
+                        $col_val[] = 1;
+                    } while ($i < $col_count);
                     $val = $row_key + 1;
                     $data[] = [$key.'.'.$val, $val, $row] + $col_val;
-                }
+                } */
             }
         }
         
