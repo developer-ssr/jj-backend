@@ -613,12 +613,12 @@ if (!function_exists('summaryKeys')) {
                 "col" => 0
             ],
             "T26" => [
-                "type" => 'multiple',
+                "type" => 'multiple',//single
                 "row" => 8,
                 "col" => 0
             ],
             "T27" => [
-                "type" => 'multiple',
+                "type" => 'multiple',//single
                 "row" => 6,
                 "col" => 0
             ],
@@ -653,12 +653,12 @@ if (!function_exists('summaryKeys')) {
                 "col" => 0
             ],
             "T34" => [ //B3 ACT
-                "type" => 'multiple',
+                "type" => 'multiple',//single
                 "row" => 7,
                 "col" => 5
             ],
             "T35" => [ //B4 ACT
-                "type" => 'single',
+                "type" => 'multiple',//single
                 "row" => 13,
                 "col" => 6
             ],
