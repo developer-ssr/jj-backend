@@ -653,7 +653,7 @@ if (!function_exists('summaryKeys')) {
                 "col" => 0
             ],
             "T34" => [ //B3 ACT
-                "type" => 'single',
+                "type" => 'multiple',
                 "row" => 7,
                 "col" => 5
             ],
