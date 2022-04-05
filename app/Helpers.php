@@ -613,7 +613,7 @@ if (!function_exists('summaryKeys')) {
                 "col" => 0
             ],
             "T26" => [
-                "type" => 'single',
+                "type" => 'multiple',
                 "row" => 8,
                 "col" => 0
             ],
