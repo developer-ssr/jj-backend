@@ -68,9 +68,9 @@ if (!function_exists('baselineSummary')) {
     {
         $val = 0;
         if ($q_summary['type'] == 'single' && $q_summary['col'] == 0) {
-            $val = $records->countBy(function ($url_data) use ($key, $row) {
+            $val = $records->filter(function ($url_data) use ($key, $row) {
                 return $url_data[$key] == $row;
-            })[$row] ?? 0;
+            })->count();
         } elseif ($q_summary['type'] == 'average') {
             /* $count = $records->count();
             if ($count > 0) {
