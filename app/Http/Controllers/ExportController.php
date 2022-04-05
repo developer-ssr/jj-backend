@@ -215,7 +215,7 @@ class ExportController extends Controller
                         $col_val[] = baselineSummary($records, $key, $row, $col);
                     } */
                     $val = $row_key + 1;
-                    $data[] = [$key.'.'.$val, $val, $row];
+                    $data[] = [$key.'.'.$val, $val, $row] + $col_val;
                 }
             }
         }
