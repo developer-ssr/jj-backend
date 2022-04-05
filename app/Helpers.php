@@ -73,7 +73,7 @@ if (!function_exists('baselineSummary')) {
             })->count();
         } elseif ($q_summary['type'] == 'average') {
             $count = $records->count();
-            if ($count) {
+            if ($count > 0) {
                 $sum = 0;
                 foreach ($records as $url_data) {
                     if (is_numeric($url_data[$key])) {
@@ -87,6 +87,17 @@ if (!function_exists('baselineSummary')) {
             $val = $records->filter(function ($url_data) use ($key, $row) {
                 return $url_data[$key.'_'.$row] == 1;
             })->count();
+        } elseif ($q_summary['type'] == 'percent' && $q_summary['col'] == 0) {
+            $count = $records->count();
+            if ($count > 0) {
+                $sum = 0;
+                foreach ($records as $url_data) {
+                    if (is_numeric($url_data[$key.'_'.$row])) {
+                        $sum += $url_data[$key.'_'.$row];
+                    }
+                }
+                $val = round(($sum / $count), 2, PHP_ROUND_HALF_UP);
+            }
         } else {
             $val = 0;
         }
@@ -559,7 +570,7 @@ if (!function_exists('summaryKeys')) {
                 "col" => 0
             ],
             "T13" => [
-                "type" => 'single',
+                "type" => 'average',
                 "row" => 0,
                 "col" => 0
             ],
@@ -569,7 +580,7 @@ if (!function_exists('summaryKeys')) {
                 "col" => 0
             ],
             "T15" => [
-                "type" => 'single',
+                "type" => 'average',
                 "row" => 0,
                 "col" => 0
             ],
