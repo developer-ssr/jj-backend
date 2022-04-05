@@ -72,13 +72,17 @@ if (!function_exists('baselineSummary')) {
                 return $url_data[$key] == $row;
             })->count();
         } elseif ($q_summary['type'] == 'average') {
-            $sum = 0;
-            foreach ($records as $url_data) {
-                if (is_numeric($url_data[$key])) {
-                    $sum += $url_data[$key];
+            $count = $records->count();
+            if ($count) {
+                $sum = 0;
+                foreach ($records as $url_data) {
+                    if (is_numeric($url_data[$key])) {
+                        $sum += $url_data[$key];
+                    }
                 }
+                $val = round(($sum / $count), 2, PHP_ROUND_HALF_UP);
             }
-            $val = $sum / $records->count();
+            
         } else {
             $val = 0;
         }
