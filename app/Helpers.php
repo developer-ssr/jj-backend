@@ -71,6 +71,7 @@ if (!function_exists('baselineSummary')) {
             $val = $records->countBy(function ($url_data) use ($key, $row) {
                 return $url_data[$key] == $row;
             });
+            dd($val);
         } elseif ($q_summary['type'] == 'average') {
             /* $count = $records->count();
             if ($count > 0) {
