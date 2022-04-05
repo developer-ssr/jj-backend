@@ -72,10 +72,13 @@ if (!function_exists('baselineSummary')) {
                 return $url_data[$key] == $row;
             })->count();
         } elseif ($q_summary['type'] == 'average') {
-            /* $count = $records->count();
-            if ($count > 0) {
-                $val = $records->sum($key) / $records->count();
-            } */
+            $sum = 0;
+            foreach ($records as $url_data) {
+                if (is_numeric($url_data[$key])) {
+                    $sum += $url_data[$key];
+                }
+            }
+            $val = $sum / $records->count();
         } else {
             $val = 0;
         }
