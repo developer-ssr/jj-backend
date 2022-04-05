@@ -703,7 +703,7 @@ if (!function_exists('summaryKeys')) {
                 "col" => 6
             ],
             "T38" => [ //B7 ACT
-                "type" => 'single',
+                "type" => 'multiple',
                 "row" => 25,
                 "col" => 11
             ],
