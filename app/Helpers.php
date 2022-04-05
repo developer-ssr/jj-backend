@@ -75,12 +75,14 @@ if (!function_exists('baselineSummary')) {
             $count = $records->count();
             if ($count > 0) {
                 $sum = 0;
+                $total = 0;
                 foreach ($records as $url_data) {
                     if (is_numeric($url_data[$key])) {
+                        $total++;
                         $sum += $url_data[$key];
                     }
                 }
-                $val = round(($sum / $count), 0, PHP_ROUND_HALF_UP);
+                $val = round(($sum / $total), 0, PHP_ROUND_HALF_UP);
             }
             
         } elseif ($q_summary['type'] == 'multiple' && $q_summary['col'] == 0) {
@@ -91,12 +93,14 @@ if (!function_exists('baselineSummary')) {
             $count = $records->count();
             if ($count > 0) {
                 $sum = 0;
+                $total = 0;
                 foreach ($records as $url_data) {
                     if (is_numeric($url_data[$key.'_'.$row])) {
+                        $total++;
                         $sum += $url_data[$key.'_'.$row];
                     }
                 }
-                $val = round(($sum / $count), 0, PHP_ROUND_HALF_UP);
+                $val = round(($sum / $total), 0, PHP_ROUND_HALF_UP);
             }
         } elseif ($q_summary['type'] == 'single' && $q_summary['col'] > 0) {
             $val = $records->filter(function ($url_data) use ($key, $row, $col) {
@@ -627,11 +631,6 @@ if (!function_exists('summaryKeys')) {
                 "row" => 4,
                 "col" => 0
             ],
-            "T23" => [
-                "type" => 'single',
-                "row" => 0,
-                "col" => 0
-            ],
             "T24" => [
                 "type" => 'single',
                 "row" => 5,
@@ -643,12 +642,12 @@ if (!function_exists('summaryKeys')) {
                 "col" => 0
             ],
             "T26" => [
-                "type" => 'multiple',//single
+                "type" => 'multiple',
                 "row" => 8,
                 "col" => 0
             ],
             "T27" => [
-                "type" => 'multiple',//single
+                "type" => 'multiple',
                 "row" => 6,
                 "col" => 0
             ],
@@ -658,12 +657,12 @@ if (!function_exists('summaryKeys')) {
                 "col" => 0
             ],
             "T29" => [
-                "type" => 'single',
+                "type" => 'average',
                 "row" => 0,
                 "col" => 0
             ],
             "T30" => [
-                "type" => 'single',
+                "type" => 'average',
                 "row" => 0,
                 "col" => 0
             ],
@@ -672,13 +671,8 @@ if (!function_exists('summaryKeys')) {
                 "row" => 3,
                 "col" => 0
             ],
-            "T32" => [ //B1 Q1
-                "type" => 'single',
-                "row" => 2,
-                "col" => 0
-            ],
             "T33" => [ //B2 Q2
-                "type" => 'single',
+                "type" => 'average',
                 "row" => 0,
                 "col" => 0
             ],
