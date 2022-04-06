@@ -945,7 +945,7 @@ class ExportController extends Controller
             if ($tmp_data != null) {
                 switch ($t) {
                     case 't3':
-                        $evaluate = [5];
+                        $evaluate = [4,5];
                         break;
                     case 't4':
                     case 't9':
