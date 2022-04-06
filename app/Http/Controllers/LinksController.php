@@ -357,6 +357,22 @@ class LinksController extends Controller
                                     [
                                         'label' => 'All ',
                                         'url' => url('/baseline/download/summary').'?all=true&title=summary_baseline_all'
+                                    ],
+                                    [
+                                        'label' => 'United States',
+                                        'url' => url('/baseline/download/summary').'?all=false&country=us&title=summary_baseline_us'
+                                    ],
+                                    [
+                                        'label' => 'Singapore',
+                                        'url' => url('/baseline/download/summary').'?all=false&country=sg&title=summary_baseline_sg'
+                                    ],
+                                    [
+                                        'label' => 'Hong Kong',
+                                        'url' => url('/baseline/download/summary').'?all=false&country=hk&title=summary_baseline_hk'
+                                    ],
+                                    [
+                                        'label' => 'Canada',
+                                        'url' => url('/baseline/download/summary').'?all=false&country=ca&title=summary_baseline_ca'
                                     ]
                                 ]
                             ]
