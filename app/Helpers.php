@@ -703,7 +703,7 @@ if (!function_exists('summaryKeys')) {
             ],
             "T39" => [ //B8 ACT
                 "type" => 'single',
-                "row" => 12,
+                "row" => 23,
                 "col" => 5
             ],
             "T40" => [ //B9 ACT
@@ -1024,7 +1024,7 @@ if (!function_exists('baselineQuestions')) {
             "T39" => [ //B8 ACT
                 "Question" => "How likely would you be to recommend the following to your patients and their parents? Please select one answer per product/brand.",
                 "choices" => [
-                    "rows" => ["MiSight","naturalVue", "Paragon CRT", "ACUVUE®Abiliti", "Euclid Emerald", "B&L MOONLENS", "Wave NighLens", "iSee", "Zeiss MyoVision", "MiyoSmart (Hoya)", "Multifocal/PALs Spectacles", "Atropine"],
+                    "rows" => ["MiSight","naturalVue", "Paragon CRT", "ACUVUE®Abiliti", "Euclid Emerald", "B&L MOONLENS", "Wave NighLens", "iSee", "Zeiss MyoVision", "MiyoSmart (Hoya)", "Multifocal/PALs Spectacles", "Atropine", "Menicon Bloom Day", "Menicon Bloom Night", "Stellest (Essilor)", "Myopilux lenses (Essilor)", "E-Lens (E&E)", "DK4 (Oculus)", "Breath O Correct (Seed)", "DreamLite (ProCornea)", "Menicon Z Night", "Off label multifocal soft Contacts", "DISC"],
                     "columns" => ["Definitely would not recommend", "Probably would not recommend", "Might or might not recommend", "Probably would recommend", "Definitely would recommend"]
                 ]
             ],
