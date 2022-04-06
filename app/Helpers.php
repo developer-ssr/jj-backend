@@ -72,16 +72,15 @@ if (!function_exists('baselineSummary')) {
                 return $url_data[$key] == $row;
             })->count();
         } elseif ($q_summary['type'] == 'average') {
-            $count = $records->count();
-            if ($count > 0) {
-                $sum = 0;
-                $total = 0;
-                foreach ($records as $url_data) {
-                    if (is_numeric($url_data[$key])) {
-                        $total++;
-                        $sum += $url_data[$key];
-                    }
+            $sum = 0;
+            $total = 0;
+            foreach ($records as $url_data) {
+                if (is_numeric($url_data[$key])) {
+                    $total++;
+                    $sum += $url_data[$key];
                 }
+            }
+            if ($total > 0) {
                 $val = round(($sum / $total), 0, PHP_ROUND_HALF_UP);
             }
             
@@ -90,16 +89,15 @@ if (!function_exists('baselineSummary')) {
                 return $url_data[$key.'_'.$row] == 1;
             })->count();
         } elseif ($q_summary['type'] == 'percent' && $q_summary['col'] == 0) {
-            $count = $records->count();
-            if ($count > 0) {
-                $sum = 0;
-                $total = 0;
-                foreach ($records as $url_data) {
-                    if (is_numeric($url_data[$key.'_'.$row])) {
-                        $total++;
-                        $sum += $url_data[$key.'_'.$row];
-                    }
+            $sum = 0;
+            $total = 0;
+            foreach ($records as $url_data) {
+                if (is_numeric($url_data[$key.'_'.$row])) {
+                    $total++;
+                    $sum += $url_data[$key.'_'.$row];
                 }
+            }
+            if ($total > 0) {
                 $val = round(($sum / $total), 0, PHP_ROUND_HALF_UP);
             }
         } elseif ($q_summary['type'] == 'single' && $q_summary['col'] > 0) {
