@@ -455,7 +455,7 @@ if (!function_exists('baselineVariables')) {
             ],
             "T39" => [ //B8 ACT
                 "Q_num" => '',
-                "Q_limit" => 20, //number of primes
+                "Q_limit" => 23, //number of primes
                 "Q_not" => 'b8',
                 "USA" => ['b8', 'a19', 'c19'],//a22 c22 inverted
                 "Singapore" => ['b8', 'i7'], //i11 inverted
