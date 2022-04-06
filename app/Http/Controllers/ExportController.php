@@ -325,15 +325,16 @@ class ExportController extends Controller
                         for ($i=1; $i <= $variables['Q_limit']; $i++) { 
                             $header = "{$t}_{$i}";
                             $headers[] = $header;
-                            if ($i >= 21 && $i <= 23) {
-                                if (in_array($record['participant_id'], [6079043,6139189,6713964,6857625])) {
-                                    $val = baselineVal($record['url_data'], 'j6', '_'.$i);
+                            /* if ($i >= 21 && $i <= 23) {
+                                if (in_array($record['participant_id'], [6079043,6139189,6713964,6857625])) {//missing data repondents
+                                    $val = baselineVal($record['url_data'], ['j6'], '_'.$i);
                                 }else {
                                     $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
                                 }
                             }else {
                                 $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
-                            }
+                            } */
+                            $val = baselineVal($record['url_data'], $variables[$country], $variables['Q_num'].'_'.$i);
                             $url_data[$header] = $val;
                             $data[] = $val;
                         }

@@ -459,7 +459,7 @@ if (!function_exists('baselineVariables')) {
                 "Q_not" => 'b8',
                 "USA" => ['b8', 'a19', 'c19'],//a22 c22 inverted
                 "Singapore" => ['b8', 'i7'], //i11 inverted
-                "Hongkong" => ['b8'],
+                "Hongkong" => ['b8', 'j6'],
                 "Canada" => ['b8', 'i8']//i11 inverted
             ],
             "T40" => [ //B9 ACT
