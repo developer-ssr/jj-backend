@@ -876,7 +876,12 @@ class ExportController extends Controller
                     }
                 }
             }else {
-                $tmp_result[4] = 0;//initialize
+                $equivalent = Chart::items($t, $prime);
+                $tmp_result[4] = $equivalent;
+                /* foreach ($tmp_data['data'] as $p_key => $tmp) {
+                    $tmp_result[3] = $equivalent['equivalent'];//prime
+                    $tmp_result[4+$p_key] = 0;//initialize
+                } */
             }
         }
         
