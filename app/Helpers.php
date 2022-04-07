@@ -463,10 +463,10 @@ if (!function_exists('baselineVariables')) {
             "T40" => [ //B9 ACT
                 "Q_num" => '',
                 "Q_limit" => 15, //number of primes
-                "USA" => ['b9', 'a20', 'c20'],//a22 c22 inverted
-                "Singapore" => ['b9', 'i8'], //i11 inverted
-                "Hongkong" => ['b9'],
-                "Canada" => ['b9', 'i9']//i11 inverted
+                "USA" => ['b9', 'a20', 'c20', 'j7'],//a22 c22 inverted
+                "Singapore" => ['b9', 'i8', 'j7'], //i11 inverted
+                "Hongkong" => ['b9', 'j7'],
+                "Canada" => ['b9', 'i9', 'j7']//i11 inverted
             ],
             "T41" => [ //B10 ACT
                 "Q_num" => '',
