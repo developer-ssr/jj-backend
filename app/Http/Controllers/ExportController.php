@@ -880,7 +880,7 @@ class ExportController extends Controller
                 $tmp_result[3] = $equivalent;
                 $questions = Chart::getQuestion($t);
                 foreach ($questions['choices'] as $c_key => $choice) {
-                    $tmp_result[4+$c_key] = 0;//initialize
+                    $tmp_result[4+$c_key] = 0;
                 }
             }   
         }
@@ -918,8 +918,10 @@ class ExportController extends Controller
             
         }else {
             $total = $count;
-            if ($t == 't2') {
+            if ($t == 't2' && $count > 0) {
                 $tmp_result[4] = round($tmp_result[4] / $total);
+            }else {
+                $tmp_result[4] = 0;
             }
         }
         if ($table == false) {
