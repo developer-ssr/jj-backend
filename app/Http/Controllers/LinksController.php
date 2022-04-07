@@ -220,7 +220,8 @@ class LinksController extends Controller
                                 'links' => [
                                     [
                                         'label' => 'KPI',
-                                        'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=us'
+                                        /* 'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=us' */
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=true&title=Baseline_KPI_US&country=us'
                                     ],
                                     [
                                         'label' => 'Leaders',
@@ -246,7 +247,8 @@ class LinksController extends Controller
                                 'links' => [
                                     [
                                         'label' => 'KPI',
-                                        'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=sg'
+                                        // 'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=sg'
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=true&title=Baseline_KPI_SG&country=sg'
                                     ],
                                     [
                                         'label' => 'Leaders',
@@ -272,7 +274,8 @@ class LinksController extends Controller
                                 'links' => [
                                     [
                                         'label' => 'KPI',
-                                        'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=hk'
+                                        // 'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=hk'
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=true&title=Baseline_KPI_HK&country=hk'
                                     ],
                                     [
                                         'label' => 'Leaders',
@@ -298,7 +301,8 @@ class LinksController extends Controller
                                 'links' => [
                                     [
                                         'label' => 'KPI',
-                                        'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=ca'
+                                        // 'url' => 'https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/download?country=ca'
+                                        'url' => 'https://jnj.splitsecondsurveys.co.uk/offices/download_office/baseline?all=true&title=Baseline_KPI_CA&country=ca'
                                     ],
                                     [
                                         'label' => 'Leaders',
