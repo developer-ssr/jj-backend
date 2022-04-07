@@ -875,6 +875,8 @@ class ExportController extends Controller
                         }
                     }
                 }
+            }else {
+                $tmp_result[4] = 0;//initialize
             }
         }
         
