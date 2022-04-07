@@ -10,6 +10,10 @@ class RecordController extends Controller
 {
     protected $act_api = 'https://ast.splitsecondsurveys.co.uk/api/record/?';
 
+    public function index(Request $request)
+    {
+        return response()->json(Record::all());
+    }
     public function complete(Request $request)
     {
 
@@ -248,5 +252,11 @@ class RecordController extends Controller
             // 'updated_at' => now()->addMonth()
         ]);
         return redirect("https://fluent.splitsecondsurveys.co.uk/engine/complete/" . $country_link[$country] . "?" . http_build_query($request->all()));
+    }
+
+    public function destroy(Record $record)
+    {
+        $record->delete();
+        return response('ok');
     }
 }

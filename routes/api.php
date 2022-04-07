@@ -6,6 +6,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\LinksController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RecordController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,11 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::put('/{user}', [UserController::class, 'update']);
         Route::delete('/{user}', [UserController::class, 'destroy']);
         Route::post('/change_password', [UserController::class, 'change_password']);
+    });
+
+    Route::prefix('records')->group(function () {
+        Route::get('/', [RecordController::class, 'index']);
+        Route::delete('/{record}', [RecordController::class, 'destroy']);
     });
 
     Route::prefix('filters')->group(function () {
