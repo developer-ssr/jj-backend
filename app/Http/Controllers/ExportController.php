@@ -836,22 +836,26 @@ class ExportController extends Controller
 
         $a = 0;
         do {
-            $record = $records[$a];
-            switch ($t) {
-                case 't2':
-                case 't6':
-                case 't7':
-                case 't11':
-                case 't12':
-                    $tmp_data = Chart::getExpData($t, $record, $prime);
-                    break;
-                default:
-                    if (isset($record->data[$t]['responses'])) {
-                        $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
-                    } else {
-                        $tmp_data = null;
-                    }                    
-                    break;
+            if (isset($records[$a])) {
+                $record = $records[$a];
+                switch ($t) {
+                    case 't2':
+                    case 't6':
+                    case 't7':
+                    case 't11':
+                    case 't12':
+                        $tmp_data = Chart::getExpData($t, $record, $prime);
+                        break;
+                    default:
+                        if (isset($record->data[$t]['responses'])) {
+                            $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
+                        } else {
+                            $tmp_data = null;
+                        }                    
+                        break;
+                }
+            }else {
+                $tmp_data = null;
             }
 
             if ($tmp_data != null) {
