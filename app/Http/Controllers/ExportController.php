@@ -875,19 +875,18 @@ class ExportController extends Controller
                         }
                     }
                 }
-            }
-        }
-        
-        $count = count($records);
-        if ($count  == 0) {
-            $equivalent = Chart::items($t, $prime);
-            $tmp_result[3] = $equivalent;
-            dd($equivalent);
+            }else {
+                $equivalent = Chart::items($t, $prime);
+                $tmp_result[3] = $equivalent;
+                dd($equivalent);
                 /* foreach ($tmp_data['data'] as $p_key => $tmp) {
                     $tmp_result[3] = $equivalent['equivalent'];//prime
                     $tmp_result[4+$p_key] = 0;//initialize
                 } */
+            }   
         }
+        
+        $count = count($records);
 
         $i = 0;
         while (count($tmp_result) < 9) {
