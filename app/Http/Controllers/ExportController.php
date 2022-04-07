@@ -878,7 +878,7 @@ class ExportController extends Controller
             }
         }
         
-        $count = count($record);
+        $count = count($records);
         if ($count  == 0) {
             $equivalent = Chart::items($t, $prime);
             $tmp_result[3] = $equivalent;
