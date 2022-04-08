@@ -890,64 +890,11 @@ class ExportController extends Controller
                 foreach ($questions['choices'] as $c_key => $choice) {
                     $tmp_result[4+$c_key] = 0;
                 }
+                $data_count = count($questions['choices']);
             } 
             $a++;
-        } while ($a < $count);
-        /* foreach ($records as $record) {
-            switch ($t) {
-                case 't2':
-                case 't6':
-                case 't7':
-                case 't11':
-                case 't12':
-                    $tmp_data = Chart::getExpData($t, $record, $prime);
-                    break;
-                default:
-                    if (isset($record->data[$t]['responses'])) {
-                        $tmp_data = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
-                    } else {
-                        $tmp_data = null;
-                    }                    
-                    break;
-            }
-
-            if ($tmp_data != null) {
-                $data_count = count($tmp_data['data']);
-                foreach ($tmp_data['data'] as $t_key => $tmp) {
-                    if (!isset($tmp_result[4+$t_key])) {
-                        $tmp_result[3] = $tmp_data['equivalent'];//prime
-                        $tmp_result[4+$t_key] = 0;//initialize
-                    }
-                    if ($tmp['selected']) {
-                        if ($summary == 'summary') {
-                            if ($t == 't4' || $t == 't9') {
-                                $tmp_result[4+$t_key] += 1;//increment selected
-                            }else {
-                                $tmp_result[4+$t_key] += $tmp['value'];
-                            }
-                            $total += $tmp['value']; //total using value
-                        }else {
-                            if ($t == 't2') {
-                                $tmp_result[4+$t_key] += $tmp['value'];
-                                $total += $tmp['value']; //total using value
-                            }else {
-                                $tmp_result[4+$t_key] += 1;//increment selected
-                            }
-                        }
-                    }
-                }
-            }else {
-                $equivalent = Chart::items($t, $prime);
-                $tmp_result[3] = $equivalent;
-                $questions = Chart::getQuestion($t);
-                foreach ($questions['choices'] as $c_key => $choice) {
-                    $tmp_result[4+$c_key] = 0;
-                }
-            }   
-        } */
+        } while ($a < $count);      
         
-        
-
         $i = 0;
         while (count($tmp_result) < 9) {
             $i++;
