@@ -1189,7 +1189,9 @@ class ExportController extends Controller
             unset($percentage['red']);
             unset($percentage['orange']);
             $colour = 'green';
-        } 
+        }  elseif ($legend == 't4' || $legend == 't9') {
+            unset($percentage['orange']);
+        }
         $tcount = count($records);
         $tmp_data = [];
         foreach ($records as $record) {
@@ -1256,7 +1258,7 @@ class ExportController extends Controller
                                     }
                                 }
                                 
-                                unset($percentage['orange']);
+                                /* unset($percentage['orange']); */
                                 break;
                             case 't10':
                                 if ($t_key == 0) {
