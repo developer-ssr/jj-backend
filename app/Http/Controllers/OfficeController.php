@@ -25,7 +25,7 @@ class OfficeController extends Controller
         } else if ($request->user()->type === "admin") {
             $offices = Office::with('links')->get()->toArray();
             $offices = collect($offices)->map(function($values) {
-                $email = Email::where('email', $values['email'])->orderBy('created_at', 'desc')->where('status', 'sent')->pluck('created_at')->toArray();
+                $email = Email::where('email', $values['email'])->orderBy('created_at', 'asc')->where('status', 'sent')->pluck('created_at')->toArray();
                 $values['emails'] = $email;
                 $taken = collect($values['links'])->filter(fn($v) => $v['taken'] === 'YES')->count();
                 $values['links2'] = $taken . '/' . count($values['links']);
@@ -34,7 +34,8 @@ class OfficeController extends Controller
         } else if ($request->user()->type === 'group_user') {
             $offices = Office::whereIn('id', $request->user()->office_ids)->with('links')->get()->toArray();
             $offices = collect($offices)->map(function($values) {
-                $email = Email::where('email', $values['email'])->where('status', 'sent')->orderBy('created_at', 'asc')->get();
+                // $email = Email::where('email', $values['email'])->where('status', 'sent')->orderBy('created_at', 'asc')->get();
+                $email = Email::where('email', $values['email'])->orderBy('created_at', 'asc')->where('status', 'sent')->pluck('created_at')->toArray();
                 $values['emails'] = $email;
                 $taken = collect($values['links'])->filter(fn($v) => $v['taken'] === 'YES')->count();
                 $values['links'] = $taken . '/' . count($values['links']);
