@@ -25,7 +25,7 @@ class OfficeController extends Controller
         } else if ($request->user()->type === "admin") {
             $offices = Office::with('links')->get()->toArray();
             $offices = collect($offices)->map(function($values) {
-                $email = Email::where('email', $values['email'])->orderBy('created_at', 'desc')->first();
+                $email = Email::where('email', $values['email'])->orderBy('created_at', 'desc')->where('status', 'sent')->pluck('created_at')->toArray();
                 $values['emails'] = $email;
                 $taken = collect($values['links'])->filter(fn($v) => $v['taken'] === 'YES')->count();
                 $values['links2'] = $taken . '/' . count($values['links']);
@@ -42,7 +42,8 @@ class OfficeController extends Controller
             });
         }
         $results = [
-            ['Name', 'Email', 'Country', 'Invite Sent', 'Test Taken', 'CSR Name', 'CSR Email', 'Client Name', 'Client Email', 'Classification', 'Baseline 1 Status', 'Baseline 1 Completed', 'Baseline 2 Status', 'Baseline 2 Completed', 'Invite 1', 'Invite 2', 'Invite 3', 'Invite 4']
+            // ['Name', 'Email', 'Country', 'Invite Sent', 'Test Taken', 'CSR Name', 'CSR Email', 'Client Name', 'Client Email', 'Classification', 'Baseline 1 Status', 'Baseline 1 Completed', 'Baseline 2 Status', 'Baseline 2 Completed', 'Invite 1', 'Invite 2', 'Invite 3', 'Invite 4']
+            ['Name', 'Email', 'Country', 'Test Taken', 'CSR Name', 'CSR Email', 'Client Name', 'Client Email', 'Classification', 'Baseline 1 Status', 'Baseline 1 Completed', 'Baseline 2 Status', 'Baseline 2 Completed', 'Invite 1', 'Invite 2', 'Invite 3', 'Invite 4', 'Email dates']
         ];
         $code = [
             840 => "USA",
@@ -71,11 +72,12 @@ class OfficeController extends Controller
                 $base1 = json_decode($_base1->body(), true);
                 $base2 = json_decode($_base2->body(), true);
 
-                $results[] = [
+                $results[] = collect([
                     $office['name'], 
                     $office['email'], 
                     $code[$office['code']], 
-                    !is_null($office['emails']) ? Carbon::parse($office['emails']['created_at'])->toDateTimeString() : null, explode('/', $office['links2'])[0] == '1' ? 'Yes': 'No', 
+                    // !is_null($office['emails']) ? Carbon::parse($office['emails']['created_at'])->toDateTimeString() : null,
+                    explode('/', $office['links2'])[0] == '1' ? 'Yes': 'No', 
                     $office['csr_name'], 
                     $office['csr_email'], 
                     $office['client_name'], 
@@ -89,7 +91,8 @@ class OfficeController extends Controller
                     empty($office['links'][1]['record']) ? null : Carbon::parse($office['links'][1]['record']['updated_at'])->toDateTimeString(),
                     empty($office['links'][2]['record']) ? null : Carbon::parse($office['links'][2]['record']['updated_at'])->toDateTimeString(),
                     empty($office['links'][3]['record']) ? null : Carbon::parse($office['links'][3]['record']['updated_at'])->toDateTimeString(),
-                ];
+                    
+                ])->merge(collect($office['emails'])->map(fn($e) => Carbon::parse($e)->toDateTimeString())->toArray())->toArray();
             }
                 
         }
