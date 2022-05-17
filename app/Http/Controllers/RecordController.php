@@ -94,7 +94,7 @@ class RecordController extends Controller
                         ]
                     ];
                 }else {
-                    dd("Something went wrong");
+                    dd("Something went wrong Country");
                 }
             break;
             case 'hk':
@@ -138,7 +138,7 @@ class RecordController extends Controller
                         ]
                     ];
                 } else {
-                    dd("Something went wrong");
+                    dd("Something went wrong HK");
                 }
             break;
             default:
