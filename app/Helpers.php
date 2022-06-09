@@ -92,9 +92,33 @@ if (!function_exists('baselineSummary')) {
             $sum = 0;
             $total = 0;
             foreach ($records as $url_data) {
-                if (is_numeric($url_data[$key.'_'.$row])) {
-                    $total++;
-                    $sum += $url_data[$key.'_'.$row];
+                if ($key == 'T16') {
+                    //none T16_4
+                    if (is_numeric($url_data[$key.'_4'])) { //new
+                        if (is_numeric($url_data[$key.'_'.$row])) {
+                            $total++;
+                            $sum += $url_data[$key.'_'.$row];
+                        }
+                    } else { //old
+                        if ($row != 3) { //skip all old 3
+                            if ($row == 4) { //calculate 3 old to 4 new
+                                if (is_numeric($url_data[$key.'_3'])) {
+                                    $total++;
+                                    $sum += $url_data[$key.'_3'];
+                                }
+                            } else {
+                                if (is_numeric($url_data[$key.'_'.$row])) {
+                                    $total++;
+                                    $sum += $url_data[$key.'_'.$row];
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (is_numeric($url_data[$key.'_'.$row])) {
+                        $total++;
+                        $sum += $url_data[$key.'_'.$row];
+                    }
                 }
             }
             if ($total > 0) {
