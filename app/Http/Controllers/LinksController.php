@@ -338,19 +338,107 @@ class LinksController extends Controller
                                     ],
                                     [
                                         'label' => 'United States',
-                                        'url' => url('/baseline/download/respondent').'?all=false&country=us&title=raw_baseline_us'
+                                        'url' => null,
+                                        'links' => [
+                                            [
+                                                'label' => 'All',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=us&title=raw_baseline_us'
+                                            ],
+                                            [
+                                                'label' => 'Leaders',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=us&title=raw_leaders_us&classifications=["Leader"]'
+                                            ],
+                                            [
+                                                'label' => 'Believers',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=us&title=raw_believers_us&classifications=["Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Leaders & Believers',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=us&title=raw_leaders_believers_us&classifications=["Leader", "Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Emerging ',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=us&title=raw_emerger_us&classifications=["Emerger"]'
+                                            ]
+                                        ]
                                     ],
                                     [
                                         'label' => 'Singapore',
-                                        'url' => url('/baseline/download/respondent').'?all=false&country=sg&title=raw_baseline_sg'
+                                        'url' => null,
+                                        'links' => [
+                                            [
+                                                'label' => 'All',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=sg&title=raw_baseline_sg'
+                                            ],
+                                            [
+                                                'label' => 'Leaders',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=sg&title=raw_leaders_sg&classifications=["Leader"]'
+                                            ],
+                                            [
+                                                'label' => 'Believers',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=sg&title=raw_believers_sg&classifications=["Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Leaders & Believers',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=sg&title=raw_leaders_believers_sg&classifications=["Leader", "Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Emerging ',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=sg&title=raw_emerger_sg&classifications=["Emerger"]'
+                                            ]
+                                        ]
                                     ],
                                     [
                                         'label' => 'Hong Kong',
-                                        'url' => url('/baseline/download/respondent').'?all=false&country=hk&title=raw_baseline_hk'
+                                        'url' => null,
+                                        'links' => [
+                                            [
+                                                'label' => 'All',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=hk&title=raw_baseline_hk'
+                                            ],
+                                            [
+                                                'label' => 'Leaders',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=hk&title=raw_leaders_hk&classifications=["Leader"]'
+                                            ],
+                                            [
+                                                'label' => 'Believers',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=hk&title=raw_believers_hk&classifications=["Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Leaders & Believers',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=hk&title=raw_leaders_believers_hk&classifications=["Leader", "Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Emerging ',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=hk&title=raw_emerger_hk&classifications=["Emerger"]'
+                                            ]
+                                        ]
                                     ],
                                     [
                                         'label' => 'Canada',
-                                        'url' => url('/baseline/download/respondent').'?all=false&country=ca&title=raw_baseline_ca'
+                                        'url' => null,
+                                        'links' => [
+                                            [
+                                                'label' => 'All',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=ca&title=raw_baseline_ca'
+                                            ],
+                                            [
+                                                'label' => 'Leaders',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=ca&title=raw_leaders_ca&classifications=["Leader"]'
+                                            ],
+                                            [
+                                                'label' => 'Believers',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=ca&title=raw_believers_ca&classifications=["Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Leaders & Believers',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=ca&title=raw_leaders_believers_ca&classifications=["Leader", "Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Emerging ',
+                                                'url' => url('/baseline/download/respondent').'?all=false&country=ca&title=raw_emerger_ca&classifications=["Emerger"]'
+                                            ]
+                                        ]
                                     ]
                                 ]
                             ],
@@ -364,19 +452,107 @@ class LinksController extends Controller
                                     ],
                                     [
                                         'label' => 'United States',
-                                        'url' => url('/baseline/download/summary').'?all=false&country=us&title=summary_baseline_us'
+                                        'url' => null,
+                                        'links' => [
+                                            [
+                                                'label' => 'All',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=us&title=summary_baseline_us'
+                                            ],
+                                            [
+                                                'label' => 'Leaders',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=us&title=summary_baseline_leaders_us&classifications=["Leader"]'
+                                            ],
+                                            [
+                                                'label' => 'Believers',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=us&title=summary_baseline_believers_us&classifications=["Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Leaders & Believers',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=us&title=summary_baseline_leaders_believers_us&classifications=["Leader", "Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Emerging ',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=us&title=summary_baseline_emerger_us&classifications=["Emerger"]'
+                                            ]
+                                        ]
                                     ],
                                     [
                                         'label' => 'Singapore',
-                                        'url' => url('/baseline/download/summary').'?all=false&country=sg&title=summary_baseline_sg'
+                                        'url' => null,
+                                        'links' => [
+                                            [
+                                                'label' => 'All',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=sg&title=summary_baseline_sg'
+                                            ],
+                                            [
+                                                'label' => 'Leaders',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=sg&title=summary_baseline_leaders_sg&classifications=["Leader"]'
+                                            ],
+                                            [
+                                                'label' => 'Believers',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=sg&title=summary_baseline_believers_sg&classifications=["Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Leaders & Believers',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=sg&title=summary_baseline_leaders_believers_sg&classifications=["Leader", "Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Emerging ',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=sg&title=summary_baseline_emerger_sg&classifications=["Emerger"]'
+                                            ]
+                                        ]
                                     ],
                                     [
                                         'label' => 'Hong Kong',
-                                        'url' => url('/baseline/download/summary').'?all=false&country=hk&title=summary_baseline_hk'
+                                        'url' => null,
+                                        'links' => [
+                                            [
+                                                'label' => 'All',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=hk&title=summary_baseline_hk'
+                                            ],
+                                            [
+                                                'label' => 'Leaders',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=hk&title=summary_baseline_leaders_hk&classifications=["Leader"]'
+                                            ],
+                                            [
+                                                'label' => 'Believers',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=hk&title=summary_baseline_believers_hk&classifications=["Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Leaders & Believers',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=hk&title=summary_baseline_leaders_believers_hk&classifications=["Leader", "Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Emerging ',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=hk&title=summary_baseline_emerger_hk&classifications=["Emerger"]'
+                                            ]
+                                        ]
                                     ],
                                     [
                                         'label' => 'Canada',
-                                        'url' => url('/baseline/download/summary').'?all=false&country=ca&title=summary_baseline_ca'
+                                        'url' => null,
+                                        'links' => [
+                                            [
+                                                'label' => 'All',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=ca&title=summary_baseline_ca'
+                                            ],
+                                            [
+                                                'label' => 'Leaders',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=ca&title=summary_baseline_leaders_ca&classifications=["Leader"]'
+                                            ],
+                                            [
+                                                'label' => 'Believers',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=ca&title=summary_baseline_believers_ca&classifications=["Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Leaders & Believers',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=ca&title=summary_baseline_leaders_believers_ca&classifications=["Leader", "Believer"]'
+                                            ],
+                                            [
+                                                'label' => 'Emerging ',
+                                                'url' => url('/baseline/download/summary').'?all=false&country=ca&title=summary_baseline_emerger_ca&classifications=["Emerger"]'
+                                            ]
+                                        ]
                                     ]
                                 ]
                             ]

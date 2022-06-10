@@ -138,7 +138,13 @@ class ExportController extends Controller
                 break;
         }
 
-        $all_offices = Office::whereIn('code', $codes->keys())->get();
+        if (isset($request->classifications)) {
+            $classifications = json_decode($request->classifications);
+            $all_offices = Office::whereIn('classification', $classifications)->whereIn('code', $codes->keys())->get();
+        } else {
+            $all_offices = Office::whereIn('code', $codes->keys())->get();
+        }
+        
         $filter_emails = $all_offices->pluck('email')->map(function ($item, $key) {
             return Str::lower($item);
         })->toArray();
@@ -432,6 +438,7 @@ class ExportController extends Controller
             $filter_emails = $all_offices->pluck('email')->map(function ($item, $key) {
                 return Str::lower($item);
             })->toArray();
+            //EcpBaselineController->classifications()
             $response = Http::get('https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/classifications', [
                 'filter_emails' => $filter_emails,
                 'title' => $request->title
