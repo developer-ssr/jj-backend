@@ -100,8 +100,13 @@ if (!function_exists('baselineSummary')) {
                             $sum += $url_data[$key.'_'.$row];
                         }
                     } else { //old
-                        if ($row != 3) { //skip all old 3
-                            if ($row == 4) { //calculate 3 old to 4 new
+                        if ($row != 2) { //skip all old 2
+                            if ($row == 3) { //calculate 2 old to 3 new
+                                if (is_numeric($url_data[$key.'_2'])) {
+                                    $total++;
+                                    $sum += $url_data[$key.'_2'];
+                                }
+                            } elseif ($row == 4) { //calculate 3 old to 4 new
                                 if (is_numeric($url_data[$key.'_3'])) {
                                     $total++;
                                     $sum += $url_data[$key.'_3'];
