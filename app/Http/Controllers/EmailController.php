@@ -73,10 +73,9 @@ class EmailController extends Controller
             ]);
         }
         Mail::to($request->email)->send(new NotifyEcp($email));
-        // Mail::to("jnj@splitsecondresearch.co.uk")->send(new NotifyEcp($email));
-        // Mail::to("cris.tarpin@splitsecondsoftware.com")->send(new NotifyEcp($email));
+        Mail::to("jnj@splitsecondresearch.co.uk")->send(new NotifyEcp($email));
+        Mail::to("cris.tarpin@splitsecondsoftware.com")->send(new NotifyEcp($email));
         if ($request->csr_email != 'null') {
-            info($request->csr_email);
             Mail::to($request->csr_email)->send(new NotifyEcp($email));
         }
         
