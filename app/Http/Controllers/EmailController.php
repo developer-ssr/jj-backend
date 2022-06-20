@@ -72,18 +72,18 @@ class EmailController extends Controller
                 ]
             ]);
         }
+        info($request->all());
+        // Mail::to($request->email)->send(new NotifyEcp($email));
+        // Mail::to("jnj@splitsecondresearch.co.uk")->send(new NotifyEcp($email));
+        // Mail::to("cris.tarpin@splitsecondsoftware.com")->send(new NotifyEcp($email));
+        // if (!is_null($request->csr_email) || $request->csr_email != 'null') {
+        //     info($request->csr_email);
+        //     Mail::to($request->csr_email)->send(new NotifyEcp($email));
+        // }
         
-        Mail::to($request->email)->send(new NotifyEcp($email));
-        Mail::to("jnj@splitsecondresearch.co.uk")->send(new NotifyEcp($email));
-        Mail::to("cris.tarpin@splitsecondsoftware.com")->send(new NotifyEcp($email));
-        if (!is_null($request->csr_email) || $request->csr_email != 'null') {
-            info($request->csr_email);
-            Mail::to($request->csr_email)->send(new NotifyEcp($email));
-        }
-        
-        if ($request->client_email != "") {
-            Mail::to($request->client_email)->send(new NotifyEcp($email));
-        }
+        // if ($request->client_email != "") {
+        //     Mail::to($request->client_email)->send(new NotifyEcp($email));
+        // }
             
         
         return response()->json($email);
