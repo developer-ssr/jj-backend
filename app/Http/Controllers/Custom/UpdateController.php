@@ -13,7 +13,7 @@ class UpdateController extends Controller
         $act_api = 'https://ast.splitsecondsurveys.co.uk/api/v1/record?';
         $records = Record::where('id', '>=', 66)->where('id', '<=', 86)->get();
         $error_ids = [];
-        // return false;
+        return false;
         foreach ($records as $record) {
             $country = $record->country;
             $data = $record->data;

@@ -315,7 +315,9 @@ class Chart extends Model
                 'DreamLite (ProCornea)',
                 'Menicon Z Night',
                 'Off label multifocal soft Contacts',
-                'DISC'
+                'DISC',
+                'Abiliti 1-Day',
+                'Abiliti Overnight' 
             ],
             "t6" => [
                 "I DO NOT USE the HealthCaringᵀᴹ Conversations ISIGHT Model",
