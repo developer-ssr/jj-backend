@@ -16,9 +16,9 @@ class UpdateController extends Controller
         foreach ($records as $record) {
             $country = $record->country;
             $data = $record->data;
-            $lang = $record->meta['lang'] ?? 'en';
-            if (!isset($record->meta['MyopiaLenses'])) {
-                $meta = $record->meta;
+            $meta = $record->meta;
+            $lang = $record->meta['query']['lang'] ?? 'en';
+            if (!isset($record->meta['query']['MyopiaLenses'])) {
                 $meta['no_myopia_lenses'] = 1;
                 $error_ids[] = $record->id;
                 $record->update([
@@ -30,7 +30,7 @@ class UpdateController extends Controller
                 case 'us':
                 case 'sg':
                 case 'ca':
-                    if ($record->meta['MyopiaLenses'] == 2) { //night
+                    if ($record->meta['query']['MyopiaLenses'] == 2) { //night
                         $country_t3 = [
                             'us' => [
                                 'en' => '1266'
@@ -53,7 +53,7 @@ class UpdateController extends Controller
                                 'en' => '1269'
                             ]
                         ];
-                    }elseif ($record->meta['MyopiaLenses'] == 1) { //day
+                    }elseif ($record->meta['query']['MyopiaLenses'] == 1) { //day
                         $country_t3 = [
                             'us' => [
                                 'en' => '1260'
@@ -76,7 +76,7 @@ class UpdateController extends Controller
                                 'en' => '1275'
                             ]
                         ];
-                    }elseif ($record->meta['MyopiaLenses'] == 3) { //both
+                    }elseif ($record->meta['query']['MyopiaLenses'] == 3) { //both
                         $country_t3 = [
                             'us' => [
                                 'en' => '1308'
@@ -104,7 +104,7 @@ class UpdateController extends Controller
                     }
                 break;
                 case 'hk':
-                    if ($record->meta['MyopiaLenses'] == 3 || $record->meta['MyopiaLenses'] == 4) { //night
+                    if ($record->meta['query']['MyopiaLenses'] == 3 || $record->meta['query']['MyopiaLenses'] == 4) { //night
                         $country_t3 = [
                             'hk' => [
                                 'en' => '1291',
@@ -117,7 +117,7 @@ class UpdateController extends Controller
                                 'cn' => '1294'
                             ]
                         ];
-                    } elseif ($record->meta['MyopiaLenses'] == 1 || $record->meta['MyopiaLenses'] == 2) { //day
+                    } elseif ($record->meta['query']['MyopiaLenses'] == 1 || $record->meta['query']['MyopiaLenses'] == 2) { //day
                         $country_t3 = [
                             'hk' => [
                                 'en' => '1285',
@@ -130,7 +130,7 @@ class UpdateController extends Controller
                                 'cn' => '1300'
                             ]
                         ];
-                    } elseif ($record->meta['MyopiaLenses'] == 5 || $record->meta['MyopiaLenses'] == 6) { //both
+                    } elseif ($record->meta['query']['MyopiaLenses'] == 5 || $record->meta['query']['MyopiaLenses'] == 6) { //both
                         $country_t3 = [
                             'hk' => [
                                 'en' => '1315',
@@ -233,8 +233,10 @@ class UpdateController extends Controller
             $http = Http::get($act_api . "survey_id=" . $country_t10[$country][$lang] . "&id={$request->id}");
             $data['t10'] = json_decode($http->body(), true);
 
+            $meta['no_myopia_lenses'] = 0;
             $record->update([
-                'data' => $data
+                'data' => $data,
+                'meta' => $meta
             ]);
         }
         dd($error_ids);
