@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Http;
 class UpdateController extends Controller
 {
     public function updatePhase2Null(Request $request) {
-        $act_api = 'https://ast.splitsecondsurveys.co.uk/api/v1/record/?';
+        $act_api = 'https://ast.splitsecondsurveys.co.uk/api/v1/record?';
         $records = Record::where('id', '>=', 66)->where('id', '<=', 86)->get();
         $error_ids = [];
-        return false;
+        // return false;
         foreach ($records as $record) {
             $country = $record->country;
             $data = $record->data;
@@ -214,25 +214,26 @@ class UpdateController extends Controller
                 ]
             ];
     
-            $http = Http::get($act_api . "survey_id=" . $country_t3[$country][$lang] . "&id={$request->id}");
-            $data = [
-                't3' => json_decode($http->body(), true) ?? null
-            ];
+            $http = Http::get($act_api . "survey_id=" . $country_t3[$country][$lang] . "&id={$record->participant_id}");
+            $data['t3'] = json_decode($http->body(), true) ?? null;
     
-            $http = Http::get($act_api . "survey_id=" . $country_t4[$country][$lang] . "&id={$request->id}");
+            $http = Http::get($act_api . "survey_id=" . $country_t4[$country][$lang] . "&id={$record->participant_id}");
             $data['t4'] = json_decode($http->body(), true) ?? null;
     
-            $http = Http::get($act_api . "survey_id=" . $country_t5[$country][$lang] . "&id={$request->id}");
+            $http = Http::get($act_api . "survey_id=" . $country_t5[$country][$lang] . "&id={$record->participant_id}");
             $data['t5'] = json_decode($http->body(), true);
     
-            $http = Http::get($act_api . "survey_id=" . $country_t8[$country][$lang] . "&id={$request->id}");
+            $http = Http::get($act_api . "survey_id=" . $country_t8[$country][$lang] . "&id={$record->participant_id}");
             $data['t8'] = json_decode($http->body(), true);
     
-            $http = Http::get($act_api . "survey_id=" . $country_t9[$country][$lang] . "&id={$request->id}");
+            $http = Http::get($act_api . "survey_id=" . $country_t9[$country][$lang] . "&id={$record->participant_id}");
             $data['t9'] = json_decode($http->body(), true);
     
-            $http = Http::get($act_api . "survey_id=" . $country_t10[$country][$lang] . "&id={$request->id}");
+            $http = Http::get($act_api . "survey_id=" . $country_t10[$country][$lang] . "&id={$record->participant_id}");
             $data['t10'] = json_decode($http->body(), true);
+
+            $data['t6'] = $meta['query']['c1'] ?? '';
+            $data['t7'] = $meta['query']['c2'] ?? '';
 
             $meta['no_myopia_lenses'] = 0;
             $record->update([
