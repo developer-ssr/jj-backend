@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class RecordController extends Controller
 {
-    protected $act_api = 'https://ast.splitsecondsurveys.co.uk/api/record/?';
+    protected $act_api = 'https://ast.splitsecondsurveys.co.uk/api/v1/record/?';
 
     public function index(Request $request)
     {
