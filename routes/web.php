@@ -4,6 +4,7 @@ use App\Http\Controllers\RecordController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\OfficeController;
+use App\Http\Controllers\Custom\UpdateController;
 use App\Models\Email;
 use App\Models\Office;
 use Illuminate\Foundation\Application;
@@ -75,3 +76,8 @@ Route::prefix('baseline')->group(function () {
     Route::get('/download/{summary}', [ExportController::class, 'downloadBaseline']);
 });
 
+Route::prefix('custom')->group(function () {
+    Route::prefix('update')->group(function () {
+        Route::get('/updatephase2null', [UpdateController::class, 'updatePhase2Null']);
+    });
+});
