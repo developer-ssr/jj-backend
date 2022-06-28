@@ -12,6 +12,7 @@ class UpdateController extends Controller
     public function updatePhase2Null(Request $request) {
         $act_api = 'https://ast.splitsecondsurveys.co.uk/api/v1/record/?';
         $records = Record::where('id', '>=', 66)->where('id', '<=', 86)->get();
+        $error_ids = [];
         foreach ($records as $record) {
             $country = $record->country;
             $data = $record->data;
@@ -19,6 +20,7 @@ class UpdateController extends Controller
             if (!isset($record->meta['MyopiaLenses'])) {
                 $meta = $record->meta;
                 $meta['no_myopia_lenses'] = 1;
+                $error_ids[] = $record->id;
                 $record->update([
                     'meta' => $meta
                 ]);
@@ -235,5 +237,6 @@ class UpdateController extends Controller
                 'data' => $data
             ]);
         }
+        dd($error_ids);
     }
 }
