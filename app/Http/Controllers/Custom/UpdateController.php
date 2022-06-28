@@ -16,6 +16,14 @@ class UpdateController extends Controller
             $country = $record->country;
             $data = $record->data;
             $lang = $record->meta['lang'] ?? 'en';
+            if (!isset($record->meta['MyopiaLenses'])) {
+                $meta = $record->meta;
+                $meta['no_myopia_lenses'] = 1;
+                $record->update([
+                    'meta' => $meta
+                ]);
+                continue;
+            }
             switch ($country) {
                 case 'us':
                 case 'sg':
