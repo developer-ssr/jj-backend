@@ -475,7 +475,7 @@ class ChartController extends Controller
         }
         
         if ($tcount > 0) {
-            $true_count = $percentage['red']['count'] + $percentage['green']['count'] + $percentage['orange']['count'];
+            
             foreach ($percentage as $key =>  $percent) {
                 if ($legend == 't2') {
                     $percentage[$key]['value'] = round($percent['count'] / $tcount);
@@ -489,6 +489,7 @@ class ChartController extends Controller
                             $percentage[$key]['active'] = false;
                         }
                     }else {
+                        $true_count = $percentage['red']['count'] + $percentage['green']['count'] + $percentage['orange']['count'];
                         $percentage[$key]['value'] = round(($percent['count'] / $true_count) * 100);
                     }
                 }
