@@ -490,7 +490,7 @@ class ChartController extends Controller
                         }
                     }else {
                         $true_count = $percentage['red']['count'] + $percentage['green']['count'] + $percentage['orange']['count'];
-                        $percentage[$key]['value'] = round(($percent['count'] / $true_count) * 100);
+                        $percentage[$key]['value'] = $true_count == 0 ? null : round(($percent['count'] / $true_count) * 100);
                     }
                 }
                 // $percent['value'] = ceil($percent['count'] / $tcount);
