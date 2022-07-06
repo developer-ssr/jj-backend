@@ -25,7 +25,6 @@ class ChartController extends Controller
     {
         $office = Office::find($request->office_id);
         if ($request->has('filter_ids')) {
-            //add desc here when there are multiple invites
             $filters = Filter::whereIn('id', json_decode($request->filter_ids, true))->get();
             Cache::put($office->id, $filters->pluck('id')->toArray());
         } else {
@@ -113,15 +112,17 @@ class ChartController extends Controller
                                 $series_data[] = [
                                     'question' => $score['question'],
                                     'code' => $code,
-                                    'prime' => $score['prime'],
                                     'segment' => ($s_key + 1),
                                     'date' => $date,
-                                    'tcount' => $tcount,
                                     'gscore' => $score['gscore'],
                                     'percentage' => $score['percentage'],
                                     'record_ids' => $records[$s_key]->pluck('id'),
                                     'dimension' => $score['dimension'],
-                                    'targets' => $score['targets']
+                                    'targets' => $score['targets'],
+                                    'prime' => $score['prime'],
+                                    'tcount' => $tcount,
+                                    'ans_count' => 0,
+                                    'skipped_count' => 0
                                 ];
                                 $segment++;
                             endforeach;
@@ -142,12 +143,14 @@ class ChartController extends Controller
                                         'prime' => $score['prime'],
                                         'segment' => ($segment + 1),
                                         'date' => $date,
-                                        'tcount' => $tcount,
                                         'gscore' => $score['gscore'],
                                         'percentage' => $score['percentage'],
                                         'record_ids' => $records[$s_key]->pluck('id'),
                                         'dimension' => $score['dimension'],
-                                        'targets' => $score['targets']
+                                        'targets' => $score['targets'],
+                                        'tcount' => $tcount,
+                                        'ans_count' => 0,
+                                        'skipped_count' => 0
                                     ];
                                     $segment++;
                                 }
