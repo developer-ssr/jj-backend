@@ -25,6 +25,7 @@ class ChartController extends Controller
     {
         $office = Office::find($request->office_id);
         if ($request->has('filter_ids')) {
+            //add desc here when there are multiple invites
             $filters = Filter::whereIn('id', json_decode($request->filter_ids, true))->get();
             Cache::put($office->id, $filters->pluck('id')->toArray());
         } else {

@@ -77,9 +77,13 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::get('{div}', [LinksController::class, 'downloadLinks']);
     });
 
-    Route::prefix('charts')->group(function () {
+    /* Route::prefix('charts')->group(function () {
         Route::post('/', [ChartController::class, 'index']);
-    });
+    }); */
+});
+
+Route::prefix('charts')->group(function () {
+    Route::post('/', [ChartController::class, 'index']);
 });
 
 
