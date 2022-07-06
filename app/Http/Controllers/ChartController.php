@@ -121,8 +121,8 @@ class ChartController extends Controller
                                     'targets' => $score['targets'],
                                     'prime' => $score['prime'],
                                     'tcount' => $tcount,
-                                    'ans_count' => 0,
-                                    'skipped_count' => 0
+                                    'ans_count' => $score['true_count'],
+                                    'skipped_count' => $tcount - $score['true_count']
                                 ];
                                 $segment++;
                             endforeach;
@@ -148,9 +148,9 @@ class ChartController extends Controller
                                         'record_ids' => $records[$s_key]->pluck('id'),
                                         'dimension' => $score['dimension'],
                                         'targets' => $score['targets'],
-                                        'tcount' => $tcount,
-                                        'ans_count' => 0,
-                                        'skipped_count' => 0
+                                        'tcount' => $tcount, // completes
+                                        'ans_count' => $score['true_count'],
+                                        'skipped_count' => $tcount - $score['true_count']
                                     ];
                                     $segment++;
                                 }
@@ -478,6 +478,7 @@ class ChartController extends Controller
             
         }
         
+        $true_count = 0;
         if ($tcount > 0) {
             
             foreach ($percentage as $key =>  $percent) {
@@ -519,7 +520,8 @@ class ChartController extends Controller
             'percentage' => $percentage,
             'question' => $question['question'],
             'dimension' => $question['dimension'],
-            'targets' => $targets
+            'targets' => $targets,
+            'true_count' => $true_count
         ];
     }    
 
