@@ -113,6 +113,13 @@ class OfficeController extends Controller
                             empty($invite1) ? null : Carbon::parse($invite1['created_at'])->diffInMinutes(Carbon::parse($invite1['updated_at']))
                         ];
                     }
+                } else if (empty($old_invite) && !empty($invite1)) {
+                    $inv = [
+                        empty($office['links'][0]['record']) ? null : Carbon::parse($office['links'][0]['record']['updated_at'])->toDateTimeString(),
+                        empty($old_invite) ? null : Carbon::parse($old_invite['created_at'])->diffInMinutes(Carbon::parse($old_invite['updated_at'])),
+                        empty($office['links'][1]['record']) ? null : Carbon::parse($office['links'][1]['record']['updated_at'])->toDateTimeString(),
+                        empty($invite1) ? null : Carbon::parse($invite1['created_at'])->diffInMinutes(Carbon::parse($invite1['updated_at']))
+                    ];
                 }
 
 
