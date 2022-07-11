@@ -55,6 +55,10 @@ Route::get('test2', function() {
     //         return $values;
     //     })->toArray();
     //     dd($offices);
+    $c = "2021-09-1 10:08:01";
+    $u = "2021-09-1 10:12:01";
+    $d = Carbon::parse($c)->diffInMinutes(Carbon::parse($u));
+    dd($d);
 });
 
 /* Route::middleware('auth:sanctum')->group(function() {

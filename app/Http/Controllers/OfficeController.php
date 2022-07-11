@@ -44,7 +44,7 @@ class OfficeController extends Controller
         }
         $results = [
             // ['Name', 'Email', 'Country', 'Invite Sent', 'Test Taken', 'CSR Name', 'CSR Email', 'Client Name', 'Client Email', 'Classification', 'Baseline 1 Status', 'Baseline 1 Completed', 'Baseline 2 Status', 'Baseline 2 Completed', 'Invite 1', 'Invite 2', 'Invite 3', 'Invite 4']
-            ['Name', 'Email', 'Country', 'Test Taken', 'CSR Name', 'CSR Email', 'Client Name', 'Client Email', 'Classification', 'Baseline 1 Status', 'Baseline 1 Completed', 'Baseline 2 Status', 'Baseline 2 Completed', 'Invite 1', 'Invite 2', 'Invite 3', 'Invite 4', 'Email dates']
+            ['Name', 'Email', 'Country', 'Test Taken', 'CSR Name', 'CSR Email', 'Client Name', 'Client Email', 'Classification', 'Baseline 1 Status', 'Baseline 1 Completed', 'Baseline 1 Duration', 'Baseline 2 Status', 'Baseline 2 Completed', 'Baseline 2 Duration', 'Old Invite 1', 'Old Invite 1 Duration', 'New Invite 1', 'New Invite 1 Duration', 'Email dates']
         ];
         $code = [
             840 => "USA",
@@ -58,20 +58,42 @@ class OfficeController extends Controller
             344 => ['4xS', '8eC'],
             124 => ['5Ph', 'Mam']
         ];
+        $code3 = [
+            840 => "nax",
+            702 => 'jqF',
+            344 => '5vw',
+            124 => 'sqV'
+        ];
         foreach ($offices as $office) {
             if ($office['type'] === 'office') {
                 $base1_query = [
                     'code' => $code2[$office['code']][0],
-                    'value' => $office['email']
+                    'value' => $office['email'],
+                    't' => 'base'
                 ];
                 $base2_query = [
                     'code' => $code2[$office['code']][1],
-                    'value' => $office['email']
+                    'value' => $office['email'],
+                    't' => 'base'
+                ];
+                $old_invite_query = [
+                    'code' => $code3[$office['code']],
+                    'value' => empty($office['links'][0]['record']) ? null : $office['links'][0]['record']['participant_id'],
+                    't' => 'tracker'
+                ];
+                $invite_1_query = [
+                    'code' => $code3[$office['code']],
+                    'value' => empty($office['links'][1]['record']) ? null : $office['links'][1]['record']['participant_id'],
+                    't' => 'tracker'
                 ];
                 $_base1 = Http::get('https://fluent.splitsecondsurveys.co.uk/api/ecp/row?' . http_build_query($base1_query));
                 $_base2 = Http::get('https://fluent.splitsecondsurveys.co.uk/api/ecp/row?' . http_build_query($base2_query));
+                $_old_invite = Http::get('https://fluent.splitsecondsurveys.co.uk/api/ecp/row?' . http_build_query($old_invite_query));
+                $_invite_1 = Http::get('https://fluent.splitsecondsurveys.co.uk/api/ecp/row?' . http_build_query($invite_1_query));
                 $base1 = json_decode($_base1->body(), true);
                 $base2 = json_decode($_base2->body(), true);
+                $old_invite = json_decode($_old_invite->body(), true);
+                $invite1 = json_decode($_invite_1->body(), true);
 
                 $results[] = collect([
                     $office['name'], 
@@ -86,12 +108,16 @@ class OfficeController extends Controller
                     $office['classification'],
                     empty($base1) ? null : 'Completed',
                     empty($base1) ? null : Carbon::parse($base1['updated_at'])->toDateTimeString(),
+                    empty($base1) ? null : Carbon::parse($base1['created_at'])->diffInMinutes(Carbon::parse($base1['updated_at'])),
                     empty($base2) ? null : 'Completed',
                     empty($base2) ? null : Carbon::parse($base2['updated_at'])->toDateTimeString(),
+                    empty($base2) ? null : Carbon::parse($base2['created_at'])->diffInMinutes(Carbon::parse($base2['updated_at'])),
                     empty($office['links'][0]['record']) ? null : Carbon::parse($office['links'][0]['record']['updated_at'])->toDateTimeString(),
+                    empty($old_invite) ? null : Carbon::parse($old_invite['created_at'])->diffInMinutes(Carbon::parse($old_invite['updated_at'])),
                     empty($office['links'][1]['record']) ? null : Carbon::parse($office['links'][1]['record']['updated_at'])->toDateTimeString(),
-                    empty($office['links'][2]['record']) ? null : Carbon::parse($office['links'][2]['record']['updated_at'])->toDateTimeString(),
-                    empty($office['links'][3]['record']) ? null : Carbon::parse($office['links'][3]['record']['updated_at'])->toDateTimeString(),
+                    empty($invite1) ? null : Carbon::parse($invite1['created_at'])->diffInMinutes(Carbon::parse($invite1['updated_at'])),
+                    // empty($office['links'][2]['record']) ? null : Carbon::parse($office['links'][2]['record']['updated_at'])->toDateTimeString(),
+                    // empty($office['links'][3]['record']) ? null : Carbon::parse($office['links'][3]['record']['updated_at'])->toDateTimeString(),
                     
                 ])->merge(collect($office['emails'])->map(fn($e) => Carbon::parse($e)->toDateTimeString())->toArray())->toArray();
             }
