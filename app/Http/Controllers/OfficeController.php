@@ -94,6 +94,27 @@ class OfficeController extends Controller
                 $base2 = json_decode($_base2->body(), true);
                 $old_invite = json_decode($_old_invite->body(), true);
                 $invite1 = json_decode($_invite_1->body(), true);
+                $tmp = Carbon::parse("2022-06-20 00:00:00")->diffInDays(now(), false);
+
+                $inv = [null, null, null, null];
+                if (!empty($old_invite)) {
+                    if (Carbon::parse($office['links'][0]['record']['updated_at'])->gt(Carbon::parse("2022-06-20"))) {
+                        $inv = [
+                            null,
+                            null,
+                            empty($office['links'][0]['record']) ? null : Carbon::parse($office['links'][0]['record']['updated_at'])->toDateTimeString(),
+                            empty($old_invite) ? null : Carbon::parse($old_invite['created_at'])->diffInMinutes(Carbon::parse($old_invite['updated_at']))
+                        ];
+                    } else {
+                        $inv = [
+                            empty($office['links'][0]['record']) ? null : Carbon::parse($office['links'][0]['record']['updated_at'])->toDateTimeString(),
+                            empty($old_invite) ? null : Carbon::parse($old_invite['created_at'])->diffInMinutes(Carbon::parse($old_invite['updated_at'])),
+                            empty($office['links'][1]['record']) ? null : Carbon::parse($office['links'][1]['record']['updated_at'])->toDateTimeString(),
+                            empty($invite1) ? null : Carbon::parse($invite1['created_at'])->diffInMinutes(Carbon::parse($invite1['updated_at']))
+                        ];
+                    }
+                }
+
 
                 $results[] = collect([
                     $office['name'], 
@@ -112,14 +133,14 @@ class OfficeController extends Controller
                     empty($base2) ? null : 'Completed',
                     empty($base2) ? null : Carbon::parse($base2['updated_at'])->toDateTimeString(),
                     empty($base2) ? null : Carbon::parse($base2['created_at'])->diffInMinutes(Carbon::parse($base2['updated_at'])),
-                    empty($office['links'][0]['record']) ? null : Carbon::parse($office['links'][0]['record']['updated_at'])->toDateTimeString(),
-                    empty($old_invite) ? null : Carbon::parse($old_invite['created_at'])->diffInMinutes(Carbon::parse($old_invite['updated_at'])),
-                    empty($office['links'][1]['record']) ? null : Carbon::parse($office['links'][1]['record']['updated_at'])->toDateTimeString(),
-                    empty($invite1) ? null : Carbon::parse($invite1['created_at'])->diffInMinutes(Carbon::parse($invite1['updated_at'])),
+                    // empty($office['links'][0]['record']) ? null : Carbon::parse($office['links'][0]['record']['updated_at'])->toDateTimeString(),
+                    // empty($old_invite) ? null : Carbon::parse($old_invite['created_at'])->diffInMinutes(Carbon::parse($old_invite['updated_at'])),
+                    // empty($office['links'][1]['record']) ? null : Carbon::parse($office['links'][1]['record']['updated_at'])->toDateTimeString(),
+                    // empty($invite1) ? null : Carbon::parse($invite1['created_at'])->diffInMinutes(Carbon::parse($invite1['updated_at'])),
                     // empty($office['links'][2]['record']) ? null : Carbon::parse($office['links'][2]['record']['updated_at'])->toDateTimeString(),
                     // empty($office['links'][3]['record']) ? null : Carbon::parse($office['links'][3]['record']['updated_at'])->toDateTimeString(),
                     
-                ])->merge(collect($office['emails'])->map(fn($e) => Carbon::parse($e)->toDateTimeString())->toArray())->toArray();
+                ])->merge($inv)->merge(collect($office['emails'])->map(fn($e) => Carbon::parse($e)->toDateTimeString())->toArray())->toArray();
             }
                 
         }
