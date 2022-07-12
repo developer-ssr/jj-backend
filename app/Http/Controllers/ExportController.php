@@ -1290,7 +1290,7 @@ class ExportController extends Controller
         if ($tcount > 0) {
             foreach ($percentage as $key =>  $percent) {
                 if ($legend == 't2') {
-                    $percentage[$key]['value'] = $true_count === 0 ? 0 : round($percent['count'] / $true_count);
+                    $percentage[$key]['value'] = round($percent['count'] / $tcount);
                 }else {
                     $percentage[$key]['value'] = $true_count === 0 ? 0 : round(($percent['count'] / $true_count) * 100);
                 }
