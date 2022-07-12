@@ -1286,13 +1286,13 @@ class ExportController extends Controller
             }
             
         }
-        
+        $true_count = ($percentage['red']['count'] ?? 0) + ($percentage['green']['count'] ?? 0) + ($percentage['orange']['count'] ?? 0);
         if ($tcount > 0) {
             foreach ($percentage as $key =>  $percent) {
                 if ($legend == 't2') {
-                    $percentage[$key]['value'] = round($percent['count'] / $tcount);
+                    $percentage[$key]['value'] = round($percent['count'] / $true_count);
                 }else {
-                    $percentage[$key]['value'] = round(($percent['count'] / $tcount) * 100);
+                    $percentage[$key]['value'] = round(($percent['count'] / $true_count) * 100);
                 }
                 // $percent['value'] = ceil($percent['count'] / $tcount);
                 /* if ($percentage[$key]['value'] > $this->tops['colours'][$key]) {

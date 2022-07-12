@@ -98,7 +98,7 @@ class OfficeController extends Controller
 
                 $inv = [null, null, null, null];
                 if (!empty($old_invite)) {
-                    if (Carbon::parse($office['links'][0]['record']['updated_at'])->gt(Carbon::parse("2022-06-20"))) {
+                    if (Carbon::parse($office['links'][0]['record']['updated_at'])->gt(Carbon::parse("2022-06-14"))) {
                         $inv = [
                             null,
                             null,
