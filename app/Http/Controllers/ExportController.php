@@ -1268,16 +1268,12 @@ class ExportController extends Controller
                                 /* unset($percentage['orange']); */
                                 break;
                             case 't10':
-                                dd($tmp);
-                                if ($tmp['value'] == 1 && $tmp['value'] == 2) {
+                                if ($tmp['value'] == 1 || $tmp['value'] == 2) {
                                     $percentage['red']['count'] += 1;
-                                    dd($tmp['value']);
                                 }elseif ($tmp['value'] == 4) {
                                     $percentage['green']['count'] += 1;
-                                    dd($tmp['value']);
                                 }elseif ($tmp['value'] == 3)  {
                                     $percentage['orange']['count'] += 1;
-                                    dd($tmp['value']);
                                 }
                                 /* if ($t_key == 0 && $t_key == 1) {
                                     $percentage['red']['count'] += 1;
@@ -1311,7 +1307,7 @@ class ExportController extends Controller
                 } */
             }
         }
-        dd($percentage);
+        // dd($percentage);
         $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
         $question = Chart::getQuestion($legend);
         $equivalent = Chart::items($legend, $prime); //$tmp_data['prime'] ?? null;
