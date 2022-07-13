@@ -653,7 +653,7 @@ class ExportController extends Controller
                     $score = $this->getScore($records, $t, $prime);
                     $data[] = $score['percentage']['green']['value'];
                     if (isset($score['percentage']['orange'])) {
-                        $data[] = 100;//$score['percentage']['orange']['value'];
+                        $data[] = $score['percentage']['orange']['value'];
                     }
                     if (isset($score['percentage']['red'])) {
                         $data[] = $score['percentage']['red']['value'];
@@ -1300,7 +1300,7 @@ class ExportController extends Controller
                 } */
             }
         }
-        
+        dd($percentage);
         $score = $max_value > 0 ? (($points/$max_value) * 100) : null;
         $question = Chart::getQuestion($legend);
         $equivalent = Chart::items($legend, $prime); //$tmp_data['prime'] ?? null;
