@@ -1268,6 +1268,7 @@ class ExportController extends Controller
                                 /* unset($percentage['orange']); */
                                 break;
                             case 't10':
+                                dd($tmp);
                                 if ($tmp['value'] == 1 && $tmp['value'] == 2) {
                                     $percentage['red']['count'] += 1;
                                     dd($tmp['value']);
