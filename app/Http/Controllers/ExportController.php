@@ -1268,7 +1268,7 @@ class ExportController extends Controller
                                 /* unset($percentage['orange']); */
                                 break;
                             case 't10':
-                                if ($t_key == 0) {
+                                if ($t_key == 0 && $t_key == 1) {
                                     $percentage['red']['count'] += 1;
                                 }elseif ($t_key == 3) {
                                     $percentage['green']['count'] += 1;

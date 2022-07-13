@@ -450,7 +450,7 @@ class ChartController extends Controller
                                 unset($percentage['orange']);
                                 break;
                             case 't10':
-                                if ($t_key == 0) {
+                                if ($t_key == 0 && $t_key == 1) {
                                     $percentage['red']['count'] += 1;
                                     if ($chart->office_type == 'office') {
                                         $percentage['red']['value'] = $tmp['value'];
