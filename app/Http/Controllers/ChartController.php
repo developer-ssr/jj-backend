@@ -284,7 +284,6 @@ class ChartController extends Controller
     {
         $max_value = 0;
         $points = 0;
-        $label_data = [];
         $percentage = [
             'green' => [
                 'colour' => 'green',
@@ -311,46 +310,29 @@ class ChartController extends Controller
                 'active' => false
             ],
         ];
-        if ($legend == 't6') {
-            unset($percentage['red']);
-            unset($percentage['orange']);
-            $colour = 'green';
-            /* if ($prime == 1) {
-                unset($percentage['orange']);
-                unset($percentage['green']);
-                $colour = 'red';
-            }else if ($prime == 2) {
-                unset($percentage['red']);
-                unset($percentage['green']);
-                $colour = 'orange';
-            }else {
+        switch ($legend) {
+            case 't2':
+            case 't6':
+            case 't7':
+            case 't11':
+            case 't12':
                 unset($percentage['red']);
                 unset($percentage['orange']);
                 $colour = 'green';
-            } */
-            
-        } elseif ($legend == 't7') {
-            unset($percentage['red']);
-            unset($percentage['orange']);
-            $colour = 'green';
-            /* if ($prime <= 2) {
-                unset($percentage['orange']);
-                unset($percentage['green']);
-                $colour = 'red';
-            }else if ($prime == 3) {
-                unset($percentage['red']);
-                unset($percentage['green']);
-                $colour = 'orange';
-            }else {
-                unset($percentage['red']);
-                unset($percentage['orange']);
-                $colour = 'green';
-            } */
-        } elseif ($legend == 't2'|| $legend == 't11' || $legend == 't12') {
-            unset($percentage['red']);
-            unset($percentage['orange']);
-            $colour = 'green';
-        } 
+                $percentage['green']['label'] = 'TB';
+                break;
+            case 't4':
+            case 't9':
+                $percentage['green']['label'] = 'TB';
+                $percentage['red']['label'] = 'BB';
+                break;
+            case 't10':
+                $percentage['green']['label'] = 'TB';
+                break;
+            default:
+                                   
+                break;
+        }
         $tcount = count($records);
         $tmp_data = [];
         foreach ($records as $record) {
