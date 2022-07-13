@@ -653,7 +653,7 @@ class ExportController extends Controller
                     $score = $this->getScore($records, $t, $prime);
                     $data[] = $score['percentage']['green']['value'];
                     if (isset($score['percentage']['orange'])) {
-                        $data[] = $score['percentage']['orange']['value'];
+                        $data[] = 100;//$score['percentage']['orange']['value'];
                     }
                     if (isset($score['percentage']['red'])) {
                         $data[] = $score['percentage']['red']['value'];
