@@ -1039,6 +1039,9 @@ class ExportController extends Controller
                 case 'T2_3':
                     $headers[$legend] = 'b3_3';
                     break;
+                case 'T2_4':
+                    $headers[$legend] = 'b3_4';
+                    break;
                 case 'T11_1':
                     $headers[$legend] = 'd1';
                     break;
