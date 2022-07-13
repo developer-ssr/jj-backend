@@ -1270,10 +1270,13 @@ class ExportController extends Controller
                             case 't10':
                                 if ($tmp['value'] == 1 && $tmp['value'] == 2) {
                                     $percentage['red']['count'] += 1;
+                                    dd($tmp['value']);
                                 }elseif ($tmp['value'] == 4) {
                                     $percentage['green']['count'] += 1;
+                                    dd($tmp['value']);
                                 }elseif ($tmp['value'] == 3)  {
                                     $percentage['orange']['count'] += 1;
+                                    dd($tmp['value']);
                                 }
                                 /* if ($t_key == 0 && $t_key == 1) {
                                     $percentage['red']['count'] += 1;
