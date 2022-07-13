@@ -1320,7 +1320,8 @@ class ExportController extends Controller
         
         return [
             'gscore' => round($score),
-            'prime' => $legend == 't5' ? ($tmp_data['equivalent'] ?? '').' '.$equivalent : $equivalent,
+            // 'prime' => $legend == 't5' ? ($tmp_data['equivalent'] ?? '').' '.$equivalent : $equivalent,
+            'prime' => $equivalent,
             'percentage' => $percentage,
             'question' => $question['question'],
             'dimension' => $question['dimension'],
