@@ -1085,8 +1085,8 @@ class ExportController extends Controller
                     case 't9':
                     case 't10':
                         $responses = collect($record->data[$t]['responses'][0]['primes'])->firstWhere('index', $prime);
+                        $val = '-';
                         if ($responses != null) {
-                            $val = '-';
                             foreach ($responses['data'] as $reskey => $resdata) {
                                 if ($resdata['selected']) {
                                     $val = $reskey + 1;
