@@ -68,7 +68,12 @@ class ChartController extends Controller
                 $country = '';
                 foreach ($filter->data['legends'] as $legend) {
                     foreach ($legend['primes'] as $prime) {
-                        $code = Str::of($legend['name'].'_'. $prime)->ucfirst();
+                        if ($legend['name'] == 't4' && $prime == 19) {
+                            $code = 'T4_21';
+                        } else {
+                            $code = Str::of($legend['name'].'_'. $prime)->ucfirst();
+                        }
+                        
                         $series_data = [];
                         $records = [];
                         $segment = 0;
@@ -109,11 +114,6 @@ class ChartController extends Controller
                                 }
                                 $score = $this->getScore($records[$s_key], $legend['name'], $prime, $chart);
                                 
-                                if ($legend['name'] == 't4' && $score['prime'] == 19) {
-                                    $prime_num = 21;
-                                } else {
-                                    $prime_num = $score['prime'];
-                                }
                                 $series_data[] = [
                                     'question' => $score['question'],
                                     'code' => $code,
@@ -124,7 +124,7 @@ class ChartController extends Controller
                                     'record_ids' => $records[$s_key]->pluck('id'),
                                     'dimension' => $score['dimension'],
                                     'targets' => $score['targets'],
-                                    'prime' => $prime_num,
+                                    'prime' => $score['prime'],
                                     'tcount' => $tcount,
                                     'ans_count' => $score['true_count'],
                                     'skipped_count' => $tcount - $score['true_count']
@@ -142,15 +142,10 @@ class ChartController extends Controller
                                     }
                                     $score = $this->getScore($records[$s_key], $legend['name'], $prime, $chart);
                                     $date = $link->created_at->format("d M Y");
-                                    if ($legend['name'] == 't4' && $score['prime'] == 19) {
-                                        $prime_num = 21;
-                                    } else {
-                                        $prime_num = $score['prime'];
-                                    }
                                     $series_data[] = [
                                         'question' => $score['question'],
                                         'code' => $code,
-                                        'prime' => $prime_num,
+                                        'prime' => $score['prime'],
                                         'segment' => ($segment + 1),
                                         'date' => $date,
                                         'gscore' => $score['gscore'],
