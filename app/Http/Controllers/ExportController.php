@@ -468,7 +468,12 @@ class ExportController extends Controller
                 if (count(explode("_", $_lg)) > 1) {
                     foreach (json_decode($request->legends) as $legend) {
                         $tmp = Str::of($legend)->explode('_');
-                        $prime = $tmp[1];
+                        if ($tmp[0] == 'T4' && $tmp[1] == 21) {
+                            $prime = 19;
+                        } else {
+                            $prime = $tmp[1];
+                        }
+                        
                         if (!isset($legends[$tmp[0]])) {
                             $legends[$tmp[0]] = [];
                             $legends[$tmp[0]][] = $prime;
@@ -519,7 +524,11 @@ class ExportController extends Controller
         foreach ($legends as $legend) {
             $tmp = Str::of($legend)->explode('_');
             $t = Str::lower($tmp[0]);//t3
-            $prime = $tmp[1];
+            if ($tmp[0] == 'T4' && $tmp[1] == 21) {
+                $prime = 19;
+            } else {
+                $prime = $tmp[1];
+            }
             $record_ids = collect([]);
             $series = collect($chart->series)->firstWhere('name', $legend);
             $tmp_data = [];
@@ -560,7 +569,11 @@ class ExportController extends Controller
         foreach ($legends as $legend) {
             $tmp = Str::of($legend)->explode('_');
             $t = Str::lower($tmp[0]);//t3
-            $prime = $tmp[1];
+            if ($tmp[0] == 'T4' && $tmp[1] == 21) {
+                $prime = 19;
+            } else {
+                $prime = $tmp[1];
+            }
             $record_ids = collect([]);
             $series = collect($chart->series)->firstWhere('name', $legend);
             $tmp_data = [];
@@ -1079,7 +1092,12 @@ class ExportController extends Controller
             foreach ($headers as $hkey => $header) {
                 $ts = Str::of($hkey)->explode('_');
                 $t = Str::lower($ts[0]);//t3
-                $prime = $ts[1] ?? null;
+                if ($ts[0] == 'T4' && $ts[1] == 21) {
+                    $prime = 19;
+                } else {
+                    $prime = $ts[1] ?? null;
+                }
+                
                 switch ($t) {
                     case 't3':
                     case 't4':
