@@ -851,7 +851,12 @@ class ExportController extends Controller
 
     public function getData($records, $t, $prime, $data, $summary, $table = false) {
         $tmp_data = [];
-        $tmp_result = collect([$data['dimension'] ?? '', Str::upper($t), $prime, $data['question'] ?? '']);
+        if ($t == 't4' && $prime == 19) {
+            $prime_num = 21;
+        } else {
+            $prime_num = $prime;
+        }
+        $tmp_result = collect([$data['dimension'] ?? '', Str::upper($t), $prime_num, $data['question'] ?? '']);
         $data_count = 0;
         $total = 0;
         $count = count($records);
