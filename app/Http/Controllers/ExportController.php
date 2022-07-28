@@ -606,6 +606,7 @@ class ExportController extends Controller
     }
 
     public function exportTable($chart, $legends, $summary, $all) {
+        dd($legends);
         $tmp_results = [];
         $headers = [];
         if ($summary == 'table_summary') {
