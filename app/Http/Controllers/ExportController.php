@@ -918,7 +918,9 @@ class ExportController extends Controller
                 $tmp_result[3] = $equivalent;
                 $questions = Chart::getQuestion($t);
                 foreach ($questions['choices'] as $c_key => $choice) {
-                    $tmp_result[4+$c_key] = 0;
+                    if (!isset($tmp_result[4+$c_key])) {
+                        $tmp_result[4+$c_key] == 0;
+                    }                    
                 }
                 $data_count = count($questions['choices']);
             } 
