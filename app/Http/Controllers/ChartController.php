@@ -109,6 +109,11 @@ class ChartController extends Controller
                                 }
                                 $score = $this->getScore($records[$s_key], $legend['name'], $prime, $chart);
                                 
+                                if ($legend['name'] == 't4' && $score['prime'] == 19) {
+                                    $prime_num = 21;
+                                } else {
+                                    $prime_num = $score['prime'];
+                                }
                                 $series_data[] = [
                                     'question' => $score['question'],
                                     'code' => $code,
@@ -119,7 +124,7 @@ class ChartController extends Controller
                                     'record_ids' => $records[$s_key]->pluck('id'),
                                     'dimension' => $score['dimension'],
                                     'targets' => $score['targets'],
-                                    'prime' => $score['prime'],
+                                    'prime' => $prime_num,
                                     'tcount' => $tcount,
                                     'ans_count' => $score['true_count'],
                                     'skipped_count' => $tcount - $score['true_count']
@@ -137,10 +142,15 @@ class ChartController extends Controller
                                     }
                                     $score = $this->getScore($records[$s_key], $legend['name'], $prime, $chart);
                                     $date = $link->created_at->format("d M Y");
+                                    if ($legend['name'] == 't4' && $score['prime'] == 19) {
+                                        $prime_num = 21;
+                                    } else {
+                                        $prime_num = $score['prime'];
+                                    }
                                     $series_data[] = [
                                         'question' => $score['question'],
                                         'code' => $code,
-                                        'prime' => $score['prime'],
+                                        'prime' => $prime_num,
                                         'segment' => ($segment + 1),
                                         'date' => $date,
                                         'gscore' => $score['gscore'],
@@ -343,13 +353,6 @@ class ChartController extends Controller
                 case 't11':
                 case 't12':
                     $tmp_data = Chart::getExpData($legend, $record, $prime);
-                    break;
-                case 't5':
-                    if (isset($record->data[$legend]['responses'])) {
-                        $tmp_data = collect($record->data[$legend]['responses'][0]['primes'])->firstWhere('index', $prime);
-                    }else {
-                        $tmp_data = null;
-                    }
                     break;
                 default:
                     if (isset($record->data[$legend]['responses'])) {
