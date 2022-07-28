@@ -606,7 +606,6 @@ class ExportController extends Controller
     }
 
     public function exportTable($chart, $legends, $summary, $all) {
-        dd($legends);
         $tmp_results = [];
         $headers = [];
         if ($summary == 'table_summary') {
@@ -633,7 +632,9 @@ class ExportController extends Controller
                         $prime = $i_key + 1;
                         $item = $legend.'_'.$prime; //T3_1
                     }
-                    
+                    if ($item == 'T4_19') {
+                        $item = 'T4_21';
+                    }
                     $series = collect($chart->series)->firstWhere('name', $item);
                     if ($series == null) {
                         continue;
