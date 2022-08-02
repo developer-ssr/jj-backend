@@ -430,7 +430,7 @@ class ExportController extends Controller
             $filter_ids = $all_filters->groupBy('office_id')->map(function ($item, $key) {
                 return collect($item)->last()->id;
             });
-            $charts = Chart::whereIn('filter_id', $filter_ids->toArray())->get();
+            $charts = Chart::whereIn('filter_id', $filter_ids->toArray())->whereNotNull('country')->get();
             $kpi_data = $this->exportKPI($charts, $request->title);
             $data = $kpi_data['results'];
             $data[] = ['Sample Size', $kpi_data['sample_size']];
@@ -782,7 +782,7 @@ class ExportController extends Controller
 
     public function exportKPI($charts ,$title) {
         
-        // dd($charts);
+        dd($charts);
         $questions = [
             [
                 'label' => 'Satisfaction w/ ordering',
