@@ -782,7 +782,7 @@ class ExportController extends Controller
 
     public function exportKPI($charts ,$title) {
         
-        dd($charts);
+        // dd($charts);
         $questions = [
             [
                 'label' => 'Satisfaction w/ ordering',
