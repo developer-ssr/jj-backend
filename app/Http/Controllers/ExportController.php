@@ -732,7 +732,7 @@ class ExportController extends Controller
                 }
             }
             $tmp_data = $this->exportTracker($chart, $ts);
-            $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
+            $headers = collect(['Respondent ID', 'Date Completed','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
             $tmp_results = $tmp_data['results'];
             $tmp_results[] = ["",""]; // add space
             ksort($ts, 4);
