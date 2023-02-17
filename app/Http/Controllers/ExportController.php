@@ -510,7 +510,7 @@ class ExportController extends Controller
             $data = $this->exportKPI($chart, $chart->title);
         } */ else {
             $tmp_data = $this->exportTracker($chart, $legends);
-            $headers = collect(['Respondent ID','Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
+            $headers = collect(['Respondent ID', 'Date Completed', 'Country','Name','Email Address'])->merge($tmp_data['headers'])->toArray();
             $data = collect($tmp_data['results'])->prepend($headers)->toArray(); 
         }
         
@@ -1097,6 +1097,7 @@ class ExportController extends Controller
         foreach ($records as $record) {
             $tmp = [
                 $record->participant_id,
+                $record->updated_at->toDateTimeString(),
                 Chart::getCountry($record->country),
                 $record->meta['query']['b2_1'] ?? '-',
                 $record->meta['query']['b2_2'] ?? '-'
