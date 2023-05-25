@@ -159,7 +159,7 @@ class ExportController extends Controller
         $country_records = [];
         foreach ($codes as $code) {
             $response = Http::get(
-                "https://fluent.splitsecondsurveys.co.uk/api/records",
+                "https://fluent2.splitsecondsurveys.co.uk/api/records",
                 [
                     "survey_codes" => [$code["survey_code"]],
                 ]
@@ -570,7 +570,7 @@ class ExportController extends Controller
                 ->toArray();
             //EcpBaselineController->classifications()
             $response = Http::get(
-                "https://fluent.splitsecondsurveys.co.uk/custom/jnj/baseline/classifications",
+                "https://fluent2.splitsecondsurveys.co.uk/custom/jnj/baseline/classifications",
                 [
                     "filter_emails" => $filter_emails,
                     "title" => $request->title,
